@@ -1,0 +1,17 @@
+:root {
+  --fontColor: #0c1b22;
+  --paper: #e8f4f2;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(1200px 480px at 12% -10%, rgba(26, 143, 138, 0.18), transparent 55%),
+    radial-gradient(900px 420px at 100% 0%, rgba(20, 111, 120, 0.12), transparent 50%),
+    var(--paper);
+  color: var(--fontColor);
+  background-repeat: no-repeat;
+}

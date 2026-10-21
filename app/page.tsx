@@ -1,8 +1,3 @@
-
 export default function Main() {
-  return (
-    <div>
-    Task Manager
-    </div>
-  );
+  return <div>Приложение для управления задачами</div>;
 }
