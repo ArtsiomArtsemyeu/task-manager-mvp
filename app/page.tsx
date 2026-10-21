@@ -1,3 +1,5 @@
-export default function MainPage() {
-  return <div>Приложение для управления задачами</div>;
+import { Home } from "@/src/widgets/home";
+
+export default function HomePage() {
+  return <Home />;
 }
