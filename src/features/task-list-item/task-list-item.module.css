@@ -1,0 +1,32 @@
+.host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    background-color: #a1a4c9;
+    box-shadow: 0 18px 40px rgba(11, 42, 50, 0.14);
+    ;
+    padding: 10px;
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.link {
+    display: block;
+    height: 100%;
+}
+
+.link:hover .host {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, #1a8f8a 45%, rgba(12, 27, 34, 0.12));
+    box-shadow: 0 22px 44px rgba(28, 25, 20, 0.16);
+}
+
+.body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1rem 1.05rem 1.15rem;
+}

@@ -35,7 +35,7 @@ export default function RootLayout({
       <body>
         <ColorThemeProvider>
           <Header />
-          <main>{children}</main>
+          <main className="rootHost">{children}</main>
           <Footer />
         </ColorThemeProvider>
       </body>

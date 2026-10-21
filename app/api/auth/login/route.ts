@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import { User, UserSession } from "@/app/src/entities/user";
+import { User, UserSession } from "@/src/entities/user";
 
 export async function POST(request: Request) {
   try {
@@ -33,15 +32,12 @@ export async function POST(request: Request) {
       );
     }
 
-    const sessionPayload: UserSession = {
+    const userSessionPayload: UserSession = {
       userId: user.id,
       email: user.email,
     };
 
-    const cookieStore = await cookies();
-    cookieStore.set("session", JSON.stringify(sessionPayload));
-
-    return NextResponse.json({ success: true, user: sessionPayload });
+    return NextResponse.json({ userSessionPayload });
   } catch (error) {
     return NextResponse.json({ error: "Ошибка сервера" }, { status: 500 });
   }

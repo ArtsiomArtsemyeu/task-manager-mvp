@@ -1,5 +1,16 @@
-.root {
+.host {
   position: sticky;
   top: 0;
   background-color: var(--header-bg);
+  height: 70px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 500;
 }

@@ -1,10 +1,12 @@
 import { Login } from "@/src/features/login";
+import styles from "./home.module.css";
 
-export function Home() {
+export function HomeWidget() {
   return (
-    <div>
-      Приложение для управления задачами.Для работы с задачами войдите в учетную
-      запись:
+    <div className={styles.host}>
+      <div className={styles.title}>
+        Для работы с задачами войдите в учетную запись
+      </div>
       <Login />
     </div>
   );

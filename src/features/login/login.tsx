@@ -1,31 +1,81 @@
 "use client";
 
-import { useActionState } from "react";
+import { startTransition, useActionState } from "react";
 import { loginAction, LoginActionState } from "./api/login.action";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { ErrorHighlight } from "@/src/shared/ui/error-highlight";
+import styles from "./login.module.css";
+type LoginFormData = {
+  email: string;
+  password: string;
+};
 
-export function Login() {
+export function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>();
+
   const [state, formAction, isPending] = useActionState<
     LoginActionState,
     FormData
   >(loginAction, null);
 
+  const onSubmit: SubmitHandler<LoginFormData> = (data: LoginFormData) => {
+    startTransition(() => {
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, val]) =>
+        formData.append(key, val as string),
+      );
+      formAction(formData);
+    });
+  };
+
   return (
-    <form action={formAction}>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" required />
-      </div>
+    <div className={styles.host}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <div className={styles.inputGroup}>
+            <label htmlFor="email">Адрес электронной почты</label>
+            <input
+              {...register("email", {
+                required: "Email обязателен",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Неверный формат email",
+                },
+              })}
+              className={styles.input}
+              placeholder="Адрес электронной почты "
+            />
+            {errors.email && <ErrorHighlight message={errors.email.message} />}
+          </div>
 
-      <div>
-        <label htmlFor="password">Password</label>
-        <input id="password" name="password" type="password" required />
-      </div>
+          <div className={styles.inputGroup}>
+            <label htmlFor="password">Пароль</label>
+            <input
+              {...register("password", {
+                required: "Пароль обязателен",
+                minLength: {
+                  value: 8,
+                  message: "Минимум 8 символов",
+                },
+              })}
+              className={styles.input}
+              placeholder="Пароль"
+            />
+            {errors.password && (
+              <ErrorHighlight message={errors.password.message} />
+            )}
+          </div>
+          <div>{state?.error && <ErrorHighlight message={state.error} />}</div>
+        </div>
 
-      {state?.error && <p style={{ color: "red" }}>{state.error}</p>}
-
-      <button type="submit" disabled={isPending}>
-        {isPending ? "Logging in..." : "Sign In"}
-      </button>
-    </form>
+        <button type="submit" disabled={isPending} className={styles.btnSubmit}>
+          {isPending ? "Загрузка..." : "Войти"}
+        </button>
+      </form>
+    </div>
   );
 }

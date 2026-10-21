@@ -1,4 +1,9 @@
 .root {
     margin-top: auto;
     background-color: var(--footer-bg);
+    height: 65px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }

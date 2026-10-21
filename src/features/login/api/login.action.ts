@@ -1,5 +1,6 @@
 "use server";
 
+import { createToken } from "@/src/shared/utils/jwt";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -7,6 +8,7 @@ export type LoginActionState = {
   error?: string;
   success?: boolean;
 } | null;
+
 export async function loginAction(
   prevState: LoginActionState,
   formData: FormData,
@@ -24,12 +26,13 @@ export async function loginAction(
     return { error: "Неверный email или пароль" };
   }
 
-  const { user } = await response.json();
+  const { userSessionPayload } = await response.json();
+  const jwtToken = createToken(userSessionPayload);
 
   const cookieStore = await cookies();
-  cookieStore.set("session_token", JSON.stringify(user), {
+  cookieStore.set("session_token", jwtToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 7,
