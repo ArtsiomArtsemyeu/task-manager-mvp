@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Footer } from "@/src/widgets/footer";
 import { Header } from "@/src/widgets/header";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ColorThemeProvider } from "@/src/app/providers/color-theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,13 +21,23 @@ export const metadata: Metadata = {
   description: "Приложение для управления задачами",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="ru"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+      suppressHydrationWarning
+    >
       <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <ColorThemeProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </ColorThemeProvider>
       </body>
     </html>
   );
