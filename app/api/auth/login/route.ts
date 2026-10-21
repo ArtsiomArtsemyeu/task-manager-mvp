@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { User, UserSession } from "@/src/entities/user";
+import { UserSession } from "@/src/entities/user";
+import { defaultUser } from "../../data/stub-data";
 
 export async function POST(request: Request) {
   try {
@@ -12,20 +13,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const user: User = {
-      id: "055cf2ac-a56a-4d16-a897-4597c4ea3756",
-      email: "admin@example.com",
-      password: "Admin123!",
-    };
-
-    if (!user) {
-      return NextResponse.json(
-        { error: "Неверный email или пароль" },
-        { status: 401 },
-      );
-    }
-
-    if (password !== user.password) {
+    if (password !== defaultUser.password) {
       return NextResponse.json(
         { error: "Неверный email или пароль" },
         { status: 401 },
@@ -33,12 +21,13 @@ export async function POST(request: Request) {
     }
 
     const userSessionPayload: UserSession = {
-      userId: user.id,
-      email: user.email,
+      userId: defaultUser.id,
+      email: defaultUser.email,
     };
 
-    return NextResponse.json({ userSessionPayload });
+    return NextResponse.json({ userSessionPayload }, { status: 200 });
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ error: "Ошибка сервера" }, { status: 500 });
   }
 }

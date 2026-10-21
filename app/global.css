@@ -6,7 +6,7 @@
 [data-theme="default"] {
   --background: #f5f5f5;
   --header-bg: #4caf50;
-  --footer-bg: #333333;
+  --footer-bg: #333333a9;
 }
 
 [data-theme="dark"] {
