@@ -1,5 +1,5 @@
-import { TaskListsWidget } from "@/src/widgets/task-lists";
 import { Suspense } from "react";
+import { TaskListsSkeleton, TaskListsWidget } from "@/src/widgets/task-lists";
 
 export default async function TasksPage() {
   const tasksListsPromise = fetch("http://localhost:3000/api/data/task-lists", {
@@ -7,7 +7,7 @@ export default async function TasksPage() {
   }).then((response) => response.json());
 
   return (
-    <Suspense fallback="Loading task lists...">
+    <Suspense fallback={<TaskListsSkeleton />}>
       <TaskListsWidget taskListsPromise={tasksListsPromise} />
     </Suspense>
   );

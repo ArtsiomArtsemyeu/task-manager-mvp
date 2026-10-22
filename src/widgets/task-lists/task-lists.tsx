@@ -2,7 +2,7 @@
 
 import { startTransition, use, useCallback, useState } from "react";
 import styles from "./task-lists.module.css";
-import { TaskListItem } from "@/src/features/task-list-item";
+import { TaskListCard } from "@/src/features/task-list-card";
 import { AddTaskListModal } from "@/src/features/add-task-list-modal";
 import { TaskListDto } from "@/src/entities/task-list";
 
@@ -69,7 +69,7 @@ export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
               : true,
           )
           .map((taskList: TaskListDto) => (
-            <TaskListItem key={taskList.id} taskList={taskList} />
+            <TaskListCard key={taskList.id} taskList={taskList} />
           ))}
       </div>
       <AddTaskListModal

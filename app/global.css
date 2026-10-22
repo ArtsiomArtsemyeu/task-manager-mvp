@@ -51,42 +51,42 @@
 }
 
 [data-theme="light"] {
-  --background: #f4f7fb;
-  --foreground: #1c2430;
-  --muted: #5d6b7c;
+  --background: #fbfcfe;
+  --foreground: #334155;
+  --muted: #7b8a9c;
   --surface: #ffffff;
   --surface-elevated: #f8fafc;
-  --border: color-mix(in srgb, #1c2430 10%, transparent);
-  --accent: #0f766e;
-  --accent-soft: #d5f5f2;
-  --header-bg: linear-gradient(135deg, #0e7490 0%, #0f766e 55%, #148f82 100%);
-  --header-fg: #f0fffd;
-  --header-muted: color-mix(in srgb, #f0fffd 74%, transparent);
-  --footer-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  --footer-fg: #cbd5e1;
-  --card-bg: linear-gradient(165deg, #ffffff 0%, #f1f7f8 100%);
-  --card-border: color-mix(in srgb, #0f766e 16%, transparent);
-  --card-shadow: 0 10px 28px color-mix(in srgb, #0f172a 8%, transparent);
-  --card-shadow-hover: 0 16px 36px color-mix(in srgb, #0f172a 12%, transparent);
-  --progress-track: #e2eef0;
-  --progress-fill: linear-gradient(90deg, #0e7490, #14b8a6);
+  --border: color-mix(in srgb, #64748b 12%, transparent);
+  --accent: #2dd4bf;
+  --accent-soft: #e6fffb;
+  --header-bg: linear-gradient(135deg, #5eead4 0%, #2dd4bf 50%, #67e8f9 100%);
+  --header-fg: #0f766e;
+  --header-muted: color-mix(in srgb, #0f766e 68%, transparent);
+  --footer-bg: linear-gradient(135deg, #eef8f7 0%, #e8f4f8 100%);
+  --footer-fg: #5b6b7c;
+  --card-bg: linear-gradient(165deg, #ffffff 0%, #f7fcfb 100%);
+  --card-border: color-mix(in srgb, #2dd4bf 14%, transparent);
+  --card-shadow: 0 10px 28px color-mix(in srgb, #94a3b8 10%, transparent);
+  --card-shadow-hover: 0 16px 36px color-mix(in srgb, #94a3b8 16%, transparent);
+  --progress-track: #e8f7f5;
+  --progress-fill: linear-gradient(90deg, #5eead4, #22d3ee);
   --input-bg: #ffffff;
-  --input-border: color-mix(in srgb, #1c2430 14%, transparent);
-  --button-bg: linear-gradient(135deg, #0e7490, #0f766e);
-  --button-fg: #ffffff;
-  --metric-new: #2563eb;
-  --metric-progress: #d97706;
-  --metric-done: #059669;
-  --metric-overdue: #dc2626;
-  --chip-red-bg: #fee2e2;
-  --chip-red-fg: #991b1b;
-  --chip-yellow-bg: #fef3c7;
-  --chip-yellow-fg: #92400e;
+  --input-border: color-mix(in srgb, #94a3b8 22%, transparent);
+  --button-bg: linear-gradient(135deg, #5eead4, #2dd4bf);
+  --button-fg: #0f766e;
+  --metric-new: #3b82f6;
+  --metric-progress: #f59e0b;
+  --metric-done: #10b981;
+  --metric-overdue: #f87171;
+  --chip-red-bg: #fff1f1;
+  --chip-red-fg: #b91c1c;
+  --chip-yellow-bg: #fffbeb;
+  --chip-yellow-fg: #b45309;
   --dropdown-bg: #ffffff;
-  --dropdown-fg: #1c2430;
+  --dropdown-fg: #334155;
   --dropdown-hover: #f1f5f9;
   --dropdown-selected: #ccfbf1;
-  --toggler-hover: color-mix(in srgb, #ffffff 18%, transparent);
+  --toggler-hover: color-mix(in srgb, #0f766e 10%, transparent);
 }
 
 [data-theme="dark"] {

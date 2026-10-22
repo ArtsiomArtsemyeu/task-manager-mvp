@@ -16,6 +16,10 @@
   transition: var(--transition-theme);
 }
 
+:global([data-theme="light"]) .host {
+  box-shadow: 0 6px 20px color-mix(in srgb, #94a3b8 18%, transparent);
+}
+
 @media (max-width: 640px) {
   .host {
     min-height: 3.75rem;

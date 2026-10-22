@@ -12,7 +12,7 @@ export function TaskMetrics({ tasks }: TaskMetricsProps) {
     [tasks],
   );
   const inProgressTaskCount = useMemo(
-    () => calculateTaskCountByState(tasks, "in-progress"),
+    () => calculateTaskCountByState(tasks, "in progress"),
     [tasks],
   );
   const doneTaskCount = useMemo(

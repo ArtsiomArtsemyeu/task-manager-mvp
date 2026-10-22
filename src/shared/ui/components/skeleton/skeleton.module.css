@@ -1,0 +1,31 @@
+.bone {
+  display: block;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg,
+      color-mix(in srgb, var(--muted) 12%, transparent) 0%,
+      color-mix(in srgb, var(--muted) 22%, transparent) 45%,
+      color-mix(in srgb, var(--muted) 12%, transparent) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bone {
+    animation: none;
+    background: color-mix(in srgb, var(--muted) 16%, transparent);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}
