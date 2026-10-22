@@ -35,8 +35,10 @@ export function TaskListItem({ taskList }: TaskListItemProps) {
   return (
     <Link href={`/lists/${taskList.id}`} className={styles.link}>
       <div className={styles.host}>
-        <div>{taskList.name}</div>
-        <div>{`Количество задач: ${taskList.tasks.length}`}</div>
+        <div className={styles.title}>{taskList.name}</div>
+        <div className={styles.count}>
+          {`Количество задач: ${taskList.tasks.length}`}
+        </div>
         <TaskMetrics tasks={taskList.tasks} />
         <ProgressBar progress={taskListProgress} />
         <div className={styles.indicators}>

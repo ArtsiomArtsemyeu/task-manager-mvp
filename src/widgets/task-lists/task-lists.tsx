@@ -1,9 +1,9 @@
 "use client";
 
-import { startTransition, use, useCallback, useState } from "react";
 import styles from "./task-lists.module.css";
 import { TaskListDto } from "./model/task-list-dto.model";
 import { TaskListItem } from "@/src/features/task-list-item";
+import { startTransition, use, useCallback, useState } from "react";
 import { AddTaskListModal } from "@/src/features/add-task-list-modal/add-task-list-modal";
 
 interface TaskListsProps {
@@ -42,14 +42,22 @@ export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
 
   return (
     <div className={styles.host}>
-      <div>
+      <div className={styles.toolbar}>
         <input
           className={styles.search}
           type="search"
+          placeholder="Поиск списков…"
           onChange={changeQuery}
           value={searchQuery}
+          aria-label="Поиск списков"
         />
-        <button onClick={showAddTaskListModal}>Добавить новый список</button>
+        <button
+          type="button"
+          className={styles.addButton}
+          onClick={showAddTaskListModal}
+        >
+          Добавить новый список
+        </button>
       </div>
       <div className={styles.list}>
         {taskLists

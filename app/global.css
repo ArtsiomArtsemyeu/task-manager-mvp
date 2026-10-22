@@ -1,24 +1,131 @@
 :root {
-  --page-gutter: clamp(1.25rem, 6vw, 7.5rem);
+  --page-gutter: clamp(1rem, 4vw, 3rem);
+  --content-max: 72rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --font-sans: var(--font-geist-sans), "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --transition-theme: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 :root,
 [data-theme="default"] {
-  --background: #f5f5f5;
-  --header-bg: #4caf50;
-  --footer-bg: #333333a9;
-}
-
-[data-theme="dark"] {
-  --background: #121212;
-  --header-bg: #1f1f1f;
-  --footer-bg: #1a1a1a;
+  --background: #eef6f0;
+  --foreground: #1a2e22;
+  --muted: #5a7263;
+  --surface: #ffffff;
+  --surface-elevated: #f7fbf8;
+  --border: color-mix(in srgb, #1a2e22 12%, transparent);
+  --accent: #2e8b57;
+  --accent-soft: #d8f0e2;
+  --header-bg: linear-gradient(135deg, #1f7a4c 0%, #2e8b57 48%, #3daa6d 100%);
+  --header-fg: #f4fff8;
+  --header-muted: color-mix(in srgb, #f4fff8 72%, transparent);
+  --footer-bg: linear-gradient(135deg, #24352c 0%, #1a2e22 100%);
+  --footer-fg: #d5e8dc;
+  --card-bg: linear-gradient(165deg, #ffffff 0%, #f3faf6 100%);
+  --card-border: color-mix(in srgb, #2e8b57 18%, transparent);
+  --card-shadow: 0 10px 28px color-mix(in srgb, #1a2e22 10%, transparent);
+  --card-shadow-hover: 0 16px 36px color-mix(in srgb, #1a2e22 14%, transparent);
+  --progress-track: #dceee3;
+  --progress-fill: linear-gradient(90deg, #2e8b57, #4caf71);
+  --input-bg: #ffffff;
+  --input-border: color-mix(in srgb, #1a2e22 16%, transparent);
+  --button-bg: linear-gradient(135deg, #2e8b57, #3daa6d);
+  --button-fg: #ffffff;
+  --metric-new: #2b6cb0;
+  --metric-progress: #c05621;
+  --metric-done: #2f855a;
+  --metric-overdue: #c53030;
+  --chip-red-bg: #fde8e8;
+  --chip-red-fg: #9b2c2c;
+  --chip-yellow-bg: #fef6e0;
+  --chip-yellow-fg: #975a16;
+  --dropdown-bg: #ffffff;
+  --dropdown-fg: #1a2e22;
+  --dropdown-hover: #eef6f0;
+  --dropdown-selected: #d8f0e2;
+  --toggler-hover: color-mix(in srgb, #ffffff 18%, transparent);
 }
 
 [data-theme="light"] {
-  --background: #ffffff;
-  --header-bg: #e0e0e0;
-  --footer-bg: #f0f0f0;
+  --background: #f4f7fb;
+  --foreground: #1c2430;
+  --muted: #5d6b7c;
+  --surface: #ffffff;
+  --surface-elevated: #f8fafc;
+  --border: color-mix(in srgb, #1c2430 10%, transparent);
+  --accent: #0f766e;
+  --accent-soft: #d5f5f2;
+  --header-bg: linear-gradient(135deg, #0e7490 0%, #0f766e 55%, #148f82 100%);
+  --header-fg: #f0fffd;
+  --header-muted: color-mix(in srgb, #f0fffd 74%, transparent);
+  --footer-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  --footer-fg: #cbd5e1;
+  --card-bg: linear-gradient(165deg, #ffffff 0%, #f1f7f8 100%);
+  --card-border: color-mix(in srgb, #0f766e 16%, transparent);
+  --card-shadow: 0 10px 28px color-mix(in srgb, #0f172a 8%, transparent);
+  --card-shadow-hover: 0 16px 36px color-mix(in srgb, #0f172a 12%, transparent);
+  --progress-track: #e2eef0;
+  --progress-fill: linear-gradient(90deg, #0e7490, #14b8a6);
+  --input-bg: #ffffff;
+  --input-border: color-mix(in srgb, #1c2430 14%, transparent);
+  --button-bg: linear-gradient(135deg, #0e7490, #0f766e);
+  --button-fg: #ffffff;
+  --metric-new: #2563eb;
+  --metric-progress: #d97706;
+  --metric-done: #059669;
+  --metric-overdue: #dc2626;
+  --chip-red-bg: #fee2e2;
+  --chip-red-fg: #991b1b;
+  --chip-yellow-bg: #fef3c7;
+  --chip-yellow-fg: #92400e;
+  --dropdown-bg: #ffffff;
+  --dropdown-fg: #1c2430;
+  --dropdown-hover: #f1f5f9;
+  --dropdown-selected: #ccfbf1;
+  --toggler-hover: color-mix(in srgb, #ffffff 18%, transparent);
+}
+
+[data-theme="dark"] {
+  --background: #0f1419;
+  --foreground: #e8eef4;
+  --muted: #9aa8b5;
+  --surface: #171d24;
+  --surface-elevated: #1e262f;
+  --border: color-mix(in srgb, #e8eef4 12%, transparent);
+  --accent: #3dd6c6;
+  --accent-soft: #1a3331;
+  --header-bg: linear-gradient(135deg, #12181f 0%, #1a2330 50%, #15252a 100%);
+  --header-fg: #eaf6f4;
+  --header-muted: color-mix(in srgb, #eaf6f4 68%, transparent);
+  --footer-bg: linear-gradient(135deg, #0a0e12 0%, #12181f 100%);
+  --footer-fg: #9aa8b5;
+  --card-bg: linear-gradient(165deg, #1a222b 0%, #151c23 100%);
+  --card-border: color-mix(in srgb, #3dd6c6 22%, transparent);
+  --card-shadow: 0 12px 30px color-mix(in srgb, #000000 40%, transparent);
+  --card-shadow-hover: 0 18px 40px color-mix(in srgb, #000000 50%, transparent);
+  --progress-track: #24303a;
+  --progress-fill: linear-gradient(90deg, #1a9b8f, #3dd6c6);
+  --input-bg: #171d24;
+  --input-border: color-mix(in srgb, #e8eef4 16%, transparent);
+  --button-bg: linear-gradient(135deg, #1a9b8f, #2bb8aa);
+  --button-fg: #041311;
+  --metric-new: #60a5fa;
+  --metric-progress: #fbbf24;
+  --metric-done: #34d399;
+  --metric-overdue: #f87171;
+  --chip-red-bg: color-mix(in srgb, #f87171 18%, #1a222b);
+  --chip-red-fg: #fecaca;
+  --chip-yellow-bg: color-mix(in srgb, #fbbf24 16%, #1a222b);
+  --chip-yellow-fg: #fde68a;
+  --dropdown-bg: #1e262f;
+  --dropdown-fg: #e8eef4;
+  --dropdown-hover: #24303a;
+  --dropdown-selected: #1a3331;
+  --toggler-hover: color-mix(in srgb, #ffffff 10%, transparent);
 }
 
 body {
@@ -26,12 +133,24 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
-  background-color: var(--background-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  color: var(--foreground);
+  background-color: var(--background);
+  font-family: var(--font-sans);
+  transition: var(--transition-theme);
   background-repeat: no-repeat;
 }
 
 .rootHost {
-  padding: 20px var(--page-gutter);
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-max);
   margin: 0 auto;
+  padding: clamp(1rem, 3vw, 2rem) var(--page-gutter) clamp(2rem, 5vw, 3.5rem);
+}
+
+@media (max-width: 640px) {
+  .rootHost {
+    padding-top: 1rem;
+    padding-bottom: 1.75rem;
+  }
 }

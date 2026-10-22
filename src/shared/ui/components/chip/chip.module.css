@@ -1,22 +1,24 @@
 .host {
     display: inline-flex;
     align-items: center;
-    padding: 6px 12px;
-    font-size: 14px;
-    font-family: sans-serif;
-    color: #333333;
-    background-color: #e0e0e0;
-    border-radius: 16px;
-    user-select: none;
     width: max-content;
+    max-width: 100%;
+    padding: 0.35rem 0.7rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.3;
+    user-select: none;
+    background-color: color-mix(in srgb, var(--muted) 14%, transparent);
+    color: var(--muted);
 }
 
 .red {
-    background-color: #ffebee;
-    color: #c62828;
+    background-color: var(--chip-red-bg);
+    color: var(--chip-red-fg);
 }
 
 .yellow {
-    background-color: #fffde7;
-    color: #f57f17;
+    background-color: var(--chip-yellow-bg);
+    color: var(--chip-yellow-fg);
 }
