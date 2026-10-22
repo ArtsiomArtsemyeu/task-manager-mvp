@@ -1,21 +1,78 @@
 "use client";
 
+import { clsx } from "clsx";
+import Image from "next/image";
 import { useTheme } from "next-themes";
-import { useCallback } from "react";
+import { ThemeConfig } from "./theme.config";
+import styles from "./theme-toggler.module.css";
+import { useCallback, useEffect, useRef, useState } from "react";
+type ThemeTogglerProps = {
+  themes: ThemeConfig[];
+};
 
-export function ThemeToggler() {
+export function ThemeToggler({ themes }: ThemeTogglerProps) {
   const { theme, setTheme } = useTheme();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
 
-  const changeThemeValue = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => setTheme(e.target.value),
+  const changeTheme = useCallback(
+    (newTheme: string) => {
+      setTheme(newTheme);
+      setIsOpenDropdown(false);
+    },
     [setTheme],
   );
 
+  const onToggleDropdown = useCallback((): void => {
+    setIsOpenDropdown((prev) => !prev);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent): void => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpenDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <select value={theme} onChange={changeThemeValue}>
-      <option value="default">Системная</option>
-      <option value="light">Светлая</option>
-      <option value="dark">Тёмная</option>
-    </select>
+    <div className={styles.dropdownContainer} ref={dropdownRef}>
+      <button
+        className={clsx(styles.dropdownButton, isOpenDropdown && styles.active)}
+        onClick={onToggleDropdown}
+        aria-haspopup
+        aria-expanded={isOpenDropdown}
+      >
+        <Image
+          src="/images/icons/color-bucket.svg"
+          alt="Кнопка выбора темы"
+          width={24}
+          height={24}
+        />
+      </button>
+
+      {isOpenDropdown && (
+        <ul className={styles.dropdownMenu}>
+          {themes.map((option) => (
+            <li
+              key={`themeOption-${option.value}`}
+              className={clsx(
+                styles.dropdownItem,
+                option.value === theme && styles.dropdownItemSelected,
+              )}
+              onClick={() => changeTheme(option.value)}
+            >
+              {option.label}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }

@@ -1,11 +1,11 @@
 "use client";
 
-import { startTransition, useActionState } from "react";
-import { loginAction, LoginActionState } from "./api/login.action";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { ErrorHighlight } from "@/src/shared/ui/error-highlight";
 import styles from "./login.module.css";
-import { CircleLoader } from "@/src/shared/ui/circle-loader";
+import { startTransition, useActionState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { loginAction, LoginActionState } from "./api/login.action";
+import { CircleLoader } from "@/src/shared/ui/components/circle-loader";
+import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
 type LoginFormData = {
   email: string;
   password: string;
