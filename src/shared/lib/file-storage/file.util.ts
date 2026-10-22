@@ -1,7 +1,14 @@
 import fs from "fs/promises";
 import path from "path";
 
-const BASE_DATA_DIR = path.join(process.cwd(), "src", "data");
+const BASE_DATA_DIR = path.join(
+  process.cwd(),
+  "src",
+  "shared",
+  "lib",
+  "file-storage",
+  "data",
+);
 
 export async function readDataFromFile<T>(fileName: string): Promise<T> {
   try {

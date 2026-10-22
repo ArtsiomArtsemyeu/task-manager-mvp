@@ -1,5 +1,4 @@
-import { Login } from "@/src/features/login";
-import styles from "./home.module.css";
+import styles from "./home.module.css";import { Login } from "@/src/features/login";
 
 export function HomeWidget() {
   return (

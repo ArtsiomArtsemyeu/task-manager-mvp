@@ -1,4 +1,4 @@
-import { ThemeConfig } from "@/src/features/theme-toggler/theme.config";
+import type { ThemeConfig } from "@/src/features/theme-toggler";
 
 export const supportedThemes: ThemeConfig[] = [
   {

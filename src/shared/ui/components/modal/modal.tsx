@@ -10,12 +10,7 @@ type ModalProps = {
   children: React.ReactNode;
 };
 
-export default function Modal({
-  isOpen,
-  onClose,
-  title,
-  children,
-}: ModalProps) {
+export function Modal({ isOpen, onClose, title, children }: ModalProps) {
   useEffect(() => {
     if (!isOpen) return;
 
@@ -31,7 +26,7 @@ export default function Modal({
 
   if (!isOpen) return null;
 
-  const handleOverlayClick = (event: MouseEvent<HTMLDivElement>) => onClose();
+  const handleOverlayClick = () => onClose();
 
   const handleContentClick = (event: MouseEvent<HTMLDivElement>) =>
     event.stopPropagation();

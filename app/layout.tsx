@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 import { Footer } from "@/src/widgets/footer";
 import { Header } from "@/src/widgets/header";
 import { Geist, Geist_Mono } from "next/font/google";
-import { ColorThemeProvider } from "@/src/app/providers/color-theme-provider";
+import { supportedThemes } from "@/src/app/configs";
+import { ColorThemeProvider } from "@/src/app/providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,7 @@ export default function RootLayout({
     >
       <body>
         <ColorThemeProvider>
-          <Header />
+          <Header themes={supportedThemes} />
           <main className="rootHost">{children}</main>
           <Footer />
         </ColorThemeProvider>

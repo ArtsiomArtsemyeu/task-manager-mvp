@@ -1,11 +1,14 @@
 import styles from "./header.module.css";
-import { ThemeToggler } from "@/src/features/theme-toggler";
-import { supportedThemes } from "@/src/app/configs/theme-configs";
+import { ThemeToggler, type ThemeConfig } from "@/src/features/theme-toggler";
 
-export function Header() {
+type HeaderProps = {
+  themes: ThemeConfig[];
+};
+
+export function Header({ themes }: HeaderProps) {
   return (
     <header className={styles.host}>
-      <ThemeToggler themes={supportedThemes} />
+      <ThemeToggler themes={themes} />
     </header>
   );
 }

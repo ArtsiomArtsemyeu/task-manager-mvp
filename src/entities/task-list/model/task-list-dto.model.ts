@@ -1,4 +1,4 @@
-import { Task } from "@/src/entities/task";
+import type { Task } from "@/src/entities/task/@x/task-list";
 
 export interface TaskListDto {
   id: string;

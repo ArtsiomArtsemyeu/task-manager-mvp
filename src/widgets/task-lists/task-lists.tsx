@@ -1,10 +1,10 @@
 "use client";
 
-import styles from "./task-lists.module.css";
-import { TaskListDto } from "./model/task-list-dto.model";
-import { TaskListItem } from "@/src/features/task-list-item";
 import { startTransition, use, useCallback, useState } from "react";
-import { AddTaskListModal } from "@/src/features/add-task-list-modal/add-task-list-modal";
+import styles from "./task-lists.module.css";
+import { TaskListItem } from "@/src/features/task-list-item";
+import { AddTaskListModal } from "@/src/features/add-task-list-modal";
+import { TaskListDto } from "@/src/entities/task-list";
 
 interface TaskListsProps {
   taskListsPromise: Promise<TaskListDto[]>;

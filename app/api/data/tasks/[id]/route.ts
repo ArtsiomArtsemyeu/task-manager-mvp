@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Task } from "@/src/entities/task";
-import { readDataFromFile, writeDataToFile } from "@/src/data/utils/file.util";
+import { readDataFromFile, writeDataToFile } from "@/src/shared/lib/file-storage";
 
 const TASKS_FILE_NAME = "tasks.json";
 

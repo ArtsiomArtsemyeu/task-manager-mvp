@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Task } from "@/src/entities/task";
 import { NextResponse } from "next/server";
 import { TaskList } from "@/src/entities/task-list";
-import { readDataFromFile, writeDataToFile } from "@/src/data/utils/file.util";
+import { readDataFromFile, writeDataToFile } from "@/src/shared/lib/file-storage";
 
 const TASKS_FILE_NAME = "tasks.json";
 const TASK_LISTS_FILE_NAME = "task-lists.json";

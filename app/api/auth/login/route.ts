@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { UserSession } from "@/src/entities/user";
-import { defaultUser } from "../../data/stub-data";
+import { defaultUser } from "@/src/shared/config";
 
 export async function POST(request: Request) {
   try {

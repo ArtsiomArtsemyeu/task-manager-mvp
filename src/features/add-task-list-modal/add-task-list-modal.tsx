@@ -1,13 +1,13 @@
 "use client";
 
+import { startTransition, useActionState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   addTaskListAction,
   AddTaskListActionState,
 } from "./api/add-task-list.action";
 import styles from "./add-task-list-modal.module.css";
-import { startTransition, useActionState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import Modal from "@/src/shared/ui/components/modal/modal";
+import { Modal } from "@/src/shared/ui/components/modal";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
 
 type AddTaskListModalProps = {

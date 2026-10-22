@@ -24,6 +24,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
+    "eslint-plugin-fsd-lint": "^1.2.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "uuid": "^14.0.3"

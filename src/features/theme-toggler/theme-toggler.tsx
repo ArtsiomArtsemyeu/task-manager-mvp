@@ -3,10 +3,10 @@
 import { clsx } from "clsx";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { ThemeConfig } from "./theme.config";
-import styles from "./theme-toggler.module.css";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ThemeTogglerItem } from "./theme-toggler-item/theme-toggler-item";
+import { ThemeConfig } from "./config/theme.config";
+import styles from "./theme-toggler.module.css";
+import { ThemeTogglerItem } from "./ui/theme-toggler-item/theme-toggler-item";
 type ThemeTogglerProps = {
   themes: ThemeConfig[];
 };

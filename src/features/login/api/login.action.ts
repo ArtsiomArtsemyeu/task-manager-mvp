@@ -1,8 +1,8 @@
 "use server";
 
-import { createToken } from "@/src/shared/utils/jwt";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { createToken } from "@/src/shared/utils/jwt";
 
 export type LoginActionState = {
   error?: string;

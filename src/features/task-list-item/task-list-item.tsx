@@ -2,16 +2,17 @@
 
 import Link from "next/link";
 import { useMemo } from "react";
+import styles from "./task-list-item.module.css";
+import { TaskMetrics } from "./ui/task-metrics/task-metrics";
 import {
   calculateTaskCountByState,
   calculateTaskListProgress,
   isDeadlineWithin48Hours,
-} from "@/src/entities/task/utils/task.util";
-import styles from "./task-list-item.module.css";
-import { TaskMetrics } from "./components/task-metrics/task-metrics.component";
-import { TaskListDto } from "@/src/widgets/task-lists/model/task-list-dto.model";
+} from "@/src/entities/task";
+import { TaskListDto } from "@/src/entities/task-list";
 import { ProgressBar } from "@/src/shared/ui/components/progress-bar";
 import { Chip } from "@/src/shared/ui/components/chip";
+
 interface TaskListItemProps {
   taskList: TaskListDto;
 }
