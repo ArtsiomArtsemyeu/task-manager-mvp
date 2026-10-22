@@ -1,16 +1,16 @@
 "use client";
 
-import { TaskList } from "@/src/entities/task-list";
-import { TaskListItem } from "@/src/features/task-list-item";
 import { use } from "react";
-import styles from './task-lists.module.css';
+import styles from "./task-lists.module.css";
+import { TaskListDto } from "./model/task-list-dto.model";
+import { TaskListItem } from "@/src/features/task-list-item";
 
 interface TaskListsProps {
-  taskListsPromise: Promise<TaskList[]>;
+  taskListsPromise: Promise<TaskListDto[]>;
 }
 
 export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
-  const taskLists: TaskList[] = use(taskListsPromise);
+  const taskLists: TaskListDto[] = use(taskListsPromise);
 
   return (
     <div className={styles.host}>
