@@ -1,0 +1,14 @@
+.themeItem {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+.themeItem:hover {
+    background-color: #f5f5f5;
+}
+
+.themeItemSelected {
+    background-color: #979797;
+}

@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import { ThemeConfig } from "./theme.config";
 import styles from "./theme-toggler.module.css";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ThemeTogglerItem } from "./theme-toggler-item/theme-toggler-item";
 type ThemeTogglerProps = {
   themes: ThemeConfig[];
 };
@@ -23,9 +24,10 @@ export function ThemeToggler({ themes }: ThemeTogglerProps) {
     [setTheme],
   );
 
-  const onToggleDropdown = useCallback((): void => {
-    setIsOpenDropdown((prev) => !prev);
-  }, []);
+  const onToggleDropdown = useCallback(
+    (): void => setIsOpenDropdown((prevState: boolean) => !prevState),
+    [],
+  );
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent): void => {
@@ -59,17 +61,13 @@ export function ThemeToggler({ themes }: ThemeTogglerProps) {
 
       {isOpenDropdown && (
         <ul className={styles.dropdownMenu}>
-          {themes.map((option) => (
-            <li
-              key={`themeOption-${option.value}`}
-              className={clsx(
-                styles.dropdownItem,
-                option.value === theme && styles.dropdownItemSelected,
-              )}
-              onClick={() => changeTheme(option.value)}
-            >
-              {option.label}
-            </li>
+          {themes.map((themeItem) => (
+            <ThemeTogglerItem
+              key={`themeOption-${themeItem.value}`}
+              theme={themeItem}
+              selected={theme === themeItem.value}
+              onChange={changeTheme}
+            />
           ))}
         </ul>
       )}

@@ -35,18 +35,3 @@
     min-width: 150px;
     z-index: 1000;
 }
-
-.dropdownItem {
-    padding: 8px 16px;
-    cursor: pointer;
-    font-family: sans-serif;
-    font-size: 14px;
-}
-
-.dropdownItem:hover {
-    background-color: #f5f5f5;
-}
-
-.dropdownItemSelected {
-    background-color: #979797;
-}
