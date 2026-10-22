@@ -1,9 +1,10 @@
 "use client";
 
-import { use } from "react";
+import { startTransition, use, useCallback, useState } from "react";
 import styles from "./task-lists.module.css";
 import { TaskListDto } from "./model/task-list-dto.model";
 import { TaskListItem } from "@/src/features/task-list-item";
+import { AddTaskListModal } from "@/src/features/add-task-list-modal/add-task-list-modal";
 
 interface TaskListsProps {
   taskListsPromise: Promise<TaskListDto[]>;
@@ -11,12 +12,62 @@ interface TaskListsProps {
 
 export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
   const taskLists: TaskListDto[] = use(taskListsPromise);
+  const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
+  const [deferredQuery, setDeferredQuery] = useState<string | undefined>(
+    undefined,
+  );
+  const [isShowAddTaskListModal, setIsShowAddTaskListModal] =
+    useState<boolean>(false);
+
+  const changeQuery = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(event.target.value);
+
+      startTransition(() => {
+        setDeferredQuery(event.target.value);
+      });
+    },
+    [],
+  );
+
+  const showAddTaskListModal = useCallback(
+    () => setIsShowAddTaskListModal(true),
+    [],
+  );
+
+  const closeAddTaskListModal = useCallback(
+    () => setIsShowAddTaskListModal(false),
+    [],
+  );
 
   return (
     <div className={styles.host}>
-      {taskLists.map((taskList) => (
-        <TaskListItem key={taskList.id} taskList={taskList} />
-      ))}
+      <div>
+        <input
+          className={styles.search}
+          type="search"
+          onChange={changeQuery}
+          value={searchQuery}
+        />
+        <button onClick={showAddTaskListModal}>Добавить новый список</button>
+      </div>
+      <div className={styles.list}>
+        {taskLists
+          .filter((taskList: TaskListDto) =>
+            deferredQuery
+              ? taskList.name
+                  .toLowerCase()
+                  .includes(deferredQuery.toLowerCase())
+              : true,
+          )
+          .map((taskList: TaskListDto) => (
+            <TaskListItem key={taskList.id} taskList={taskList} />
+          ))}
+      </div>
+      <AddTaskListModal
+        isOpen={isShowAddTaskListModal}
+        onClose={closeAddTaskListModal}
+      />
     </div>
   );
 }
