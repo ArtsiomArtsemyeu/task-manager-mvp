@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { apiUrl } from "@/src/shared/config";
+import { apiUrl, errorMessages } from "@/src/shared/config";
 
 export type AddTaskActionState = {
   error?: string;
@@ -9,7 +9,7 @@ export type AddTaskActionState = {
 } | null;
 
 export async function addTaskAction(
-  prevState: AddTaskActionState,
+  _prevState: AddTaskActionState,
   formData: FormData,
 ): Promise<AddTaskActionState> {
   const taskListId = formData.get("taskListId");
@@ -20,6 +20,11 @@ export async function addTaskAction(
   const dueDate = formData.get("dueDate");
 
   if (
+    typeof taskListId !== "string" ||
+    typeof name !== "string" ||
+    typeof description !== "string" ||
+    typeof state !== "string" ||
+    typeof dueDate !== "string" ||
     !taskListId ||
     !name ||
     !description ||
@@ -27,7 +32,7 @@ export async function addTaskAction(
     Number.isNaN(priority) ||
     !dueDate
   ) {
-    return { error: "Заполните все поля корректно" };
+    return { error: errorMessages.validation.fillAllFields };
   }
 
   const response = await fetch(apiUrl("/api/data/tasks"), {
@@ -35,16 +40,16 @@ export async function addTaskAction(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       taskListId,
-      name: (name as string).trim(),
-      description: (description as string).trim(),
+      name: name.trim(),
+      description: description.trim(),
       state,
       priority,
-      dueDate: new Date(dueDate as string).toISOString(),
+      dueDate: new Date(dueDate).toISOString(),
     }),
   });
 
   if (!response.ok) {
-    return { error: "Не удалось создать задачу" };
+    return { error: errorMessages.error.createTaskFailed };
   }
 
   revalidatePath(`/lists/${taskListId}`);

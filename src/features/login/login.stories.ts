@@ -1,6 +1,7 @@
 import { expect, userEvent, within } from "storybook/test";
-import { LoginForm } from "./login";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { LoginForm } from "./login";
+import { errorMessages } from "@/src/shared/config";
 
 const meta: Meta<typeof LoginForm> = {
   title: "Features/LoginForm",
@@ -33,8 +34,12 @@ export const RequiredFields: Story = {
 
     await userEvent.click(canvas.getByRole("button", { name: "Войти" }));
 
-    await expect(canvas.getByText("Email обязателен")).toBeInTheDocument();
-    await expect(canvas.getByText("Пароль обязателен")).toBeInTheDocument();
+    await expect(
+      canvas.getByText(errorMessages.validation.emailRequired),
+    ).toBeInTheDocument();
+    await expect(
+      canvas.getByText(errorMessages.validation.passwordRequired),
+    ).toBeInTheDocument();
   },
 };
 
@@ -59,7 +64,7 @@ export const InvalidEmail: Story = {
     await userEvent.click(canvas.getByRole("button", { name: "Войти" }));
 
     await expect(
-      canvas.getByText("Неверный формат email"),
+      canvas.getByText(errorMessages.validation.emailInvalid),
     ).toBeInTheDocument();
   },
 };
@@ -84,7 +89,9 @@ export const ShortPassword: Story = {
     await userEvent.type(canvas.getByLabelText("Пароль"), "short");
     await userEvent.click(canvas.getByRole("button", { name: "Войти" }));
 
-    await expect(canvas.getByText("Минимум 8 символов")).toBeInTheDocument();
+    await expect(
+      canvas.getByText(errorMessages.validation.passwordMinLength),
+    ).toBeInTheDocument();
   },
 };
 

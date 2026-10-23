@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { apiUrl } from "@/src/shared/config";
+import { apiUrl, errorMessages } from "@/src/shared/config";
 
 export type DeleteTaskListActionState = {
   error?: string;
@@ -9,13 +9,13 @@ export type DeleteTaskListActionState = {
 } | null;
 
 export async function deleteTaskListAction(
-  prevState: DeleteTaskListActionState,
+  _prevState: DeleteTaskListActionState,
   formData: FormData,
 ): Promise<DeleteTaskListActionState> {
   const id = formData.get("id");
 
   if (typeof id !== "string" || !id) {
-    return { error: "Некорректный идентификатор списка" };
+    return { error: errorMessages.validation.invalidTaskListId };
   }
 
   const response = await fetch(apiUrl(`/api/data/task-lists/${id}`), {
@@ -23,7 +23,7 @@ export async function deleteTaskListAction(
   });
 
   if (!response.ok) {
-    return { error: "Не удалось удалить список" };
+    return { error: errorMessages.error.deleteTaskListFailed };
   }
 
   revalidatePath("/lists");

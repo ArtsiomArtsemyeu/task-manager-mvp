@@ -1,12 +1,15 @@
 "use client";
 
 import { startTransition, useActionState, useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler} from "react-hook-form";
+import { useForm } from "react-hook-form";
+import type {
+  AddTaskListActionState} from "./api/add-task-list.action";
 import {
-  addTaskListAction,
-  AddTaskListActionState,
+  addTaskListAction
 } from "./api/add-task-list.action";
 import styles from "./add-task-list-modal.module.css";
+import { errorMessages } from "@/src/shared/config";
 import { useFillFormStubsHotkey } from "@/src/shared/lib/fill-form-stubs";
 import { Modal } from "@/src/shared/ui/components/modal";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
@@ -60,7 +63,7 @@ export function AddTaskListModal({ isOpen, onClose }: AddTaskListModalProps) {
     startTransition(() => {
       const formData = new FormData();
       Object.entries(data).forEach(([key, val]) =>
-        formData.append(key, val as string),
+        formData.append(key, val),
       );
       formAction(formData);
     });
@@ -80,7 +83,7 @@ export function AddTaskListModal({ isOpen, onClose }: AddTaskListModalProps) {
             <input
               id="add-task-list-name"
               {...register("name", {
-                required: "Название обязательно",
+                required: errorMessages.validation.nameRequired,
               })}
               className={styles.input}
               placeholder="Например, Работа"

@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { TaskListCard } from "@/src/features/task-list-card";
 import { RenameTaskListModal } from "@/src/features/rename-task-list-modal";
 import { DeleteTaskListModal } from "@/src/features/delete-task-list-modal";
-import { TaskListDto } from "@/src/entities/task-list";
+import type { TaskListDto } from "@/src/entities/task-list";
 
 type TaskListCardItemProps = {
   taskList: TaskListDto;

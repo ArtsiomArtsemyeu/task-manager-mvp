@@ -2,8 +2,9 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { apiUrl } from "@/src/shared/config";
+import { apiUrl, errorMessages } from "@/src/shared/config";
 import { createToken } from "@/src/shared/utils/jwt";
+import { isRecord, readJson } from "@/src/shared/utils/type-guard";
 
 export type LoginActionState = {
   error?: string;
@@ -11,7 +12,7 @@ export type LoginActionState = {
 } | null;
 
 export async function loginAction(
-  prevState: LoginActionState,
+  _prevState: LoginActionState,
   formData: FormData,
 ): Promise<LoginActionState> {
   const email = formData.get("email");
@@ -24,11 +25,16 @@ export async function loginAction(
   });
 
   if (!response.ok) {
-    return { error: "Неверный email или пароль" };
+    return { error: errorMessages.error.invalidCredentials };
   }
 
-  const { userSessionPayload } = await response.json();
-  const jwtToken = createToken(userSessionPayload);
+  const body = await readJson(response);
+
+  if (!isRecord(body) || !isRecord(body.userSessionPayload)) {
+    return { error: errorMessages.error.loginFailed };
+  }
+
+  const jwtToken = createToken(body.userSessionPayload);
 
   const cookieStore = await cookies();
   cookieStore.set("session_token", jwtToken, {

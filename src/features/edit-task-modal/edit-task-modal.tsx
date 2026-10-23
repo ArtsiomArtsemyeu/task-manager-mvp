@@ -1,20 +1,24 @@
 "use client";
 
 import { startTransition, useActionState, useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { editTaskAction, EditTaskActionState } from "./api/edit-task.action";
+import type { SubmitHandler} from "react-hook-form";
+import { useForm } from "react-hook-form";
+import type { EditTaskActionState } from "./api/edit-task.action";
+import { editTaskAction } from "./api/edit-task.action";
 import styles from "./edit-task-modal.module.css";
-import {
+import type {
   Task,
+  TaskPriority,
+  TaskState} from "@/src/entities/task";
+import {
   TASK_PRIORITIES,
   TASK_PRIORITY_LABELS,
   TASK_STATE_LABELS,
   TASK_STATES,
-  TaskPriority,
-  TaskState,
   isTaskPriority,
   isTaskState,
 } from "@/src/entities/task";
+import { errorMessages } from "@/src/shared/config";
 import { Modal } from "@/src/shared/ui/components/modal";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
 
@@ -102,7 +106,7 @@ export function EditTaskModal({
             id="edit-task-name"
             className={styles.input}
             placeholder="Например, Подготовить отчёт"
-            {...register("name", { required: "Название обязательно" })}
+            {...register("name", { required: errorMessages.validation.nameRequired })}
           />
           {errors.name && <ErrorHighlight message={errors.name.message} />}
         </div>
@@ -155,7 +159,9 @@ export function EditTaskModal({
             id="edit-task-due-date"
             type="datetime-local"
             className={styles.input}
-            {...register("dueDate", { required: "Дедлайн обязателен" })}
+            {...register("dueDate", {
+              required: errorMessages.validation.dueDateRequired,
+            })}
           />
           {errors.dueDate && (
             <ErrorHighlight message={errors.dueDate.message} />

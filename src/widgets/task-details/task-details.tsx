@@ -8,6 +8,10 @@ import styles from "./task-details.module.css";
 import { EditTaskModal } from "@/src/features/edit-task-modal";
 import { DeleteTaskModal } from "@/src/features/delete-task-modal";
 import { changeTaskStatusAction } from "@/src/features/change-task-status";
+import type {
+  TaskDto,
+  TaskPriority,
+  TaskState} from "@/src/entities/task";
 import {
   formatTaskDueDate,
   isDeadlineWithin48Hours,
@@ -15,17 +19,14 @@ import {
   isTaskState,
   TASK_PRIORITY_LABELS,
   TASK_STATE_LABELS,
-  TASK_STATES,
-  TaskDto,
-  TaskPriority,
-  TaskState,
+  TASK_STATES
 } from "@/src/entities/task";
 
 type TaskDetailsProps = {
   task: TaskDto;
 };
 
-function getPriorityClass(priority: number): string {
+function getPriorityClass(priority: number): string | undefined {
   if (priority >= 3) {
     return styles.priorityHigh;
   }

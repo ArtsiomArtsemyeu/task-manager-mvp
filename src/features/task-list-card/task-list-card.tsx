@@ -10,7 +10,7 @@ import {
   calculateTaskListProgress,
   isDeadlineWithin48Hours,
 } from "@/src/entities/task";
-import { TaskListDto } from "@/src/entities/task-list";
+import type { TaskListDto } from "@/src/entities/task-list";
 import { ProgressBar } from "@/src/shared/ui/components/progress-bar";
 import { Chip } from "@/src/shared/ui/components/chip";
 

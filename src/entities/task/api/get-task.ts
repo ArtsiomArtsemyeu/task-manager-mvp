@@ -12,5 +12,5 @@ export async function getTask(id: string): Promise<TaskDto | null> {
     return null;
   }
 
-  return response.json();
+  return (await response.json()) as TaskDto;
 }

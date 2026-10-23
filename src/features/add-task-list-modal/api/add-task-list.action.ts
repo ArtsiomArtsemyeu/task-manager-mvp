@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { apiUrl } from "@/src/shared/config";
+import { apiUrl, errorMessages } from "@/src/shared/config";
 
 export type AddTaskListActionState = {
   error?: string;
@@ -9,7 +9,7 @@ export type AddTaskListActionState = {
 } | null;
 
 export async function addTaskListAction(
-  prevState: AddTaskListActionState,
+  _prevState: AddTaskListActionState,
   formData: FormData,
 ): Promise<AddTaskListActionState> {
   const name = formData.get("name");
@@ -21,7 +21,7 @@ export async function addTaskListAction(
   });
 
   if (!response.ok) {
-    return { error: "Некорректное имя списка" };
+    return { error: errorMessages.validation.invalidListName };
   }
 
   revalidatePath("/lists");

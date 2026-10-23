@@ -3,7 +3,7 @@
 import { clsx } from "clsx";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ThemeConfig } from "./config/theme.config";
+import type { ThemeConfig } from "./config/theme.config";
 import styles from "./theme-toggler.module.css";
 import { ThemeTogglerItem } from "./ui/theme-toggler-item/theme-toggler-item";
 

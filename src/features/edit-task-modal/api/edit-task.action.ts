@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { apiUrl } from "@/src/shared/config";
+import { apiUrl, errorMessages } from "@/src/shared/config";
 
 export type EditTaskActionState = {
   error?: string;
@@ -21,6 +21,12 @@ export async function editTaskAction(
   const priority = Number(formData.get("priority"));
 
   if (
+    typeof id !== "string" ||
+    typeof taskListId !== "string" ||
+    typeof name !== "string" ||
+    typeof description !== "string" ||
+    typeof state !== "string" ||
+    typeof dueDate !== "string" ||
     !id ||
     !taskListId ||
     !name ||
@@ -29,23 +35,23 @@ export async function editTaskAction(
     Number.isNaN(priority) ||
     !dueDate
   ) {
-    return { error: "Заполните все поля корректно" };
+    return { error: errorMessages.validation.fillAllFields };
   }
 
   const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      name: (name as string).trim(),
-      description: (description as string).trim(),
+      name: name.trim(),
+      description: description.trim(),
       state,
       priority,
-      dueDate: new Date(dueDate as string).toISOString(),
+      dueDate: new Date(dueDate).toISOString(),
     }),
   });
 
   if (!response.ok) {
-    return { error: "Не удалось обновить задачу" };
+    return { error: errorMessages.error.updateTaskFailed };
   }
 
   revalidatePath(`/tasks/${id}`);

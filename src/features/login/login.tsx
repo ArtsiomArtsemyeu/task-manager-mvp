@@ -1,9 +1,12 @@
 "use client";
 
 import { startTransition, useActionState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import styles from "./login.module.css";
-import { loginAction, LoginActionState } from "./api/login.action";
+import type { LoginActionState } from "./api/login.action";
+import { loginAction } from "./api/login.action";
+import { errorMessages } from "@/src/shared/config";
 import { useFillFormStubsHotkey } from "@/src/shared/lib/fill-form-stubs";
 import { CircleLoader } from "@/src/shared/ui/components/circle-loader";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
@@ -41,7 +44,7 @@ export function LoginForm({ stubCredentials }: LoginFormProps) {
     startTransition(() => {
       const formData = new FormData();
       Object.entries(data).forEach(([key, val]) =>
-        formData.append(key, val as string),
+        formData.append(key, val),
       );
       formAction(formData);
     });
@@ -59,10 +62,10 @@ export function LoginForm({ stubCredentials }: LoginFormProps) {
                 type="email"
                 autoComplete="email"
                 {...register("email", {
-                  required: "Email обязателен",
+                  required: errorMessages.validation.emailRequired,
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Неверный формат email",
+                    message: errorMessages.validation.emailInvalid,
                   },
                 })}
                 className={styles.input}
@@ -80,10 +83,10 @@ export function LoginForm({ stubCredentials }: LoginFormProps) {
                 type="password"
                 autoComplete="current-password"
                 {...register("password", {
-                  required: "Пароль обязателен",
+                  required: errorMessages.validation.passwordRequired,
                   minLength: {
                     value: 8,
-                    message: "Минимум 8 символов",
+                    message: errorMessages.validation.passwordMinLength,
                   },
                 })}
                 className={styles.input}

@@ -1,5 +1,6 @@
-import { ProgressBar } from "./progress-bar";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { ProgressBar } from "./progress-bar";
+
 
 const meta: Meta<typeof ProgressBar> = {
   title: "Компоненты/progress-bar",

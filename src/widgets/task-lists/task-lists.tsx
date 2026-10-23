@@ -4,7 +4,7 @@ import { startTransition, use, useCallback, useState } from "react";
 import styles from "./task-lists.module.css";
 import { TaskListCardItem } from "./ui/task-list-card-item/task-list-card-item";
 import { AddTaskListModal } from "@/src/features/add-task-list-modal";
-import { TaskListDto } from "@/src/entities/task-list";
+import type { TaskListDto } from "@/src/entities/task-list";
 
 interface TaskListsProps {
   taskListsPromise: Promise<TaskListDto[]>;

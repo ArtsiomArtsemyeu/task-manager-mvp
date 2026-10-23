@@ -1,21 +1,28 @@
 import { NextResponse } from "next/server";
-import { UserSession } from "@/src/entities/user";
-import { defaultUser } from "@/src/shared/config";
+import type { UserSession } from "@/src/entities/user";
+import { defaultUser, errorMessages } from "@/src/shared/config";
+import { isRecord, readJson } from "@/src/shared/utils/type-guard";
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json();
+    const body = await readJson(request);
 
-    if (!email || !password) {
+    if (
+      !isRecord(body) ||
+      typeof body.email !== "string" ||
+      typeof body.password !== "string" ||
+      !body.email ||
+      !body.password
+    ) {
       return NextResponse.json(
-        { error: "Заполните все требуемые поля" },
+        { error: errorMessages.validation.requiredFields },
         { status: 400 },
       );
     }
 
-    if (password !== defaultUser.password) {
+    if (body.password !== defaultUser.password) {
       return NextResponse.json(
-        { error: "Неверный email или пароль" },
+        { error: errorMessages.error.invalidCredentials },
         { status: 401 },
       );
     }
@@ -28,6 +35,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ userSessionPayload }, { status: 200 });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "Ошибка сервера" }, { status: 500 });
+    return NextResponse.json(
+      { error: errorMessages.error.server },
+      { status: 500 },
+    );
   }
 }

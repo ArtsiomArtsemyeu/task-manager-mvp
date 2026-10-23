@@ -1,12 +1,15 @@
 "use client";
 
 import { startTransition, useActionState, useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler} from "react-hook-form";
+import { useForm } from "react-hook-form";
+import type {
+  RenameTaskListActionState} from "./api/rename-task-list.action";
 import {
-  renameTaskListAction,
-  RenameTaskListActionState,
+  renameTaskListAction
 } from "./api/rename-task-list.action";
 import styles from "./rename-task-list-modal.module.css";
+import { errorMessages } from "@/src/shared/config";
 import { Modal } from "@/src/shared/ui/components/modal";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
 
@@ -67,7 +70,7 @@ export function RenameTaskListModal({
           <input
             id="rename-task-list-name"
             {...register("name", {
-              required: "Название обязательно",
+              required: errorMessages.validation.nameRequired,
             })}
             className={styles.input}
           />

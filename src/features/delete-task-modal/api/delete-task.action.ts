@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { apiUrl } from "@/src/shared/config";
+import { apiUrl, errorMessages } from "@/src/shared/config";
 
 export type DeleteTaskActionState = {
   error?: string;
@@ -10,15 +10,20 @@ export type DeleteTaskActionState = {
 } | null;
 
 export async function deleteTaskAction(
-  prevState: DeleteTaskActionState,
+  _prevState: DeleteTaskActionState,
   formData: FormData,
 ): Promise<DeleteTaskActionState> {
   const id = formData.get("id");
   const taskListId = formData.get("taskListId");
   const redirectTo = formData.get("redirectTo");
 
-  if (!id || !taskListId) {
-    return { error: "Некорректные данные задачи" };
+  if (
+    typeof id !== "string" ||
+    typeof taskListId !== "string" ||
+    !id ||
+    !taskListId
+  ) {
+    return { error: errorMessages.validation.invalidTaskData };
   }
 
   const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
@@ -26,7 +31,7 @@ export async function deleteTaskAction(
   });
 
   if (!response.ok) {
-    return { error: "Не удалось удалить задачу" };
+    return { error: errorMessages.error.deleteTaskFailed };
   }
 
   revalidatePath(`/tasks/${id}`);

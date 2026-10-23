@@ -6,10 +6,14 @@ export const createToken = (payload: object): string => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: "1d" });
 };
 
-export const verifyToken = <T extends object>(token: string): T | null => {
+export const verifyToken = (token: string): object | null => {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    return decoded as T;
+    if (typeof decoded !== "object") {
+      return null;
+    }
+
+    return decoded;
   } catch (error) {
     console.error(error);
     return null;

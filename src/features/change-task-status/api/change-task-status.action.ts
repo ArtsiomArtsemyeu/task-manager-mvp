@@ -2,15 +2,15 @@
 
 import { revalidatePath } from "next/cache";
 import type { TaskState } from "@/src/entities/task";
-import { apiUrl } from "@/src/shared/config";
+import { apiUrl, errorMessages } from "@/src/shared/config";
 
 export async function changeTaskStatusAction(
   id: string,
   taskListId: string,
   state: TaskState,
 ): Promise<{ error?: string; success?: boolean }> {
-  if (!id || !taskListId || !state) {
-    return { error: "Некорректные данные статуса" };
+  if (!id || !taskListId) {
+    return { error: errorMessages.validation.invalidStatusData };
   }
 
   const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
@@ -20,7 +20,7 @@ export async function changeTaskStatusAction(
   });
 
   if (!response.ok) {
-    return { error: "Не удалось изменить статус" };
+    return { error: errorMessages.error.changeStatusFailed };
   }
 
   revalidatePath(`/tasks/${id}`);

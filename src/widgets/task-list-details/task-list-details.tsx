@@ -9,13 +9,14 @@ import { AddTaskModal } from "@/src/features/add-task-modal";
 import { EditTaskModal } from "@/src/features/edit-task-modal";
 import { DeleteTaskModal } from "@/src/features/delete-task-modal";
 import { changeTaskStatusAction } from "@/src/features/change-task-status";
-import {
+import type {
   Task,
+  TaskPriority,
+  TaskState} from "@/src/entities/task";
+import {
   TASK_PRIORITY_LABELS,
   TASK_STATE_LABELS,
   TASK_STATES,
-  TaskPriority,
-  TaskState,
   calculateTaskListProgress,
   formatTaskDueDate,
   isDeadlineWithin48Hours,
@@ -23,7 +24,7 @@ import {
   isTaskState,
   sortTasks,
 } from "@/src/entities/task";
-import { TaskListDto } from "@/src/entities/task-list";
+import type { TaskListDto } from "@/src/entities/task-list";
 import { ProgressBar } from "@/src/shared/ui/components/progress-bar";
 
 type StatusFilter = "all" | TaskState;
@@ -32,7 +33,7 @@ type TaskListDetailsProps = {
   taskList: TaskListDto;
 };
 
-function getPriorityClass(priority: number): string {
+function getPriorityClass(priority: number): string | undefined {
   if (priority >= 3) {
     return styles.priorityHigh;
   }

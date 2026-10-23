@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import styles from "./task-metrics.module.css";
-import { Task, calculateTaskCountByState } from "@/src/entities/task";
+import type { Task} from "@/src/entities/task";
+import { calculateTaskCountByState } from "@/src/entities/task";
 
 type TaskMetricsProps = {
   tasks: Task[];

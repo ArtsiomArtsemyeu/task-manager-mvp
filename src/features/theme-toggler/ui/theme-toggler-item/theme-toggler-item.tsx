@@ -2,7 +2,7 @@
 
 import { clsx } from "clsx";
 import { useCallback } from "react";
-import { ThemeConfig } from "../../config/theme.config";
+import type { ThemeConfig } from "../../config/theme.config";
 import styles from "./theme-toggler-item.module.css";
 
 type ThemeTogglerItemProps = {

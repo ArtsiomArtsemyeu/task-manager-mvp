@@ -1,9 +1,10 @@
 "use client";
 
 import { startTransition, useActionState } from "react";
+import type {
+  DeleteTaskActionState} from "./api/delete-task.action";
 import {
-  deleteTaskAction,
-  DeleteTaskActionState,
+  deleteTaskAction
 } from "./api/delete-task.action";
 import styles from "./delete-task-modal.module.css";
 import { Modal } from "@/src/shared/ui/components/modal";

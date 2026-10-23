@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, MouseEvent } from "react";
+import type { MouseEvent } from "react";
+import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./modal.module.css";
 

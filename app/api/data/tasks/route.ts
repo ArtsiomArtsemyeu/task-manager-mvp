@@ -1,8 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
-import { Task } from "@/src/entities/task";
+import { isTaskState } from "@/src/entities/task";
+import type { Task } from "@/src/entities/task";
 import { NextResponse } from "next/server";
-import { TaskList } from "@/src/entities/task-list";
+import type { TaskList } from "@/src/entities/task-list";
+import { errorMessages } from "@/src/shared/config";
 import { readDataFromFile, writeDataToFile } from "@/src/shared/lib/file-storage";
+import { isRecord, readJson } from "@/src/shared/utils/type-guard";
 
 const TASKS_FILE_NAME = "tasks.json";
 const TASK_LISTS_FILE_NAME = "task-lists.json";
@@ -14,7 +17,20 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const body = await readJson(request);
+
+    if (
+      !isRecord(body) ||
+      typeof body.name !== "string" ||
+      typeof body.description !== "string" ||
+      typeof body.state !== "string" ||
+      !isTaskState(body.state) ||
+      typeof body.priority !== "number" ||
+      typeof body.dueDate !== "string" ||
+      typeof body.taskListId !== "string"
+    ) {
+      return NextResponse.json({ error: errorMessages.validation.invalidJson }, { status: 400 });
+    }
 
     const generatedId = uuidv4();
     const newTask: Task = {
@@ -43,6 +59,6 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error(error);
 
-    return NextResponse.json({ error: "Некорректный JSON" }, { status: 400 });
+    return NextResponse.json({ error: errorMessages.validation.invalidJson }, { status: 400 });
   }
 }

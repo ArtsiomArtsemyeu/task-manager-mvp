@@ -22,9 +22,9 @@ export async function readDataFromFile<T>(fileName: string): Promise<T> {
   }
 }
 
-export async function writeDataToFile<T>(
+export async function writeDataToFile(
   fileName: string,
-  data: T,
+  data: unknown,
 ): Promise<void> {
   const filePath = path.join(BASE_DATA_DIR, fileName);
   await fs.mkdir(BASE_DATA_DIR, { recursive: true });

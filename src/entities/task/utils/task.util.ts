@@ -1,5 +1,5 @@
 import type { TaskState } from "../config/task.config";
-import { Task } from "../model/task.model";
+import type { Task } from "../model/task.model";
 
 export const calculateTaskCountByState = (
   tasks: Task[],
@@ -7,7 +7,7 @@ export const calculateTaskCountByState = (
 ): number => tasks.filter((taskItem: Task) => taskItem.state === state).length;
 
 export const calculateTaskListProgress = (tasks: Task[]): number => {
-  if (!tasks || tasks.length === 0) {
+  if (tasks.length === 0) {
     return 0;
   }
 

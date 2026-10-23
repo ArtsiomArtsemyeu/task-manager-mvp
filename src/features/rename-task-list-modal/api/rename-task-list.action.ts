@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { apiUrl } from "@/src/shared/config";
+import { apiUrl, errorMessages } from "@/src/shared/config";
 
 export type RenameTaskListActionState = {
   error?: string;
@@ -9,18 +9,18 @@ export type RenameTaskListActionState = {
 } | null;
 
 export async function renameTaskListAction(
-  prevState: RenameTaskListActionState,
+  _prevState: RenameTaskListActionState,
   formData: FormData,
 ): Promise<RenameTaskListActionState> {
   const id = formData.get("id");
   const name = formData.get("name");
 
   if (typeof id !== "string" || !id) {
-    return { error: "Некорректный идентификатор списка" };
+    return { error: errorMessages.validation.invalidTaskListId };
   }
 
   if (typeof name !== "string" || !name.trim()) {
-    return { error: "Имя обязательно" };
+    return { error: errorMessages.validation.nameMandatory };
   }
 
   const response = await fetch(apiUrl(`/api/data/task-lists/${id}`), {
@@ -30,7 +30,7 @@ export async function renameTaskListAction(
   });
 
   if (!response.ok) {
-    return { error: "Не удалось переименовать список" };
+    return { error: errorMessages.error.renameTaskListFailed };
   }
 
   revalidatePath("/lists");

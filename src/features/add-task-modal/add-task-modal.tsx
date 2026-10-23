@@ -1,17 +1,21 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { startTransition, useActionState, useEffect } from "react";
-import { addTaskAction, AddTaskActionState } from "./api/add-task.action";
+import type { AddTaskActionState } from "./api/add-task.action";
+import { addTaskAction } from "./api/add-task.action";
 import styles from "./add-task-modal.module.css";
+import type {
+  TaskPriority,
+  TaskState} from "@/src/entities/task";
 import {
   TASK_PRIORITIES,
   TASK_PRIORITY_LABELS,
   TASK_STATE_LABELS,
-  TASK_STATES,
-  TaskPriority,
-  TaskState,
+  TASK_STATES
 } from "@/src/entities/task";
+import { errorMessages } from "@/src/shared/config";
 import { useFillFormStubsHotkey } from "@/src/shared/lib/fill-form-stubs";
 import { Modal } from "@/src/shared/ui/components/modal";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
@@ -116,7 +120,7 @@ export function AddTaskModal({
             id="add-task-name"
             className={styles.input}
             placeholder="Например, Подготовить отчёт"
-            {...register("name", { required: "Название обязательно" })}
+            {...register("name", { required: errorMessages.validation.nameRequired })}
           />
           {errors.name && <ErrorHighlight message={errors.name.message} />}
         </div>
@@ -169,7 +173,9 @@ export function AddTaskModal({
             id="add-task-due-date"
             type="datetime-local"
             className={styles.input}
-            {...register("dueDate", { required: "Дедлайн обязателен" })}
+            {...register("dueDate", {
+              required: errorMessages.validation.dueDateRequired,
+            })}
           />
           {errors.dueDate && (
             <ErrorHighlight message={errors.dueDate.message} />
