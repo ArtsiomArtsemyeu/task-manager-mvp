@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { notFound } from "next/navigation";
 import { getTaskList } from "@/src/entities/task-list/api";
 import {
   TaskListDetailsSkeleton,
@@ -16,22 +15,13 @@ export const metadata: Metadata = {
   description: "Просмотр и управление задачами выбранного списка",
 };
 
-async function TaskListContent({ id }: { id: string }) {
-  const taskList = await getTaskList(id);
-
-  if (!taskList) {
-    notFound();
-  }
-
-  return <TaskListDetailsWidget taskList={taskList} />;
-}
-
 export default async function TaskListPage({ params }: TaskListPageProps) {
   const { id } = await params;
+  const taskListPromise = getTaskList(id);
 
   return (
     <Suspense fallback={<TaskListDetailsSkeleton />}>
-      <TaskListContent id={id} />
+      <TaskListDetailsWidget taskListPromise={taskListPromise} />
     </Suspense>
   );
 }

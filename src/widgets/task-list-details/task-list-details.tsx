@@ -5,6 +5,7 @@ import Link from "next/link";
 import { clsx } from "clsx";
 import {
   startTransition,
+  use,
   useCallback,
   useEffect,
   useMemo,
@@ -37,7 +38,7 @@ import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
 type StatusFilter = "all" | TaskState;
 
 type TaskListDetailsProps = {
-  taskList: TaskListDto;
+  taskListPromise: Promise<TaskListDto>;
 };
 
 function getPriorityClass(priority: number): string | undefined {
@@ -50,7 +51,10 @@ function getPriorityClass(priority: number): string | undefined {
   return styles.priorityLow;
 }
 
-export function TaskListDetailsWidget({ taskList }: TaskListDetailsProps) {
+export function TaskListDetailsWidget({
+  taskListPromise,
+}: TaskListDetailsProps) {
+  const taskList = use(taskListPromise);
   const [tasks, setTasks] = useState(taskList.tasks);
   const [statusError, setStatusError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");

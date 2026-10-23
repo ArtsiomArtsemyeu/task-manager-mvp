@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import styles from "./login.module.css";
 import type { LoginActionState } from "./api/login.action";
 import { loginAction } from "./api/login.action";
-import { errorMessages } from "@/src/shared/config";
+import { errorMessages } from "@/src/shared/config/error";
 import { useFillFormStubsHotkey } from "@/src/shared/lib/fill-form-stubs";
 import { CircleLoader } from "@/src/shared/ui/components/circle-loader";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";

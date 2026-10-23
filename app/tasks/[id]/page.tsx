@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { notFound } from "next/navigation";
 import { getTask } from "@/src/entities/task/api";
 import {
   TaskDetailsSkeleton,
@@ -16,22 +15,13 @@ export const metadata: Metadata = {
   description: "Просмотр и управление задачей",
 };
 
-async function TaskContent({ id }: { id: string }) {
-  const task = await getTask(id);
-
-  if (!task) {
-    notFound();
-  }
-
-  return <TaskDetailsWidget task={task} />;
-}
-
 export default async function TaskPage({ params }: TaskPageProps) {
   const { id } = await params;
+  const taskPromise = getTask(id);
 
   return (
     <Suspense fallback={<TaskDetailsSkeleton />}>
-      <TaskContent id={id} />
+      <TaskDetailsWidget taskPromise={taskPromise} />
     </Suspense>
   );
 }

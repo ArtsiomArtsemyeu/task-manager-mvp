@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { clsx } from "clsx";
-import { startTransition, useCallback, useEffect, useState } from "react";
+import { startTransition, use, useCallback, useEffect, useState } from "react";
 import styles from "./task-details.module.css";
 import { EditTaskModal } from "@/src/features/edit-task-modal";
 import { DeleteTaskModal } from "@/src/features/delete-task-modal";
@@ -24,7 +24,7 @@ import {
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
 
 type TaskDetailsProps = {
-  task: TaskDto;
+  taskPromise: Promise<TaskDto>;
 };
 
 function getPriorityClass(priority: number): string | undefined {
@@ -41,7 +41,8 @@ function getInitialState(state: string): TaskState {
   return isTaskState(state) ? state : "new";
 }
 
-export function TaskDetailsWidget({ task }: TaskDetailsProps) {
+export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
+  const task = use(taskPromise);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [status, setStatus] = useState<TaskState>(() =>

@@ -66,7 +66,7 @@ const meta: Meta<typeof TaskListDetailsWidget> = {
   component: TaskListDetailsWidget,
   tags: ["autodocs"],
   args: {
-    taskList: sampleTaskList,
+    taskListPromise: Promise.resolve(sampleTaskList),
   },
   parameters: {
     layout: "fullscreen",
@@ -79,7 +79,7 @@ export const Default: Story = {};
 
 export const Empty: Story = {
   args: {
-    taskList: emptyTaskList,
+    taskListPromise: Promise.resolve(emptyTaskList),
   },
   parameters: {
     docs: {
@@ -95,7 +95,7 @@ export const FilterByDone: Story = {
     docs: {
       description: {
         story:
-          "Фильтрация задач в таблице и отображение задача со статусом done.",
+          "Фильтрация задач в таблице и отображение задач со статусом done.",
       },
       story: { autoplay: true },
     },
@@ -116,7 +116,7 @@ export const FilterByDone: Story = {
 
 export const FilterEmptyResult: Story = {
   args: {
-    taskList: {
+    taskListPromise: Promise.resolve({
       ...sampleTaskList,
       tasks: [
         makeTask({
@@ -125,13 +125,13 @@ export const FilterEmptyResult: Story = {
           state: "new",
         }),
       ],
-    },
+    }),
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Фильтрация задач в таблице о отображение сообщения о том, что задач не найдено.",
+          "Фильтрация задач в таблице и отображение сообщения о том, что задач не найдено.",
       },
       story: { autoplay: true },
     },

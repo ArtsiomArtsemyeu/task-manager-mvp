@@ -33,7 +33,7 @@
   --progress-fill: linear-gradient(90deg, #2e8b57, #4caf71);
   --input-bg: #ffffff;
   --input-border: color-mix(in srgb, #1a2e22 16%, transparent);
-  --button-bg: linear-gradient(135deg, #2e8b57, #3daa6d);
+  --button-bg: #2e8b57;
   --button-fg: #ffffff;
   --metric-new: #2b6cb0;
   --metric-progress: #c05621;
@@ -72,7 +72,7 @@
   --progress-fill: linear-gradient(90deg, #5eead4, #22d3ee);
   --input-bg: #ffffff;
   --input-border: color-mix(in srgb, #94a3b8 22%, transparent);
-  --button-bg: linear-gradient(135deg, #5eead4, #2dd4bf);
+  --button-bg: #2dd4bf;
   --button-fg: #0f766e;
   --metric-new: #3b82f6;
   --metric-progress: #f59e0b;
@@ -111,7 +111,7 @@
   --progress-fill: linear-gradient(90deg, #1a9b8f, #3dd6c6);
   --input-bg: #171d24;
   --input-border: color-mix(in srgb, #e8eef4 16%, transparent);
-  --button-bg: linear-gradient(135deg, #1a9b8f, #2bb8aa);
+  --button-bg: #2bb8aa;
   --button-fg: #041311;
   --metric-new: #60a5fa;
   --metric-progress: #fbbf24;

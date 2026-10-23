@@ -3,13 +3,10 @@
 import { startTransition, useActionState, useEffect } from "react";
 import type { SubmitHandler} from "react-hook-form";
 import { useForm } from "react-hook-form";
-import type {
-  AddTaskListActionState} from "./api/add-task-list.action";
-import {
-  addTaskListAction
-} from "./api/add-task-list.action";
+import type { AddTaskListActionState } from "./api/add-task-list.action";
+import { addTaskListAction } from "./api/add-task-list.action";
 import styles from "./add-task-list-modal.module.css";
-import { errorMessages } from "@/src/shared/config";
+import { errorMessages } from "@/src/shared/config/error";
 import { useFillFormStubsHotkey } from "@/src/shared/lib/fill-form-stubs";
 import { Modal } from "@/src/shared/ui/components/modal";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";

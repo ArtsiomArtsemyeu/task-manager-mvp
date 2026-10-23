@@ -1,7 +1,7 @@
 import { expect, userEvent, within } from "storybook/test";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { LoginForm } from "./login";
-import { errorMessages } from "@/src/shared/config";
+import { errorMessages } from "@/src/shared/config/error";
 
 const meta: Meta<typeof LoginForm> = {
   title: "Features/LoginForm",

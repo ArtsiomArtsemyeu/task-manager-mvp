@@ -1,3 +1,3 @@
-export { defaultUser } from "./auth.config";
-export { apiBaseUrl, apiUrl } from "./api.config";
-export { default as errorMessages } from "./error.json";
+export { apiUrl } from "./api";
+export { defaultUser } from "./auth";
+export { errorMessages } from "./error";

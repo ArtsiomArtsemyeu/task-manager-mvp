@@ -6,16 +6,14 @@ import { startTransition, useActionState, useEffect } from "react";
 import type { AddTaskActionState } from "./api/add-task.action";
 import { addTaskAction } from "./api/add-task.action";
 import styles from "./add-task-modal.module.css";
-import type {
-  TaskPriority,
-  TaskState} from "@/src/entities/task";
+import type { TaskPriority, TaskState } from "@/src/entities/task";
 import {
   TASK_PRIORITIES,
   TASK_PRIORITY_LABELS,
   TASK_STATE_LABELS,
-  TASK_STATES
+  TASK_STATES,
 } from "@/src/entities/task";
-import { errorMessages } from "@/src/shared/config";
+import { errorMessages } from "@/src/shared/config/error";
 import { useFillFormStubsHotkey } from "@/src/shared/lib/fill-form-stubs";
 import { Modal } from "@/src/shared/ui/components/modal";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";

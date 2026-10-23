@@ -15,7 +15,7 @@ export async function addTaskListAction(
   const name = formData.get("name");
 
   if (typeof name !== "string" || !name.trim()) {
-    return { error: errorMessages.validation.nameMandatory };
+    return { error: errorMessages.validation.nameRequired };
   }
 
   const response = await fetch(apiUrl("/api/data/task-lists"), {

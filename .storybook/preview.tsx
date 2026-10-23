@@ -1,3 +1,4 @@
+import "./env";
 import type { Preview } from "@storybook/nextjs-vite";
 import "@/app/reset.css";
 import "@/app/global.css";

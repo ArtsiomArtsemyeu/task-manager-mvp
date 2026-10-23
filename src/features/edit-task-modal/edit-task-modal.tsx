@@ -6,10 +6,7 @@ import { useForm } from "react-hook-form";
 import type { EditTaskActionState } from "./api/edit-task.action";
 import { editTaskAction } from "./api/edit-task.action";
 import styles from "./edit-task-modal.module.css";
-import type {
-  Task,
-  TaskPriority,
-  TaskState} from "@/src/entities/task";
+import type { Task, TaskPriority, TaskState } from "@/src/entities/task";
 import {
   TASK_PRIORITIES,
   TASK_PRIORITY_LABELS,
@@ -18,7 +15,7 @@ import {
   isTaskPriority,
   isTaskState,
 } from "@/src/entities/task";
-import { errorMessages } from "@/src/shared/config";
+import { errorMessages } from "@/src/shared/config/error";
 import { Modal } from "@/src/shared/ui/components/modal";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
 

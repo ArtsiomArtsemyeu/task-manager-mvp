@@ -20,7 +20,7 @@ export async function renameTaskListAction(
   }
 
   if (typeof name !== "string" || !name.trim()) {
-    return { error: errorMessages.validation.nameMandatory };
+    return { error: errorMessages.validation.nameRequired };
   }
 
   const response = await fetch(apiUrl(`/api/data/task-lists/${id}`), {

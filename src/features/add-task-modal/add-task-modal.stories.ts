@@ -1,7 +1,7 @@
 import { expect, fn, userEvent } from "storybook/test";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { AddTaskModal } from "./add-task-modal";
-import { errorMessages } from "@/src/shared/config";
+import { errorMessages } from "@/src/shared/config/error";
 import { getPortalBody } from "@/src/shared/lib/storybook";
 
 const meta: Meta<typeof AddTaskModal> = {

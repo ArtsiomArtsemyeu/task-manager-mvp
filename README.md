@@ -1,36 +1,200 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Менеджер задач (MVP)
 
-## Getting Started
+## 1. Техническая документация
 
-First, run the development server:
+### 1.1. Технологии, используемые в проекте
+
+#### 1.1.1. Описание технологий
+
+| Технология | Назначение |
+| --- | --- |
+| **Next.js** | Фреймворк приложения (App Router): страницы, API routes, Server Actions, SSR/CSR. |
+| **React** | UI-библиотека для клиентских и серверных компонентов. |
+| **TypeScript** | Статическая типизация исходного кода. |
+| **Feature-Sliced Design (FSD)** | Архитектура слоёв (`app` / `pages` через Next.js App Router, `widgets`, `features`, `entities`, `shared`) с публичными API слайсов. |
+| **ESLint** | Линтер: правила Next.js, TypeScript и FSD (`eslint-plugin-fsd-lint`). |
+| **Vitest** | Unit-тесты (в т.ч. с поддержкой браузерного окружения через Playwright). |
+| **Storybook** | Изолированная разработка и просмотр UI-компонентов. |
+| **next-themes** | Переключение цветовой темы (системная / светлая / тёмная). |
+| **react-hook-form** | Управление формами (вход, создание и редактирование сущностей). |
+| **jsonwebtoken** | Выдача и проверка JWT при аутентификации. |
+| **CSS Modules** | Локальные стили компонентов. |
+
+#### 1.1.2. Текущие версии технологий
+
+| Технология | Версия |
+| --- | --- |
+| Next.js | 16.4.2 |
+| React / React DOM | 19.3.0 |
+| TypeScript | 5.9.3 |
+| ESLint | 9.39.5 |
+| eslint-plugin-fsd-lint | 1.2.1 |
+| Vitest | 5.0.5 |
+| Storybook | 10.6.3 |
+| next-themes | 0.4.6 |
+| react-hook-form | 7.90.0 |
+| jsonwebtoken | 9.0.3 |
+| Node.js (рекомендуется) | ≥ 20 |
+
+> Версии зависимостей соответствуют установленным в проекте на момент обновления README. Актуальные значения можно уточнить в `package.json` / `package-lock.json`.
+
+### 1.2. Инструкция для локальной разработки
+
+#### 1.2.1. Локальный запуск проекта
+
+1. Установите зависимости:
+
+```bash
+npm install
+```
+
+2. **Обязательно один раз** установите браузер Chromium для Playwright (нужен для `npm run test` / `npm run test:run`, т.к. в них входят Storybook browser-тесты). Повторите после обновления пакета `playwright`:
+
+```bash
+npm run playwright:install
+```
+
+Без этого шага прогон тестов упадёт с ошибкой отсутствия браузера. Для `npm run dev` и UI Storybook (`npm run storybook`) шаг не требуется.
+
+Файл `.env` уже лежит в репозитории (stub-учётные данные для MVP). Локальные переопределения можно держать в `.env.local` (он в `.gitignore`).
+
+| Переменная | Описание |
+| --- | --- |
+| `APP_BASE_URL` | Базовый URL приложения (по умолчанию `http://localhost:3000`) |
+| `DEFAULT_USER_ID` | Идентификатор пользователя по умолчанию |
+| `DEFAULT_USER_EMAIL` | Адрес электронной почты по умолчанию |
+| `DEFAULT_USER_PASSWORD` | Пароль для входа по умолчанию |
+
+3. Запустите dev-сервер:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Приложение будет доступно по адресу [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Дополнительно:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build   # production-сборка
+npm run start   # запуск собранного приложения
+```
 
-## Learn More
+#### 1.2.2. Запуск плагинов для проверки кода
 
-To learn more about Next.js, take a look at the following resources:
+##### 1.2.2.1. Проверка TypeScript
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Проверка типов без эмита файлов:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run typecheck
+```
 
-## Deploy on Vercel
+##### 1.2.2.2. Проверка FSD-архитектуры
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Правила Feature-Sliced Design подключены в ESLint (`eslint-plugin-fsd-lint`). Запуск:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+```
+
+Проверяются, в частности:
+
+- запрещённые импорты между слоями;
+- cross-slice зависимости;
+- публичный API слайсов;
+- относительные импорты;
+- порядок импортов.
+
+##### 1.2.2.3. Запуск unit-тестов
+
+> **⚠ Предусловие (не пропускать):** перед первым `npm run test` / `npm run test:run` выполните `npm run playwright:install` (см. п. 1.2.1, шаг 2). Иначе Storybook browser-тесты в Vitest завершатся ошибкой. Повторно — только после обновления `playwright`.
+
+В режиме watch:
+
+```bash
+npm run test
+```
+
+Однократный прогон:
+
+```bash
+npm run test:run
+```
+
+##### 1.2.2.4. Запуск Storybook
+
+```bash
+npm run storybook
+```
+
+Storybook откроется на порту `6006` ([http://localhost:6006](http://localhost:6006)).
+
+Сборка статического Storybook:
+
+```bash
+npm run build-storybook
+```
+
+### 1.3. API (`app/api`)
+
+Данные списков и задач хранятся в JSON-файлах:
+
+| Файл | Путь |
+| --- | --- |
+| Списки задач | `src/shared/lib/file-storage/data/task-lists.json` |
+| Задачи | `src/shared/lib/file-storage/data/tasks.json` |
+
+Чтение/запись выполняется через `readDataFromFile` / `writeDataToFile` (`src/shared/lib/file-storage`).
+
+Допустимые значения `state` задачи: `new`, `in progress`, `done`, `overdue`.
+
+| Метод | Путь | Параметры | Описание | Куда пишет данные |
+| --- | --- | --- | --- | --- |
+| `POST` | `/api/auth/login` | **Body (JSON):** `email` (string), `password` (string) | Проверяет учётные данные относительно `DEFAULT_USER_*` из `.env`. При успехе возвращает `{ userSessionPayload: { userId, email } }`. JWT в cookie выставляет Server Action на стороне приложения, не этот роут. | Никуда не пишет (только ответ) |
+| `GET` | `/api/data/task-lists` | — | Возвращает все списки задач в виде DTO (список + вложенные задачи). | Не пишет (читает оба JSON) |
+| `POST` | `/api/data/task-lists` | **Body (JSON):** `name` (string, обязателен); `taskIds` (string[], опционально) | Создаёт список задач с новым `id` (uuid) и `userId` из `DEFAULT_USER_ID`. | `task-lists.json` |
+| `GET` | `/api/data/task-lists/[id]` | **Path:** `id` — идентификатор списка | Возвращает один список с задачами. `404`, если список не найден. | Не пишет (читает оба JSON) |
+| `PUT` | `/api/data/task-lists/[id]` | **Path:** `id`; **Body (JSON):** `name` (string) | Переименовывает список. `404`, если список не найден. | `task-lists.json` |
+| `DELETE` | `/api/data/task-lists/[id]` | **Path:** `id` | Удаляет список. Связанные задачи в `tasks.json` не удаляются. `404`, если список не найден. | `task-lists.json` |
+| `GET` | `/api/data/tasks` | — | Возвращает все задачи. | Не пишет (читает `tasks.json`) |
+| `POST` | `/api/data/tasks` | **Body (JSON):** `name` (string), `description` (string), `state` (TaskState), `priority` (number), `dueDate` (string), `taskListId` (string) | Создаёт задачу и добавляет её `id` в `taskIds` указанного списка. | `tasks.json` и `task-lists.json` |
+| `GET` | `/api/data/tasks/[id]` | **Path:** `id` — идентификатор задачи | Возвращает задачу с `taskListId` и `taskListName`. `404`, если задача или её список не найдены. | Не пишет (читает оба JSON) |
+| `PUT` | `/api/data/tasks/[id]` | **Path:** `id`; **Body (JSON, все поля опциональны):** `name`, `description`, `state`, `priority`, `dueDate` — незаданные поля сохраняют текущие значения | Обновляет задачу. `404`, если задача не найдена. | `tasks.json` |
+| `DELETE` | `/api/data/tasks/[id]` | **Path:** `id` | Удаляет задачу и убирает её `id` из `taskIds` всех списков. `404`, если задача не найдена. | `tasks.json` и `task-lists.json` |
+
+## 2. Описание функций приложения
+
+### 2.1. Вход в систему
+
+- Главная страница (`/`) предлагает войти в учётную запись для работы с задачами.
+- Форма входа принимает email и пароль; при успешной аутентификации выдаётся сессия (JWT).
+- Учётные данные пользователя по умолчанию задаются в `.env` (`DEFAULT_USER_EMAIL`, `DEFAULT_USER_PASSWORD`).
+- В форме доступна горячая клавиша для подстановки stub-учётных данных (удобно при локальной разработке).
+
+### 2.2. Просмотр списков задач (страница `/lists`)
+
+- Отображение всех списков задач в виде карточек.
+- На карточке: название, количество задач, метрики по статусам, прогресс выполнения, индикаторы просроченных задач и дедлайнов в ближайшие 48 часов.
+- Поиск списков по названию.
+- Создание нового списка задач (модальное окно).
+- Переименование и удаление списка через меню карточки.
+- Переход в конкретный список по клику на карточку.
+
+### 2.3. Просмотр списка задач (страница `/lists/[id]`)
+
+- Заголовок списка, количество задач и прогресс выполнения.
+- Таблица задач: название, описание, статус, приоритет, дедлайн, действия.
+- Фильтрация задач по статусу (все / отдельные статусы).
+- Сортировка задач в таблице.
+- Подсветка скорого дедлайна (до 48 часов) и просроченных задач.
+- Смена статуса задачи прямо в таблице (с откатом при ошибке).
+- Добавление, редактирование и удаление задач через модальные окна.
+- Переход на страницу детали задачи (`/tasks/[id]`).
+- Навигация назад к списку всех списков.
+
+### 2.4. Смена цветовой темы
+
+- Переключатель темы расположен в шапке приложения.
+- Доступны режимы: **системная**, **светлая**, **тёмная** (`next-themes`).
+- Выбранная тема сохраняется и применяется ко всему интерфейсу.

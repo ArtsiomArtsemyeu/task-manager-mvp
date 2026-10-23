@@ -1,15 +1,13 @@
 import { Suspense } from "react";
-import { apiUrl } from "@/src/shared/config";
+import { getTaskLists } from "@/src/entities/task-list/api";
 import { TaskListsSkeleton, TaskListsWidget } from "@/src/widgets/task-lists";
 
 export default function TasksPage() {
-  const tasksListsPromise = fetch(apiUrl("/api/data/task-lists"), {
-    cache: "no-store",
-  }).then((response) => response.json());
+  const taskListsPromise = getTaskLists();
 
   return (
     <Suspense fallback={<TaskListsSkeleton />}>
-      <TaskListsWidget taskListsPromise={tasksListsPromise} />
+      <TaskListsWidget taskListsPromise={taskListsPromise} />
     </Suspense>
   );
 }

@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import type { Task } from "@/src/entities/task";
 import { NextResponse } from "next/server";
-import { defaultUser, errorMessages } from "@/src/shared/config";
 import type { TaskList, TaskListDto } from "@/src/entities/task-list";
+import { defaultUser, errorMessages } from "@/src/shared/config";
 import { readDataFromFile, writeDataToFile } from "@/src/shared/lib/file-storage";
 import { isRecord, isStringArray, readJson } from "@/src/shared/utils/type-guard";
 
