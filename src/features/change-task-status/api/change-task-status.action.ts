@@ -1,12 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import type { TaskState } from "@/src/entities/task";
 import { apiUrl } from "@/src/shared/config";
 
 export async function changeTaskStatusAction(
   id: string,
   taskListId: string,
-  state: string,
+  state: TaskState,
 ): Promise<{ error?: string; success?: boolean }> {
   if (!id || !taskListId || !state) {
     return { error: "Некорректные данные статуса" };

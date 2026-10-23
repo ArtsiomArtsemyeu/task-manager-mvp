@@ -68,7 +68,7 @@ export function TaskListDetailsWidget({ taskList }: TaskListDetailsProps) {
   const closeDeleteModal = useCallback(() => setDeletingTask(null), []);
 
   const onStatusChange = useCallback(
-    (taskId: string, nextState: string) => {
+    (taskId: string, nextState: TaskState) => {
       startTransition(() => {
         void changeTaskStatusAction(taskId, taskList.id, nextState);
       });
@@ -189,9 +189,11 @@ export function TaskListDetailsWidget({ taskList }: TaskListDetailsProps) {
                           className={styles.statusSelect}
                           aria-label={`Статус задачи ${task.name}`}
                           value={isTaskState(task.state) ? task.state : "new"}
-                          onChange={(event) =>
-                            onStatusChange(task.id, event.target.value)
-                          }
+                          onChange={(event) => {
+                            if (isTaskState(event.target.value)) {
+                              onStatusChange(task.id, event.target.value);
+                            }
+                          }}
                         >
                           {TASK_STATES.map((state) => (
                             <option key={state} value={state}>

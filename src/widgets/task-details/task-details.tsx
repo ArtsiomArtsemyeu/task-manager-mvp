@@ -18,6 +18,7 @@ import {
   TASK_STATES,
   TaskDto,
   TaskPriority,
+  TaskState,
 } from "@/src/entities/task";
 
 type TaskDetailsProps = {
@@ -50,7 +51,7 @@ export function TaskDetailsWidget({ task }: TaskDetailsProps) {
   const closeDeleteModal = useCallback(() => setIsDeleteOpen(false), []);
 
   const onStatusChange = useCallback(
-    (nextState: string) => {
+    (nextState: TaskState) => {
       startTransition(() => {
         void changeTaskStatusAction(task.id, task.taskListId, nextState);
       });
@@ -121,7 +122,11 @@ export function TaskDetailsWidget({ task }: TaskDetailsProps) {
               className={styles.statusSelect}
               aria-label={`Статус задачи ${task.name}`}
               value={isTaskState(task.state) ? task.state : "new"}
-              onChange={(event) => onStatusChange(event.target.value)}
+              onChange={(event) => {
+                if (isTaskState(event.target.value)) {
+                  onStatusChange(event.target.value);
+                }
+              }}
             >
               {TASK_STATES.map((state) => (
                 <option key={state} value={state}>
