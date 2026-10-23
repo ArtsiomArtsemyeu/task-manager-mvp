@@ -14,10 +14,14 @@ export async function addTaskListAction(
 ): Promise<AddTaskListActionState> {
   const name = formData.get("name");
 
+  if (typeof name !== "string" || !name.trim()) {
+    return { error: errorMessages.validation.nameMandatory };
+  }
+
   const response = await fetch(apiUrl("/api/data/task-lists"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name }),
+    body: JSON.stringify({ name: name.trim() }),
   });
 
   if (!response.ok) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { startTransition, useActionState } from "react";
+import { startTransition, useActionState, useEffect } from "react";
 import type {
   DeleteTaskActionState} from "./api/delete-task.action";
 import {
@@ -32,6 +32,12 @@ export function DeleteTaskModal({
     FormData
   >(deleteTaskAction, null);
 
+  useEffect(() => {
+    if (state?.success) {
+      onClose();
+    }
+  }, [state, onClose]);
+
   const onConfirm = () => {
     startTransition(() => {
       const formData = new FormData();
@@ -42,7 +48,6 @@ export function DeleteTaskModal({
       }
       formAction(formData);
     });
-    onClose();
   };
 
   return (

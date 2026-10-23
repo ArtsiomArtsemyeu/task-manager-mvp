@@ -29,8 +29,7 @@ export async function editTaskAction(
     typeof dueDate !== "string" ||
     !id ||
     !taskListId ||
-    !name ||
-    !description ||
+    !name.trim() ||
     !state ||
     Number.isNaN(priority) ||
     !dueDate

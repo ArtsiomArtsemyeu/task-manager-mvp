@@ -1,6 +1,6 @@
 "use client";
 
-import { startTransition, useActionState } from "react";
+import { startTransition, useActionState, useEffect } from "react";
 import type {
   DeleteTaskListActionState} from "./api/delete-task-list.action";
 import {
@@ -28,13 +28,18 @@ export function DeleteTaskListModal({
     FormData
   >(deleteTaskListAction, null);
 
+  useEffect(() => {
+    if (state?.success) {
+      onClose();
+    }
+  }, [state, onClose]);
+
   const onConfirm = () => {
     startTransition(() => {
       const formData = new FormData();
       formData.append("id", taskListId);
       formAction(formData);
     });
-    onClose();
   };
 
   return (

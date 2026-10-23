@@ -78,6 +78,12 @@ export function EditTaskModal({
     }
   }, [isOpen, reset, task]);
 
+  useEffect(() => {
+    if (state?.success) {
+      onClose();
+    }
+  }, [state, onClose]);
+
   const onSubmit: SubmitHandler<EditTaskFormData> = (data) => {
     if (!task) {
       return;
@@ -94,7 +100,6 @@ export function EditTaskModal({
       formData.append("dueDate", data.dueDate);
       formAction(formData);
     });
-    onClose();
   };
 
   return (

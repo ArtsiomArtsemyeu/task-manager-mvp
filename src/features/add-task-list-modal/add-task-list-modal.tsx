@@ -52,10 +52,16 @@ export function AddTaskListModal({ isOpen, onClose }: AddTaskListModalProps) {
   >(addTaskListAction, null);
 
   useEffect(() => {
-    if (!isOpen) {
+    if (isOpen) {
       reset({ name: "" });
     }
   }, [isOpen, reset]);
+
+  useEffect(() => {
+    if (state?.success) {
+      onClose();
+    }
+  }, [state, onClose]);
 
   const onSubmit: SubmitHandler<AddTaskListFormData> = (
     data: AddTaskListFormData,
@@ -67,7 +73,6 @@ export function AddTaskListModal({ isOpen, onClose }: AddTaskListModalProps) {
       );
       formAction(formData);
     });
-    onClose();
   };
 
   return (

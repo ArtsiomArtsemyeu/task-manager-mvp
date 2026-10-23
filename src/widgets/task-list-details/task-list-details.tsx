@@ -3,7 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { clsx } from "clsx";
-import { startTransition, useCallback, useMemo, useState } from "react";
+import {
+  startTransition,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import styles from "./task-list-details.module.css";
 import { AddTaskModal } from "@/src/features/add-task-modal";
 import { EditTaskModal } from "@/src/features/edit-task-modal";
@@ -26,6 +32,7 @@ import {
 } from "@/src/entities/task";
 import type { TaskListDto } from "@/src/entities/task-list";
 import { ProgressBar } from "@/src/shared/ui/components/progress-bar";
+import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
 
 type StatusFilter = "all" | TaskState;
 
@@ -44,24 +51,30 @@ function getPriorityClass(priority: number): string | undefined {
 }
 
 export function TaskListDetailsWidget({ taskList }: TaskListDetailsProps) {
+  const [tasks, setTasks] = useState(taskList.tasks);
+  const [statusError, setStatusError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [deletingTask, setDeletingTask] = useState<Task | null>(null);
 
+  useEffect(() => {
+    setTasks(taskList.tasks);
+  }, [taskList.tasks]);
+
   const progress = useMemo(
-    () => calculateTaskListProgress(taskList.tasks),
-    [taskList.tasks],
+    () => calculateTaskListProgress(tasks),
+    [tasks],
   );
 
   const filteredTasks = useMemo(() => {
-    const tasks =
+    const filtered =
       statusFilter === "all"
-        ? taskList.tasks
-        : taskList.tasks.filter((task) => task.state === statusFilter);
+        ? tasks
+        : tasks.filter((task) => task.state === statusFilter);
 
-    return sortTasks(tasks);
-  }, [statusFilter, taskList.tasks]);
+    return sortTasks(filtered);
+  }, [statusFilter, tasks]);
 
   const openAddModal = useCallback(() => setIsAddOpen(true), []);
   const closeAddModal = useCallback(() => setIsAddOpen(false), []);
@@ -70,8 +83,46 @@ export function TaskListDetailsWidget({ taskList }: TaskListDetailsProps) {
 
   const onStatusChange = useCallback(
     (taskId: string, nextState: TaskState) => {
+      let previousState: TaskState | undefined;
+
+      setStatusError(null);
+      setTasks((prev) => {
+        const current = prev.find((task) => task.id === taskId);
+        if (
+          !current ||
+          !isTaskState(current.state) ||
+          current.state === nextState
+        ) {
+          return prev;
+        }
+
+        previousState = current.state;
+        return prev.map((task) =>
+          task.id === taskId ? { ...task, state: nextState } : task,
+        );
+      });
+
+      if (!previousState) {
+        return;
+      }
+
+      const stateToRestore = previousState;
+
       startTransition(() => {
-        void changeTaskStatusAction(taskId, taskList.id, nextState);
+        void changeTaskStatusAction(taskId, taskList.id, nextState).then(
+          (result) => {
+            if (!result.error) {
+              return;
+            }
+
+            setTasks((prev) =>
+              prev.map((task) =>
+                task.id === taskId ? { ...task, state: stateToRestore } : task,
+              ),
+            );
+            setStatusError(result.error);
+          },
+        );
       });
     },
     [taskList.id],
@@ -89,7 +140,7 @@ export function TaskListDetailsWidget({ taskList }: TaskListDetailsProps) {
 
           <div className={styles.rightCol}>
             <span className={styles.metaLabel}>
-              Количество задач: {taskList.tasks.length}
+              Количество задач: {tasks.length}
             </span>
             <div className={styles.progressWrap}>
               <span className={styles.metaLabel}>Прогресс {progress}%</span>
@@ -137,6 +188,8 @@ export function TaskListDetailsWidget({ taskList }: TaskListDetailsProps) {
           </div>
         </div>
       </header>
+
+      {statusError ? <ErrorHighlight message={statusError} /> : null}
 
       <div className={styles.tableCard}>
         {filteredTasks.length === 0 ? (

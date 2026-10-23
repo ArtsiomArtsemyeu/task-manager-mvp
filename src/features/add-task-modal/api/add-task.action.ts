@@ -26,8 +26,7 @@ export async function addTaskAction(
     typeof state !== "string" ||
     typeof dueDate !== "string" ||
     !taskListId ||
-    !name ||
-    !description ||
+    !name.trim() ||
     !state ||
     Number.isNaN(priority) ||
     !dueDate

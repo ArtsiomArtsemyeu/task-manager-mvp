@@ -97,6 +97,12 @@ export function AddTaskModal({
     }
   }, [isOpen, reset]);
 
+  useEffect(() => {
+    if (state?.success) {
+      onClose();
+    }
+  }, [state, onClose]);
+
   const onSubmit: SubmitHandler<AddTaskFormData> = (data) => {
     startTransition(() => {
       const formData = new FormData();
@@ -108,7 +114,6 @@ export function AddTaskModal({
       formData.append("dueDate", data.dueDate);
       formAction(formData);
     });
-    onClose();
   };
 
   return (

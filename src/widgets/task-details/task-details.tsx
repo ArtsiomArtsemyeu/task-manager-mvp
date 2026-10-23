@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { clsx } from "clsx";
-import { startTransition, useCallback, useState } from "react";
+import { startTransition, useCallback, useEffect, useState } from "react";
 import styles from "./task-details.module.css";
 import { EditTaskModal } from "@/src/features/edit-task-modal";
 import { DeleteTaskModal } from "@/src/features/delete-task-modal";
@@ -21,6 +21,7 @@ import {
   TASK_STATE_LABELS,
   TASK_STATES
 } from "@/src/entities/task";
+import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
 
 type TaskDetailsProps = {
   task: TaskDto;
@@ -36,14 +37,26 @@ function getPriorityClass(priority: number): string | undefined {
   return styles.priorityLow;
 }
 
+function getInitialState(state: string): TaskState {
+  return isTaskState(state) ? state : "new";
+}
+
 export function TaskDetailsWidget({ task }: TaskDetailsProps) {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [status, setStatus] = useState<TaskState>(() =>
+    getInitialState(task.state),
+  );
+  const [statusError, setStatusError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setStatus(getInitialState(task.state));
+  }, [task.state]);
 
   const priority = isTaskPriority(task.priority)
     ? task.priority
     : (2 as TaskPriority);
-  const isOverdue = task.state === "overdue";
+  const isOverdue = status === "overdue";
   const isSoon = !isOverdue && isDeadlineWithin48Hours(task);
 
   const openEditModal = useCallback(() => setIsEditOpen(true), []);
@@ -53,8 +66,35 @@ export function TaskDetailsWidget({ task }: TaskDetailsProps) {
 
   const onStatusChange = useCallback(
     (nextState: TaskState) => {
+      let previousState: TaskState | undefined;
+
+      setStatusError(null);
+      setStatus((current) => {
+        if (current === nextState) {
+          return current;
+        }
+
+        previousState = current;
+        return nextState;
+      });
+
+      if (!previousState) {
+        return;
+      }
+
+      const stateToRestore = previousState;
+
       startTransition(() => {
-        void changeTaskStatusAction(task.id, task.taskListId, nextState);
+        void changeTaskStatusAction(task.id, task.taskListId, nextState).then(
+          (result) => {
+            if (!result.error) {
+              return;
+            }
+
+            setStatus(stateToRestore);
+            setStatusError(result.error);
+          },
+        );
       });
     },
     [task.id, task.taskListId],
@@ -101,6 +141,8 @@ export function TaskDetailsWidget({ task }: TaskDetailsProps) {
         </div>
       </header>
 
+      {statusError ? <ErrorHighlight message={statusError} /> : null}
+
       <section className={styles.card}>
         <div className={styles.field}>
           <span className={styles.label}>Описание</span>
@@ -122,7 +164,7 @@ export function TaskDetailsWidget({ task }: TaskDetailsProps) {
               id="task-status"
               className={styles.statusSelect}
               aria-label={`Статус задачи ${task.name}`}
-              value={isTaskState(task.state) ? task.state : "new"}
+              value={status}
               onChange={(event) => {
                 if (isTaskState(event.target.value)) {
                   onStatusChange(event.target.value);
@@ -164,7 +206,7 @@ export function TaskDetailsWidget({ task }: TaskDetailsProps) {
       <EditTaskModal
         isOpen={isEditOpen}
         taskListId={task.taskListId}
-        task={task}
+        task={{ ...task, state: status }}
         onClose={closeEditModal}
       />
       <DeleteTaskModal

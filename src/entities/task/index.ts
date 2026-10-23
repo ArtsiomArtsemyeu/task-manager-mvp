@@ -1,6 +1,5 @@
 export {
   sortTasks,
-  compareTasks,
   calculateTaskCountByState,
   calculateTaskListProgress,
   isDeadlineWithin48Hours,

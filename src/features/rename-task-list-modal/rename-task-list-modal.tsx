@@ -50,6 +50,12 @@ export function RenameTaskListModal({
     }
   }, [currentName, isOpen, reset]);
 
+  useEffect(() => {
+    if (state?.success) {
+      onClose();
+    }
+  }, [state, onClose]);
+
   const onSubmit: SubmitHandler<RenameTaskListFormData> = (
     data: RenameTaskListFormData,
   ) => {
@@ -59,7 +65,6 @@ export function RenameTaskListModal({
       formData.append("name", data.name);
       formAction(formData);
     });
-    onClose();
   };
 
   return (
