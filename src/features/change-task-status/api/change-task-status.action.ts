@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { apiUrl } from "@/src/shared/config";
 
 export async function changeTaskStatusAction(
   id: string,
@@ -11,7 +12,7 @@ export async function changeTaskStatusAction(
     return { error: "Некорректные данные статуса" };
   }
 
-  const response = await fetch(`http://localhost:3000/api/data/tasks/${id}`, {
+  const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ state }),
@@ -21,6 +22,7 @@ export async function changeTaskStatusAction(
     return { error: "Не удалось изменить статус" };
   }
 
+  revalidatePath(`/tasks/${id}`);
   revalidatePath(`/lists/${taskListId}`);
   revalidatePath("/lists");
   return { success: true };

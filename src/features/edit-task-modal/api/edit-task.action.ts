@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { apiUrl } from "@/src/shared/config";
 
 export type EditTaskActionState = {
   error?: string;
@@ -31,7 +32,7 @@ export async function editTaskAction(
     return { error: "Заполните все поля корректно" };
   }
 
-  const response = await fetch(`http://localhost:3000/api/data/tasks/${id}`, {
+  const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -47,6 +48,7 @@ export async function editTaskAction(
     return { error: "Не удалось обновить задачу" };
   }
 
+  revalidatePath(`/tasks/${id}`);
   revalidatePath(`/lists/${taskListId}`);
   revalidatePath("/lists");
   return { success: true };

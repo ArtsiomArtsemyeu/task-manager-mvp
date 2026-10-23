@@ -17,6 +17,7 @@ import {
   TaskPriority,
   TaskState,
   calculateTaskListProgress,
+  formatTaskDueDate,
   isDeadlineWithin48Hours,
   isTaskPriority,
   isTaskState,
@@ -30,21 +31,6 @@ type StatusFilter = "all" | TaskState;
 type TaskListDetailsProps = {
   taskList: TaskListDto;
 };
-
-function formatDueDate(isoDate: string): string {
-  const date = new Date(isoDate);
-  if (Number.isNaN(date.getTime())) {
-    return "—";
-  }
-
-  return new Intl.DateTimeFormat("ru-RU", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(date);
-}
 
 function getPriorityClass(priority: number): string {
   if (priority >= 3) {
@@ -185,9 +171,12 @@ export function TaskListDetailsWidget({ taskList }: TaskListDetailsProps) {
                     <tr key={task.id}>
                       <td>
                         <div className={styles.taskName}>
-                          <span className={styles.taskNameText}>
+                          <Link
+                            href={`/tasks/${task.id}`}
+                            className={styles.taskNameLink}
+                          >
                             {task.name}
-                          </span>
+                          </Link>
                           {task.description ? (
                             <span className={styles.taskDescription}>
                               {task.description}
@@ -229,7 +218,7 @@ export function TaskListDetailsWidget({ taskList }: TaskListDetailsProps) {
                             isOverdue && styles.dueDateOverdue,
                           )}
                         >
-                          {formatDueDate(task.dueDate)}
+                          {formatTaskDueDate(task.dueDate)}
                         </span>
                       </td>
                       <td>

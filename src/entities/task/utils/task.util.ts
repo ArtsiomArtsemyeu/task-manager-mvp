@@ -66,3 +66,18 @@ export const compareTasks = (left: Task, right: Task): number => {
 
 export const sortTasks = (tasks: Task[]): Task[] =>
   [...tasks].sort(compareTasks);
+
+export const formatTaskDueDate = (isoDate: string): string => {
+  const date = new Date(isoDate);
+  if (Number.isNaN(date.getTime())) {
+    return "—";
+  }
+
+  return new Intl.DateTimeFormat("ru-RU", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+};

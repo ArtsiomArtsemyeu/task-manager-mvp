@@ -1,5 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { apiUrl } from "@/src/shared/config";
+
 export type AddTaskListActionState = {
   error?: string;
   success?: boolean;
@@ -11,7 +14,7 @@ export async function addTaskListAction(
 ): Promise<AddTaskListActionState> {
   const name = formData.get("name");
 
-  const response = await fetch("http:/localhost:3000/api/data/task-lists", {
+  const response = await fetch(apiUrl("/api/data/task-lists"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name }),
@@ -20,5 +23,7 @@ export async function addTaskListAction(
   if (!response.ok) {
     return { error: "Некорректное имя списка" };
   }
+
+  revalidatePath("/lists");
   return { success: true };
 }

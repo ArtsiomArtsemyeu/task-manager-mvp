@@ -101,7 +101,7 @@ export function EditTaskModal({
           <input
             id="edit-task-name"
             className={styles.input}
-            placeholder="Название задачи"
+            placeholder="Например, Подготовить отчёт"
             {...register("name", { required: "Название обязательно" })}
           />
           {errors.name && <ErrorHighlight message={errors.name.message} />}
@@ -112,7 +112,7 @@ export function EditTaskModal({
           <textarea
             id="edit-task-description"
             className={styles.textarea}
-            placeholder="Краткое описание"
+            placeholder="Необязательно"
             {...register("description")}
           />
         </div>

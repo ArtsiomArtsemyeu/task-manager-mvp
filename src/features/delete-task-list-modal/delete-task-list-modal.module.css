@@ -1,7 +1,24 @@
 .message {
   margin: 0 0 1.25rem;
-  color: #4a4a4a;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.messageText {
+  margin: 0;
+  color: var(--foreground, #4a4a4a);
   line-height: 1.5;
+}
+
+.warning {
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm, 0.5rem);
+  background: var(--chip-red-bg, #fde8e8);
+  color: var(--chip-red-fg, #9b2c2c);
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .actions {

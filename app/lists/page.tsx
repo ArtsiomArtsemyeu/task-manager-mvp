@@ -1,8 +1,9 @@
 import { Suspense } from "react";
+import { apiUrl } from "@/src/shared/config";
 import { TaskListsSkeleton, TaskListsWidget } from "@/src/widgets/task-lists";
 
 export default async function TasksPage() {
-  const tasksListsPromise = fetch("http://localhost:3000/api/data/task-lists", {
+  const tasksListsPromise = fetch(apiUrl("/api/data/task-lists"), {
     cache: "no-store",
   }).then((response) => response.json());
 

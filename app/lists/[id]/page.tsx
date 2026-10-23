@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { TaskListDto } from "@/src/entities/task-list";
+import { getTaskList } from "@/src/entities/task-list/api";
 import {
   TaskListDetailsSkeleton,
   TaskListDetailsWidget,
@@ -17,16 +17,11 @@ export const metadata: Metadata = {
 };
 
 async function TaskListContent({ id }: { id: string }) {
-  const response = await fetch(
-    `http://localhost:3000/api/data/task-lists/${id}`,
-    { cache: "no-store" },
-  );
+  const taskList = await getTaskList(id);
 
-  if (!response.ok) {
+  if (!taskList) {
     notFound();
   }
-
-  const taskList: TaskListDto = await response.json();
 
   return <TaskListDetailsWidget taskList={taskList} />;
 }

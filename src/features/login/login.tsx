@@ -4,19 +4,33 @@ import { startTransition, useActionState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./login.module.css";
 import { loginAction, LoginActionState } from "./api/login.action";
+import { useFillFormStubsHotkey } from "@/src/shared/lib/fill-form-stubs";
 import { CircleLoader } from "@/src/shared/ui/components/circle-loader";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
+
 type LoginFormData = {
   email: string;
   password: string;
 };
 
-export function LoginForm() {
+type LoginFormProps = {
+  stubCredentials: LoginFormData;
+};
+
+export function LoginForm({ stubCredentials }: LoginFormProps) {
   const {
     register,
     handleSubmit,
+    getValues,
+    setValue,
     formState: { errors },
   } = useForm<LoginFormData>();
+
+  useFillFormStubsHotkey({
+    getValues,
+    setValue,
+    stubs: stubCredentials,
+  });
 
   const [state, formAction, isPending] = useActionState<
     LoginActionState,
@@ -39,8 +53,11 @@ export function LoginForm() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <div className={styles.inputGroup}>
-              <label htmlFor="email">Адрес электронной почты</label>
+              <label htmlFor="email">Электронная почта</label>
               <input
+                id="email"
+                type="email"
+                autoComplete="email"
                 {...register("email", {
                   required: "Email обязателен",
                   pattern: {
@@ -49,7 +66,7 @@ export function LoginForm() {
                   },
                 })}
                 className={styles.input}
-                placeholder="Адрес электронной почты "
+                placeholder="name@example.com"
               />
               {errors.email && (
                 <ErrorHighlight message={errors.email.message} />
@@ -59,6 +76,9 @@ export function LoginForm() {
             <div className={styles.inputGroup}>
               <label htmlFor="password">Пароль</label>
               <input
+                id="password"
+                type="password"
+                autoComplete="current-password"
                 {...register("password", {
                   required: "Пароль обязателен",
                   minLength: {
@@ -67,7 +87,6 @@ export function LoginForm() {
                   },
                 })}
                 className={styles.input}
-                placeholder="Пароль"
               />
               {errors.password && (
                 <ErrorHighlight message={errors.password.message} />

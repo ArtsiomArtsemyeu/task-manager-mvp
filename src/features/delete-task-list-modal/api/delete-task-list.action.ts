@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { apiUrl } from "@/src/shared/config";
 
 export type DeleteTaskListActionState = {
   error?: string;
@@ -17,12 +18,9 @@ export async function deleteTaskListAction(
     return { error: "Некорректный идентификатор списка" };
   }
 
-  const response = await fetch(
-    `http://localhost:3000/api/data/task-lists/${id}`,
-    {
-      method: "DELETE",
-    },
-  );
+  const response = await fetch(apiUrl(`/api/data/task-lists/${id}`), {
+    method: "DELETE",
+  });
 
   if (!response.ok) {
     return { error: "Не удалось удалить список" };

@@ -2,7 +2,7 @@
 
 import { startTransition, use, useCallback, useState } from "react";
 import styles from "./task-lists.module.css";
-import { TaskListCard } from "@/src/features/task-list-card";
+import { TaskListCardItem } from "./ui/task-list-card-item/task-list-card-item";
 import { AddTaskListModal } from "@/src/features/add-task-list-modal";
 import { TaskListDto } from "@/src/entities/task-list";
 
@@ -12,10 +12,8 @@ interface TaskListsProps {
 
 export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
   const taskLists: TaskListDto[] = use(taskListsPromise);
-  const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
-  const [deferredQuery, setDeferredQuery] = useState<string | undefined>(
-    undefined,
-  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [deferredQuery, setDeferredQuery] = useState("");
   const [isShowAddTaskListModal, setIsShowAddTaskListModal] =
     useState<boolean>(false);
 
@@ -40,13 +38,19 @@ export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
     [],
   );
 
+  const filteredTaskLists = taskLists.filter((taskList: TaskListDto) =>
+    deferredQuery.trim()
+      ? taskList.name.toLowerCase().includes(deferredQuery.toLowerCase())
+      : true,
+  );
+
   return (
     <div className={styles.host}>
       <div className={styles.toolbar}>
         <input
           className={styles.search}
           type="search"
-          placeholder="Поиск списков…"
+          placeholder="Найти список…"
           onChange={changeQuery}
           value={searchQuery}
           aria-label="Поиск списков"
@@ -59,19 +63,17 @@ export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
           Добавить новый список
         </button>
       </div>
-      <div className={styles.list}>
-        {taskLists
-          .filter((taskList: TaskListDto) =>
-            deferredQuery
-              ? taskList.name
-                  .toLowerCase()
-                  .includes(deferredQuery.toLowerCase())
-              : true,
-          )
-          .map((taskList: TaskListDto) => (
-            <TaskListCard key={taskList.id} taskList={taskList} />
+      {filteredTaskLists.length === 0 && deferredQuery.trim() ? (
+        <p className={styles.empty} role="status">
+          Ничего не найдено
+        </p>
+      ) : (
+        <div className={styles.list}>
+          {filteredTaskLists.map((taskList: TaskListDto) => (
+            <TaskListCardItem key={taskList.id} taskList={taskList} />
           ))}
-      </div>
+        </div>
+      )}
       <AddTaskListModal
         isOpen={isShowAddTaskListModal}
         onClose={closeAddTaskListModal}

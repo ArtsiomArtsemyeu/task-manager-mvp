@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, MouseEvent } from "react";
+import { createPortal } from "react-dom";
 import styles from "./modal.module.css";
 
 type ModalProps = {
@@ -20,8 +21,14 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
       }
     };
 
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
@@ -31,19 +38,21 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
   const handleContentClick = (event: MouseEvent<HTMLDivElement>) =>
     event.stopPropagation();
 
-  return (
+  return createPortal(
     <div className={styles.overlay} onClick={handleOverlayClick}>
       <div className={styles.content} onClick={handleContentClick}>
         <header className={styles.header}>
           <h2>{title}</h2>
           <button
+            type="button"
             className={styles.closeButton}
             onClick={onClose}
             aria-label="Закрыть"
-          ></button>
+          />
         </header>
-        <main className={styles.body}>{children}</main>
+        <div className={styles.body}>{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

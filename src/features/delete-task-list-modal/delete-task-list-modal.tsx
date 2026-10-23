@@ -38,10 +38,12 @@ export function DeleteTaskListModal({
 
   return (
     <Modal isOpen={isOpen} title="Удалить список" onClose={onClose}>
-      <p className={styles.message}>
-        Вы уверены, что хотите удалить список «{taskListName}»? Это действие
-        нельзя отменить.
-      </p>
+      <div className={styles.message}>
+        <p className={styles.messageText}>
+          Вы уверены, что хотите удалить список «{taskListName}»?
+        </p>
+        <p className={styles.warning}>Это действие нельзя отменить.</p>
+      </div>
 
       {state?.error && <ErrorHighlight message={state.error} />}
 

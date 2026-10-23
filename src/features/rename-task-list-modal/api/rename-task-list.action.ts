@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { apiUrl } from "@/src/shared/config";
 
 export type RenameTaskListActionState = {
   error?: string;
@@ -22,14 +23,11 @@ export async function renameTaskListAction(
     return { error: "Имя обязательно" };
   }
 
-  const response = await fetch(
-    `http://localhost:3000/api/data/task-lists/${id}`,
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: name.trim() }),
-    },
-  );
+  const response = await fetch(apiUrl(`/api/data/task-lists/${id}`), {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: name.trim() }),
+  });
 
   if (!response.ok) {
     return { error: "Не удалось переименовать список" };

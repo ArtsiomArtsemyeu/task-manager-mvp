@@ -12,6 +12,7 @@ import {
   TaskPriority,
   TaskState,
 } from "@/src/entities/task";
+import { useFillFormStubsHotkey } from "@/src/shared/lib/fill-form-stubs";
 import { Modal } from "@/src/shared/ui/components/modal";
 import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
 
@@ -29,6 +30,24 @@ type AddTaskFormData = {
   dueDate: string;
 };
 
+function getTomorrowDateTimeLocal(): string {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  date.setHours(12, 0, 0, 0);
+
+  const offset = date.getTimezoneOffset();
+  const local = new Date(date.getTime() - offset * 60_000);
+  return local.toISOString().slice(0, 16);
+}
+
+function getAddTaskFormStubs(): Partial<AddTaskFormData> {
+  return {
+    name: "Подготовить отчёт",
+    description: "Собрать данные за неделю и оформить презентацию",
+    dueDate: getTomorrowDateTimeLocal(),
+  };
+}
+
 export function AddTaskModal({
   isOpen,
   taskListId,
@@ -38,6 +57,8 @@ export function AddTaskModal({
     register,
     handleSubmit,
     reset,
+    getValues,
+    setValue,
     formState: { errors },
   } = useForm<AddTaskFormData>({
     defaultValues: {
@@ -49,6 +70,12 @@ export function AddTaskModal({
     },
   });
 
+  useFillFormStubsHotkey({
+    getValues,
+    setValue,
+    stubs: getAddTaskFormStubs,
+    enabled: isOpen,
+  });
   const [state, formAction, isPending] = useActionState<
     AddTaskActionState,
     FormData
@@ -88,7 +115,7 @@ export function AddTaskModal({
           <input
             id="add-task-name"
             className={styles.input}
-            placeholder="Название задачи"
+            placeholder="Например, Подготовить отчёт"
             {...register("name", { required: "Название обязательно" })}
           />
           {errors.name && <ErrorHighlight message={errors.name.message} />}
@@ -99,7 +126,7 @@ export function AddTaskModal({
           <textarea
             id="add-task-description"
             className={styles.textarea}
-            placeholder="Краткое описание"
+            placeholder="Необязательно"
             {...register("description")}
           />
         </div>

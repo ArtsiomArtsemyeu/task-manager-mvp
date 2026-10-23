@@ -63,14 +63,13 @@ export function RenameTaskListModal({
     <Modal isOpen={isOpen} title="Переименовать список" onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputGroup}>
-          <label htmlFor="rename-task-list-name">Новое имя списка</label>
+          <label htmlFor="rename-task-list-name">Название</label>
           <input
             id="rename-task-list-name"
             {...register("name", {
-              required: "Имя обязательно",
+              required: "Название обязательно",
             })}
             className={styles.input}
-            placeholder="Имя списка"
           />
           {errors.name && <ErrorHighlight message={errors.name.message} />}
         </div>

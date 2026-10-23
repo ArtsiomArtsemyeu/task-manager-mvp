@@ -14,6 +14,7 @@ type DeleteTaskModalProps = {
   taskListId: string;
   taskId: string;
   taskName: string;
+  redirectTo?: string;
   onClose: () => void;
 };
 
@@ -22,6 +23,7 @@ export function DeleteTaskModal({
   taskListId,
   taskId,
   taskName,
+  redirectTo,
   onClose,
 }: DeleteTaskModalProps) {
   const [state, formAction, isPending] = useActionState<
@@ -34,6 +36,9 @@ export function DeleteTaskModal({
       const formData = new FormData();
       formData.append("id", taskId);
       formData.append("taskListId", taskListId);
+      if (redirectTo) {
+        formData.append("redirectTo", redirectTo);
+      }
       formAction(formData);
     });
     onClose();
@@ -41,10 +46,12 @@ export function DeleteTaskModal({
 
   return (
     <Modal isOpen={isOpen} title="Удалить задачу" onClose={onClose}>
-      <p className={styles.message}>
-        Вы уверены, что хотите удалить задачу «{taskName}»? Это действие нельзя
-        отменить.
-      </p>
+      <div className={styles.message}>
+        <p className={styles.messageText}>
+          Вы уверены, что хотите удалить задачу «{taskName}»?
+        </p>
+        <p className={styles.warning}>Это действие нельзя отменить.</p>
+      </div>
 
       {state?.error && <ErrorHighlight message={state.error} />}
 

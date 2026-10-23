@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { apiUrl } from "@/src/shared/config";
 
 export type AddTaskActionState = {
   error?: string;
@@ -29,7 +30,7 @@ export async function addTaskAction(
     return { error: "Заполните все поля корректно" };
   }
 
-  const response = await fetch("http://localhost:3000/api/data/tasks", {
+  const response = await fetch(apiUrl("/api/data/tasks"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

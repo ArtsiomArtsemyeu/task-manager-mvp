@@ -1,12 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 import styles from "./task-list-card.module.css";
 import { TaskMetrics } from "./ui/task-metrics/task-metrics";
 import { CardMenu } from "./ui/card-menu/card-menu";
-import { RenameTaskListModal } from "./ui/rename-task-list-modal/rename-task-list-modal";
-import { DeleteTaskListModal } from "./ui/delete-task-list-modal/delete-task-list-modal";
 import {
   calculateTaskCountByState,
   calculateTaskListProgress,
@@ -18,12 +16,15 @@ import { Chip } from "@/src/shared/ui/components/chip";
 
 interface TaskListCardProps {
   taskList: TaskListDto;
+  onRename: () => void;
+  onDelete: () => void;
 }
 
-export function TaskListCard({ taskList }: TaskListCardProps) {
-  const [isRenameOpen, setIsRenameOpen] = useState(false);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
+export function TaskListCard({
+  taskList,
+  onRename,
+  onDelete,
+}: TaskListCardProps) {
   const taskListProgress = useMemo(
     () => calculateTaskListProgress(taskList.tasks),
     [taskList],
@@ -39,14 +40,9 @@ export function TaskListCard({ taskList }: TaskListCardProps) {
     [taskList],
   );
 
-  const openRenameModal = useCallback(() => setIsRenameOpen(true), []);
-  const closeRenameModal = useCallback(() => setIsRenameOpen(false), []);
-  const openDeleteModal = useCallback(() => setIsDeleteOpen(true), []);
-  const closeDeleteModal = useCallback(() => setIsDeleteOpen(false), []);
-
   return (
     <div className={styles.host}>
-      <CardMenu onRename={openRenameModal} onDelete={openDeleteModal} />
+      <CardMenu onRename={onRename} onDelete={onDelete} />
 
       <Link href={`/lists/${taskList.id}`} className={styles.link}>
         <div className={styles.title}>{taskList.name}</div>
@@ -64,19 +60,6 @@ export function TaskListCard({ taskList }: TaskListCardProps) {
           )}
         </div>
       </Link>
-
-      <RenameTaskListModal
-        isOpen={isRenameOpen}
-        taskListId={taskList.id}
-        currentName={taskList.name}
-        onClose={closeRenameModal}
-      />
-      <DeleteTaskListModal
-        isOpen={isDeleteOpen}
-        taskListId={taskList.id}
-        taskListName={taskList.name}
-        onClose={closeDeleteModal}
-      />
     </div>
   );
 }
