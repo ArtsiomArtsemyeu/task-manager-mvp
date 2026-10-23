@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
@@ -13,51 +16,46 @@ const fsdOptions = {
   ignoreImportPatterns: ["\\.css$", "\\.module\\.css$"],
 };
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  {
-    files: ["src/**/*.{js,jsx,ts,tsx}"],
-    plugins: {
-      fsd: fsdPlugin,
-    },
-    rules: {
-      "fsd/forbidden-imports": ["error", fsdOptions],
-      "fsd/no-cross-slice-dependency": [
-        "error",
-        {
-          ...fsdOptions,
-          allowTypeImports: true,
-        },
-      ],
-      "fsd/no-public-api-sidestep": [
-        "error",
-        {
-          ...fsdOptions,
-          ignoreImportPatterns: [
-            ...fsdOptions.ignoreImportPatterns,
-            "/@x/",
-          ],
-        },
-      ],
-      "fsd/no-relative-imports": [
-        "error",
-        {
-          ...fsdOptions,
-          allowSameSlice: true,
-        },
-      ],
-      "fsd/no-ui-in-business-logic": ["error", fsdOptions],
-      "fsd/no-global-store-imports": "error",
-      "fsd/ordered-imports": ["warn", fsdOptions],
-    },
+const eslintConfig = defineConfig([...nextVitals, ...nextTs, {
+  files: ["src/**/*.{js,jsx,ts,tsx}"],
+  plugins: {
+    fsd: fsdPlugin,
   },
-  globalIgnores([
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ]),
-]);
+  rules: {
+    "fsd/forbidden-imports": ["error", fsdOptions],
+    "fsd/no-cross-slice-dependency": [
+      "error",
+      {
+        ...fsdOptions,
+        allowTypeImports: true,
+      },
+    ],
+    "fsd/no-public-api-sidestep": [
+      "error",
+      {
+        ...fsdOptions,
+        ignoreImportPatterns: [
+          ...fsdOptions.ignoreImportPatterns,
+          "/@x/",
+        ],
+      },
+    ],
+    "fsd/no-relative-imports": [
+      "error",
+      {
+        ...fsdOptions,
+        allowSameSlice: true,
+      },
+    ],
+    "fsd/no-ui-in-business-logic": ["error", fsdOptions],
+    "fsd/no-global-store-imports": "error",
+    "fsd/ordered-imports": ["warn", fsdOptions],
+  },
+}, globalIgnores([
+  ".next/**",
+  "out/**",
+  "build/**",
+  "next-env.d.ts",
+]), ...storybook.configs["flat/recommended"]]);
 
 export default eslintConfig;
