@@ -7,7 +7,7 @@
 #### 1.1.1. Описание технологий
 
 | Технология | Назначение |
-| --- | --- |
+| :--- | :--- |
 | **Next.js** | Фреймворк приложения (App Router): страницы, API routes, Server Actions, SSR/CSR. |
 | **React** | UI-библиотека для клиентских и серверных компонентов. |
 | **TypeScript** | Статическая типизация исходного кода. |
@@ -23,20 +23,22 @@
 #### 1.1.2. Текущие версии технологий
 
 | Технология | Версия |
-| --- | --- |
-| Next.js | 16.4.2 |
-| React / React DOM | 19.3.0 |
-| TypeScript | 5.9.3 |
-| ESLint | 9.39.5 |
-| eslint-plugin-fsd-lint | 1.2.1 |
-| Vitest | 5.0.5 |
-| Storybook | 10.6.3 |
-| next-themes | 0.4.6 |
-| react-hook-form | 7.90.0 |
-| jsonwebtoken | 9.0.3 |
-| Node.js (рекомендуется) | ≥ 20 |
+| :--- | :---: |
+| Next.js | `16.4.2` |
+| React / React DOM | `19.3.0` |
+| TypeScript | `5.9.3` |
+| ESLint | `9.39.5` |
+| eslint-plugin-fsd-lint | `1.2.1` |
+| Vitest | `5.0.5` |
+| Storybook | `10.6.3` |
+| next-themes | `0.4.6` |
+| react-hook-form | `7.90.0` |
+| jsonwebtoken | `9.0.3` |
+| Node.js (рекомендуется) | `≥ 20` |
 
 > Версии зависимостей соответствуют установленным в проекте на момент обновления README. Актуальные значения можно уточнить в `package.json` / `package-lock.json`.
+
+---
 
 ### 1.2. Инструкция для локальной разработки
 
@@ -59,7 +61,7 @@ npm run playwright:install
 Файл `.env` уже лежит в репозитории (stub-учётные данные для MVP). Локальные переопределения можно держать в `.env.local` (он в `.gitignore`).
 
 | Переменная | Описание |
-| --- | --- |
+| :--- | :--- |
 | `APP_BASE_URL` | Базовый URL приложения (по умолчанию `http://localhost:3000`) |
 | `DEFAULT_USER_ID` | Идентификатор пользователя по умолчанию |
 | `DEFAULT_USER_EMAIL` | Адрес электронной почты по умолчанию |
@@ -136,12 +138,14 @@ Storybook откроется на порту `6006` ([http://localhost:6006](htt
 npm run build-storybook
 ```
 
+---
+
 ### 1.3. API (`app/api`)
 
 Данные списков и задач хранятся в JSON-файлах:
 
 | Файл | Путь |
-| --- | --- |
+| :--- | :--- |
 | Списки задач | `src/shared/lib/file-storage/data/task-lists.json` |
 | Задачи | `src/shared/lib/file-storage/data/tasks.json` |
 
@@ -150,18 +154,20 @@ npm run build-storybook
 Допустимые значения `state` задачи: `new`, `in progress`, `done`, `overdue`.
 
 | Метод | Путь | Параметры | Описание | Куда пишет данные |
-| --- | --- | --- | --- | --- |
-| `POST` | `/api/auth/login` | **Body (JSON):** `email` (string), `password` (string) | Проверяет учётные данные относительно `DEFAULT_USER_*` из `.env`. При успехе возвращает `{ userSessionPayload: { userId, email } }`. JWT в cookie выставляет Server Action на стороне приложения, не этот роут. | Никуда не пишет (только ответ) |
+| :---: | :--- | :--- | :--- | :--- |
+| `POST` | `/api/auth/login` | **Body (JSON):**<br>`email` (string), `password` (string) | Проверяет учётные данные относительно `DEFAULT_USER_*` из `.env`. При успехе возвращает `{ userSessionPayload: { userId, email } }`. JWT в cookie выставляет Server Action на стороне приложения, не этот роут. | Никуда не пишет (только ответ) |
 | `GET` | `/api/data/task-lists` | — | Возвращает все списки задач в виде DTO (список + вложенные задачи). | Не пишет (читает оба JSON) |
-| `POST` | `/api/data/task-lists` | **Body (JSON):** `name` (string, обязателен); `taskIds` (string[], опционально) | Создаёт список задач с новым `id` (uuid) и `userId` из `DEFAULT_USER_ID`. | `task-lists.json` |
+| `POST` | `/api/data/task-lists` | **Body (JSON):**<br>`name` (string, обязателен); `taskIds` (string[], опционально) | Создаёт список задач с новым `id` (uuid) и `userId` из `DEFAULT_USER_ID`. | `task-lists.json` |
 | `GET` | `/api/data/task-lists/[id]` | **Path:** `id` — идентификатор списка | Возвращает один список с задачами. `404`, если список не найден. | Не пишет (читает оба JSON) |
-| `PUT` | `/api/data/task-lists/[id]` | **Path:** `id`; **Body (JSON):** `name` (string) | Переименовывает список. `404`, если список не найден. | `task-lists.json` |
+| `PUT` | `/api/data/task-lists/[id]` | **Path:** `id`;<br>**Body (JSON):** `name` (string) | Переименовывает список. `404`, если список не найден. | `task-lists.json` |
 | `DELETE` | `/api/data/task-lists/[id]` | **Path:** `id` | Удаляет список. Связанные задачи в `tasks.json` не удаляются. `404`, если список не найден. | `task-lists.json` |
 | `GET` | `/api/data/tasks` | — | Возвращает все задачи. | Не пишет (читает `tasks.json`) |
-| `POST` | `/api/data/tasks` | **Body (JSON):** `name` (string), `description` (string), `state` (TaskState), `priority` (number), `dueDate` (string), `taskListId` (string) | Создаёт задачу и добавляет её `id` в `taskIds` указанного списка. | `tasks.json` и `task-lists.json` |
+| `POST` | `/api/data/tasks` | **Body (JSON):**<br>`name` (string), `description` (string), `state` (TaskState), `priority` (number), `dueDate` (string), `taskListId` (string) | Создаёт задачу и добавляет её `id` в `taskIds` указанного списка. | `tasks.json` и `task-lists.json` |
 | `GET` | `/api/data/tasks/[id]` | **Path:** `id` — идентификатор задачи | Возвращает задачу с `taskListId` и `taskListName`. `404`, если задача или её список не найдены. | Не пишет (читает оба JSON) |
-| `PUT` | `/api/data/tasks/[id]` | **Path:** `id`; **Body (JSON, все поля опциональны):** `name`, `description`, `state`, `priority`, `dueDate` — незаданные поля сохраняют текущие значения | Обновляет задачу. `404`, если задача не найдена. | `tasks.json` |
+| `PUT` | `/api/data/tasks/[id]` | **Path:** `id`;<br>**Body (JSON, все поля опциональны):**<br>`name`, `description`, `state`, `priority`, `dueDate` — незаданные поля сохраняют текущие значения | Обновляет задачу. `404`, если задача не найдена. | `tasks.json` |
 | `DELETE` | `/api/data/tasks/[id]` | **Path:** `id` | Удаляет задачу и убирает её `id` из `taskIds` всех списков. `404`, если задача не найдена. | `tasks.json` и `task-lists.json` |
+
+---
 
 ## 2. Описание функций приложения
 

@@ -1,16 +1,16 @@
 import "server-only";
 
 import type { TaskListDto } from "../model/task-list-dto.model";
-import { apiUrl, errorMessages } from "@/src/shared/config";
+import { apiUrl } from "@/src/shared/config";
 
-export async function getTaskList(id: string): Promise<TaskListDto> {
-  const response = await fetch(apiUrl(`/api/data/task-lists/${id}`), {
+export function getTaskList(id: string): Promise<TaskListDto> {
+  return fetch(apiUrl(`/api/data/task-lists/${id}`), {
     cache: "no-store",
+  }).then((response: Response) => {
+    if (!response.ok) {
+      throw response;
+    }
+
+    return response.json();
   });
-
-  if (!response.ok) {
-    throw new Error(errorMessages.error.loadTaskListFailed);
-  }
-
-  return (await response.json()) as TaskListDto;
 }

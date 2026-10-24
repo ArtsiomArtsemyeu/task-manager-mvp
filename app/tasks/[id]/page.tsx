@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getTask } from "@/src/entities/task/api";
 import {
@@ -17,7 +18,13 @@ export const metadata: Metadata = {
 
 export default async function TaskPage({ params }: TaskPageProps) {
   const { id } = await params;
-  const taskPromise = getTask(id);
+  const taskPromise = getTask(id).catch((error: Response) => {
+    if (error.status === 404) {
+      notFound();
+    }
+
+    throw error;
+  });
 
   return (
     <Suspense fallback={<TaskDetailsSkeleton />}>
