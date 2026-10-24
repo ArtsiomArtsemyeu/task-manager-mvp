@@ -50,6 +50,14 @@
 .count {
   font-size: 0.9rem;
   color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.countValue {
+  font-weight: 700;
+  color: var(--foreground);
 }
 
 .indicators {

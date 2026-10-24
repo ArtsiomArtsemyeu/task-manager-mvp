@@ -75,28 +75,32 @@ export function AddTaskList({ isOpen, onClose }: AddTaskListProps) {
       isOpen={isOpen}
       title="Добавить новый список задач"
       onClose={onClose}
-    >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <div className={styles.inputGroup}>
-            <label htmlFor="add-task-list-name">Название</label>
-            <input
-              id="add-task-list-name"
-              {...register('name', {
-                required: errorMessages.validation.nameRequired,
-              })}
-              className={styles.input}
-              placeholder="Например, Работа"
-            />
-            {errors.name && <ErrorHighlight message={errors.name.message} />}
-          </div>
-
-          <div>{state?.error && <ErrorHighlight message={state.error} />}</div>
-        </div>
-
-        <button type="submit" disabled={isPending} className={styles.btnSubmit}>
+      action={
+        <button
+          type="submit"
+          form="add-task-list-form"
+          disabled={isPending}
+          className={styles.btnSubmit}
+        >
           {isPending ? 'Загрузка...' : 'Создать'}
         </button>
+      }
+    >
+      <form id="add-task-list-form" onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.inputGroup}>
+          <label htmlFor="add-task-list-name">Название</label>
+          <input
+            id="add-task-list-name"
+            {...register('name', {
+              required: errorMessages.validation.nameRequired,
+            })}
+            className={styles.input}
+            placeholder="Например, Работа"
+          />
+          {errors.name && <ErrorHighlight message={errors.name.message} />}
+        </div>
+
+        {state?.error && <ErrorHighlight message={state.error} />}
       </form>
     </Modal>
   );

@@ -12,6 +12,7 @@ import {
   TASK_PRIORITY_LABELS,
   TASK_STATE_LABELS,
   TASK_STATES,
+  getTomorrowDateTimeLocal,
 } from '@/src/entities/task';
 import { errorMessages } from '@/src/shared/config/error';
 import { useFillFormStubsHotkey } from '@/src/shared/lib/fill-form-stubs';
@@ -31,16 +32,6 @@ type AddTaskFormData = {
   priority: TaskPriority;
   dueDate: string;
 };
-
-function getTomorrowDateTimeLocal(): string {
-  const date = new Date();
-  date.setDate(date.getDate() + 1);
-  date.setHours(12, 0, 0, 0);
-
-  const offset = date.getTimezoneOffset();
-  const local = new Date(date.getTime() - offset * 60_000);
-  return local.toISOString().slice(0, 16);
-}
 
 function getAddTaskFormStubs(): Partial<AddTaskFormData> {
   return {
@@ -63,7 +54,7 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
       name: '',
       description: '',
       state: 'new',
-      priority: 2,
+      priority: 1,
       dueDate: '',
     },
   });
@@ -85,7 +76,7 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
         name: '',
         description: '',
         state: 'new',
-        priority: 2,
+        priority: 1,
         dueDate: '',
       });
     }
@@ -109,8 +100,26 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
   };
 
   return (
-    <Modal isOpen={isOpen} title="Добавить задачу" onClose={onClose}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <Modal
+      isOpen={isOpen}
+      title="Добавить задачу"
+      onClose={onClose}
+      action={
+        <button
+          type="submit"
+          form="add-task-form"
+          disabled={isPending}
+          className={styles.btnSubmit}
+        >
+          {isPending ? 'Создание...' : 'Создать'}
+        </button>
+      }
+    >
+      <form
+        id="add-task-form"
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className={styles.inputGroup}>
           <label htmlFor="add-task-name">Название</label>
           <input
@@ -182,10 +191,6 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
         </div>
 
         {state?.error && <ErrorHighlight message={state.error} />}
-
-        <button type="submit" disabled={isPending} className={styles.btnSubmit}>
-          {isPending ? 'Создание...' : 'Создать'}
-        </button>
       </form>
     </Modal>
   );

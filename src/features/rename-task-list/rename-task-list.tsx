@@ -67,8 +67,22 @@ export function RenameTaskList({
   };
 
   return (
-    <Modal isOpen={isOpen} title="Переименовать список" onClose={onClose}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <Modal
+      isOpen={isOpen}
+      title="Переименовать список"
+      onClose={onClose}
+      action={
+        <button
+          type="submit"
+          form="rename-task-list-form"
+          disabled={isPending}
+          className={styles.btnSubmit}
+        >
+          {isPending ? 'Сохранение...' : 'Сохранить'}
+        </button>
+      }
+    >
+      <form id="rename-task-list-form" onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputGroup}>
           <label htmlFor="rename-task-list-name">Название</label>
           <input
@@ -82,10 +96,6 @@ export function RenameTaskList({
         </div>
 
         {state?.error && <ErrorHighlight message={state.error} />}
-
-        <button type="submit" disabled={isPending} className={styles.btnSubmit}>
-          {isPending ? 'Сохранение...' : 'Сохранить'}
-        </button>
       </form>
     </Modal>
   );

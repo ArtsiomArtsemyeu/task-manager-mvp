@@ -34,31 +34,19 @@ export function DeleteTaskList({
   const onConfirm = () => {
     startTransition(() => {
       const formData = new FormData();
-      formData.append('id', taskListId);
+      Object.entries({ id: taskListId }).forEach(([key, val]) =>
+        formData.append(key, val),
+      );
       formAction(formData);
     });
   };
 
   return (
-    <Modal isOpen={isOpen} title="Удалить ѝпиѝок" onClose={onClose}>
-      <div className={styles.message}>
-        <p className={styles.messageText}>
-          Вы уверены, что хотите удалить ѝпиѝок «{taskListName}»?
-        </p>
-        <p className={styles.warning}>Это дейѝтвие нельзѝ отменить.</p>
-      </div>
-
-      {state?.error && <ErrorHighlight message={state.error} />}
-
-      <div className={styles.actions}>
-        <button
-          type="button"
-          className={styles.btnCancel}
-          onClick={onClose}
-          disabled={isPending}
-        >
-          Отмена
-        </button>
+    <Modal
+      isOpen={isOpen}
+      title="Удалить список"
+      onClose={onClose}
+      action={
         <button
           type="button"
           className={styles.btnDanger}
@@ -67,7 +55,16 @@ export function DeleteTaskList({
         >
           {isPending ? 'Удаление...' : 'Удалить'}
         </button>
+      }
+    >
+      <div className={styles.message}>
+        <p className={styles.messageText}>
+          Вы уверены, что хотите удалить список «{taskListName}»?
+        </p>
+        <p className={styles.warning}>Это действие нельзя отменить.</p>
       </div>
+
+      {state?.error && <ErrorHighlight message={state.error} />}
     </Modal>
   );
 }

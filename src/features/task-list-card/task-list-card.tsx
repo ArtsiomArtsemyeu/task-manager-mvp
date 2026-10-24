@@ -42,12 +42,13 @@ export function TaskListCard({
 
   return (
     <div className={styles.host}>
-      <CardMenu onRename={onRename} onDelete={onDelete} />
+      <CardMenu onRenameTasksListName={onRename} onDeleteTasksList={onDelete} />
 
       <Link href={`/lists/${taskList.id}`} className={styles.link}>
         <div className={styles.title}>{taskList.name}</div>
         <div className={styles.count}>
-          {`Количество задач: ${taskList.tasks.length}`}
+          Количество задач:
+          <span className={styles.countValue}>{taskList.tasks.length}</span>
         </div>
         <TaskMetrics tasks={taskList.tasks} />
         <ProgressBar progress={taskListProgress} />

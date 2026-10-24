@@ -11,32 +11,41 @@ type TaskListCardItemProps = {
 };
 
 export function TaskListCardItem({ taskList }: TaskListCardItemProps) {
-  const [isRenameOpen, setIsRenameOpen] = useState(false);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isRenameOpen, setIsRenameOpen] = useState<boolean>(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
 
-  const openRenameModal = useCallback(() => setIsRenameOpen(true), []);
-  const closeRenameModal = useCallback(() => setIsRenameOpen(false), []);
-  const openDeleteModal = useCallback(() => setIsDeleteOpen(true), []);
-  const closeDeleteModal = useCallback(() => setIsDeleteOpen(false), []);
+  const openRenameTasksListNameModal = useCallback(
+    () => setIsRenameOpen(true),
+    [],
+  );
+  const closeRenameTasksListNameModal = useCallback(
+    () => setIsRenameOpen(false),
+    [],
+  );
+  const openDeleteTasksListModal = useCallback(() => setIsDeleteOpen(true), []);
+  const closeDeleteTasksListModal = useCallback(
+    () => setIsDeleteOpen(false),
+    [],
+  );
 
   return (
     <>
       <TaskListCard
         taskList={taskList}
-        onRename={openRenameModal}
-        onDelete={openDeleteModal}
+        onRename={openRenameTasksListNameModal}
+        onDelete={openDeleteTasksListModal}
       />
       <RenameTaskList
         isOpen={isRenameOpen}
         taskListId={taskList.id}
         currentName={taskList.name}
-        onClose={closeRenameModal}
+        onClose={closeRenameTasksListNameModal}
       />
       <DeleteTaskList
         isOpen={isDeleteOpen}
         taskListId={taskList.id}
         taskListName={taskList.name}
-        onClose={closeDeleteModal}
+        onClose={closeDeleteTasksListModal}
       />
     </>
   );

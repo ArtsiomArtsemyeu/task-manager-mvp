@@ -1,5 +1,6 @@
 import { clsx } from 'clsx';
 import styles from './skeleton.module.css';
+import { toCssSize } from '@/src/shared/utils/css';
 
 type SkeletonProps = {
   width?: string | number;
@@ -7,13 +8,6 @@ type SkeletonProps = {
   className?: string;
   circle?: boolean;
 };
-
-function toCssSize(value?: string | number): string | undefined {
-  if (value === undefined) {
-    return undefined;
-  }
-  return typeof value === 'number' ? `${value}px` : value;
-}
 
 export function Skeleton({
   width,

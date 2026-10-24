@@ -12,8 +12,8 @@ interface TaskListsProps {
 
 export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
   const taskLists: TaskListDto[] = use(taskListsPromise);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [deferredQuery, setDeferredQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [deferredQuery, setDeferredQuery] = useState<string>('');
   const [isShowAddTaskList, setIsShowAddTaskList] = useState<boolean>(false);
 
   const changeQuery = useCallback(

@@ -9,13 +9,19 @@ import { AddTask } from '@/src/features/add-task';
 import { EditTask } from '@/src/features/edit-task';
 import { DeleteTask } from '@/src/features/delete-task';
 import { changeTaskStatusAction } from '@/src/features/change-task-status';
-import type { Task, TaskPriority, TaskState } from '@/src/entities/task';
+import type {
+  Task,
+  TaskPriority,
+  TaskPriorityLevel,
+  TaskState,
+} from '@/src/entities/task';
 import {
   TASK_PRIORITY_LABELS,
   TASK_STATE_LABELS,
   TASK_STATES,
   calculateTaskListProgress,
   formatTaskDueDate,
+  getTaskPriorityLevel,
   isDeadlineWithin48Hours,
   isTaskPriority,
   isTaskState,
@@ -31,25 +37,21 @@ type TaskListDetailsProps = {
   taskListPromise: Promise<TaskListDto>;
 };
 
-function getPriorityClass(priority: number): string | undefined {
-  if (priority >= 3) {
-    return styles.priorityHigh;
-  }
-  if (priority === 2) {
-    return styles.priorityMedium;
-  }
-  return styles.priorityLow;
-}
+const PRIORITY_CLASS_BY_LEVEL: Record<TaskPriorityLevel, string | undefined> = {
+  high: styles.priorityHigh,
+  medium: styles.priorityMedium,
+  low: styles.priorityLow,
+};
 
 export function TaskListDetailsWidget({
   taskListPromise,
 }: TaskListDetailsProps) {
   const taskList = use(taskListPromise);
-  const [tasks, setTasks] = useState(taskList.tasks);
-  const [tasksSource, setTasksSource] = useState(taskList.tasks);
+  const [tasks, setTasks] = useState<Task[]>(taskList.tasks);
+  const [tasksSource, setTasksSource] = useState<Task[]>(taskList.tasks);
   const [statusError, setStatusError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
-  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isAddOpen, setIsAddOpen] = useState<boolean>(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [deletingTask, setDeletingTask] = useState<Task | null>(null);
 
@@ -210,7 +212,7 @@ export function TaskListDetailsWidget({
                 {filteredTasks.map((task) => {
                   const priority = isTaskPriority(task.priority)
                     ? task.priority
-                    : (2 as TaskPriority);
+                    : (1 as TaskPriority);
                   const isOverdue = task.state === 'overdue';
                   const isSoon = !isOverdue && isDeadlineWithin48Hours(task);
 
@@ -253,7 +255,9 @@ export function TaskListDetailsWidget({
                         <span
                           className={clsx(
                             styles.priority,
-                            getPriorityClass(priority),
+                            PRIORITY_CLASS_BY_LEVEL[
+                              getTaskPriorityLevel(priority)
+                            ],
                           )}
                         >
                           {TASK_PRIORITY_LABELS[priority]}

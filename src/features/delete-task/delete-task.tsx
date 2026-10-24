@@ -48,25 +48,11 @@ export function DeleteTask({
   };
 
   return (
-    <Modal isOpen={isOpen} title="Удалить задачу" onClose={onClose}>
-      <div className={styles.message}>
-        <p className={styles.messageText}>
-          Вы уверены, что хотите удалить задачу «{taskName}»?
-        </p>
-        <p className={styles.warning}>Это действие нельзя отменить.</p>
-      </div>
-
-      {state?.error && <ErrorHighlight message={state.error} />}
-
-      <div className={styles.actions}>
-        <button
-          type="button"
-          className={styles.btnCancel}
-          onClick={onClose}
-          disabled={isPending}
-        >
-          Отмена
-        </button>
+    <Modal
+      isOpen={isOpen}
+      title="Удалить задачу"
+      onClose={onClose}
+      action={
         <button
           type="button"
           className={styles.btnDanger}
@@ -75,7 +61,16 @@ export function DeleteTask({
         >
           {isPending ? 'Удаление...' : 'Удалить'}
         </button>
+      }
+    >
+      <div className={styles.message}>
+        <p className={styles.messageText}>
+          Вы уверены, что хотите удалить задачу «{taskName}»?
+        </p>
+        <p className={styles.warning}>Это действие нельзя отменить.</p>
       </div>
+
+      {state?.error && <ErrorHighlight message={state.error} />}
     </Modal>
   );
 }

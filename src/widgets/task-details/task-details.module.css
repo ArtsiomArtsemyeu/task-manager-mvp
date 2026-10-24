@@ -42,18 +42,19 @@
   outline-offset: 2px;
 }
 
-.topRow {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
+.backIcon {
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+}
+
+:global([data-theme='light']) .backIcon,
+:global([data-theme='dark']) .backIcon {
+  filter: brightness(0);
 }
 
 .title {
   margin: 0;
   min-width: 0;
-  flex: 1 1 16rem;
   font-size: clamp(1.5rem, 3.5vw, 2rem);
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -64,8 +65,10 @@
 .actions {
   display: flex;
   align-items: center;
+  align-self: end;
   gap: 0.35rem;
-  flex: 0 0 auto;
+  flex-shrink: 0;
+  min-height: 2.45rem;
 }
 
 .iconButton {
@@ -80,6 +83,7 @@
   background: var(--surface);
   cursor: pointer;
   transition: background-color 0.15s ease;
+  flex-shrink: 0;
 }
 
 .iconButton:hover {
@@ -102,6 +106,7 @@
 }
 
 .card {
+  min-width: 0;
   overflow: hidden;
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
@@ -117,6 +122,13 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  min-width: 0;
+}
+
+.fieldValue {
+  display: flex;
+  align-items: center;
+  min-height: 2.45rem;
 }
 
 .label {
@@ -125,14 +137,19 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--muted);
+  line-height: 1.2;
+  min-height: 1.2em;
 }
 
 .description {
   margin: 0;
+  min-width: 0;
   color: var(--foreground);
   font-size: 0.98rem;
   line-height: 1.55;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .descriptionEmpty {
@@ -141,15 +158,47 @@
 }
 
 .metaRow {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem 1.25rem;
+  min-width: 0;
+}
+
+.metaGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 1rem 1.25rem;
+  min-width: 0;
+}
+
+.metaGroup > .field {
+  flex: 0 0 auto;
+}
+
+.metaTrailing {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: start;
+  gap: 0.75rem;
+  margin-left: auto;
+  min-width: 0;
+}
+
+.statusField {
+  flex: 1 1 10rem;
+  min-width: 8rem;
+  max-width: 14rem;
 }
 
 .statusSelect {
+  box-sizing: border-box;
   min-width: 0;
   width: 100%;
-  padding: 0.55rem 0.7rem;
+  height: 2.45rem;
+  padding: 0 0.7rem;
   border: 1px solid var(--input-border);
   border-radius: var(--radius-sm);
   background: var(--input-bg);
@@ -206,16 +255,13 @@
 }
 
 @media (max-width: 640px) {
-  .metaRow {
-    grid-template-columns: 1fr;
-  }
-
-  .topRow {
-    flex-direction: column;
-  }
-
-  .actions {
+  .metaTrailing {
+    margin-left: 0;
     width: 100%;
-    justify-content: flex-end;
+  }
+
+  .statusField {
+    flex: 1 1 auto;
+    max-width: none;
   }
 }

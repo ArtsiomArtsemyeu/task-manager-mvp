@@ -3,7 +3,10 @@ import type { Task } from '../model/task.model';
 import {
   calculateTaskCountByState,
   calculateTaskListProgress,
+  getTaskPriorityLevel,
+  getTomorrowDateTimeLocal,
   sortTasks,
+  toDateTimeLocalValue,
 } from './task.util';
 
 const makeTask = (overrides: Partial<Task> = {}): Task => ({
@@ -248,5 +251,51 @@ describe('sortTasks', () => {
       'Активная с поздним дедлайном',
       'Выполненная',
     ]);
+  });
+});
+
+describe('toDateTimeLocalValue', () => {
+  it('возвращает пустую строку для невалидной даты', () => {
+    expect(toDateTimeLocalValue('not-a-date')).toBe('');
+  });
+
+  it('возвращает значение в формате datetime-local', () => {
+    const result = toDateTimeLocalValue('2026-10-24T12:00:00.000Z');
+    expect(result).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/);
+  });
+});
+
+describe('getTomorrowDateTimeLocal', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-10-24T08:00:00.000Z'));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('возвращает завтрашний полдень в формате datetime-local', () => {
+    const result = getTomorrowDateTimeLocal();
+    expect(result).toMatch(/^\d{4}-\d{2}-\d{2}T12:00$/);
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const expectedDay = String(tomorrow.getDate()).padStart(2, '0');
+    const expectedMonth = String(tomorrow.getMonth() + 1).padStart(2, '0');
+    expect(
+      result.startsWith(
+        `${tomorrow.getFullYear()}-${expectedMonth}-${expectedDay}`,
+      ),
+    ).toBe(true);
+  });
+});
+
+describe('getTaskPriorityLevel', () => {
+  it('определяет уровень приоритета', () => {
+    expect(getTaskPriorityLevel(1)).toBe('low');
+    expect(getTaskPriorityLevel(2)).toBe('medium');
+    expect(getTaskPriorityLevel(3)).toBe('high');
+    expect(getTaskPriorityLevel(10)).toBe('high');
   });
 });

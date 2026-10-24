@@ -4,6 +4,9 @@ export {
   calculateTaskListProgress,
   isDeadlineWithin48Hours,
   formatTaskDueDate,
+  toDateTimeLocalValue,
+  getTomorrowDateTimeLocal,
+  getTaskPriorityLevel,
 } from './utils/task.util';
 export {
   isTaskState,
@@ -16,3 +19,4 @@ export {
 export type { Task } from './model/task.model';
 export type { TaskDto } from './model/task-dto.model';
 export type { TaskState, TaskPriority } from './config/task.config';
+export type { TaskPriorityLevel } from './utils/task.util';

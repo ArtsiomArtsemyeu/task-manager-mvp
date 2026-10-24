@@ -10,8 +10,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest",
-    "test:run": "vitest run",
+    "test": "vitest --project unit",
+    "test:run": "vitest run --project unit",
+    "test:storybook": "vitest run --project storybook",
     "playwright:install": "playwright install chromium",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

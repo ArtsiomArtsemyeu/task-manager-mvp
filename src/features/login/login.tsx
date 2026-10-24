@@ -16,11 +16,12 @@ type LoginFormData = {
   password: string;
 };
 
-type LoginFormProps = {
-  stubCredentials: LoginFormData;
+const LOGIN_FORM_STUBS: LoginFormData = {
+  email: 'admin@example.com',
+  password: 'Admin123!',
 };
 
-export function LoginForm({ stubCredentials }: LoginFormProps) {
+export function Login() {
   const {
     register,
     handleSubmit,
@@ -32,7 +33,7 @@ export function LoginForm({ stubCredentials }: LoginFormProps) {
   useFillFormStubsHotkey({
     getValues,
     setValue,
-    stubs: stubCredentials,
+    stubs: LOGIN_FORM_STUBS,
   });
 
   const [state, formAction, isPending] = useActionState<

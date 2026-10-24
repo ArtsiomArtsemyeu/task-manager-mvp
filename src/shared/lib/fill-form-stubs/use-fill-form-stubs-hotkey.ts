@@ -1,5 +1,3 @@
-'use client';
-
 import { useHotkeys } from 'react-hotkeys-hook';
 import type {
   FieldValues,
@@ -36,9 +34,7 @@ export function useFillFormStubsHotkey<T extends FieldValues>({
 }: UseFillFormStubsHotkeyOptions<T>) {
   useHotkeys(
     'alt+c',
-    (event) => {
-      event.preventDefault();
-
+    () => {
       const currentValues = getValues();
       const stubValues = typeof stubs === 'function' ? stubs() : stubs;
 

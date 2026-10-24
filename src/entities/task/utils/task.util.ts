@@ -1,6 +1,8 @@
 import type { TaskState } from '../config/task.config';
 import type { Task } from '../model/task.model';
 
+export type TaskPriorityLevel = 'low' | 'medium' | 'high';
+
 export const calculateTaskCountByState = (
   tasks: Task[],
   state: TaskState,
@@ -81,4 +83,32 @@ export const formatTaskDueDate = (isoDate: string): string => {
     hour: '2-digit',
     minute: '2-digit',
   }).format(date);
+};
+
+export const toDateTimeLocalValue = (isoDate: string): string => {
+  const date = new Date(isoDate);
+  if (Number.isNaN(date.getTime())) {
+    return '';
+  }
+
+  const offset = date.getTimezoneOffset();
+  const local = new Date(date.getTime() - offset * 60_000);
+  return local.toISOString().slice(0, 16);
+};
+
+export const getTomorrowDateTimeLocal = (): string => {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  date.setHours(12, 0, 0, 0);
+  return toDateTimeLocalValue(date.toISOString());
+};
+
+export const getTaskPriorityLevel = (priority: number): TaskPriorityLevel => {
+  if (priority >= 3) {
+    return 'high';
+  }
+  if (priority === 2) {
+    return 'medium';
+  }
+  return 'low';
 };

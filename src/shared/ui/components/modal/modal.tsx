@@ -1,6 +1,6 @@
 'use client';
 
-import type { MouseEvent } from 'react';
+import Image from 'next/image';
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './modal.module.css';
@@ -10,9 +10,16 @@ type ModalProps = {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  action?: React.ReactNode;
 };
 
-export function Modal({ isOpen, onClose, title, children }: ModalProps) {
+export function Modal({
+  isOpen,
+  onClose,
+  title,
+  children,
+  action,
+}: ModalProps) {
   useEffect(() => {
     if (!isOpen) return;
 
@@ -34,14 +41,9 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
 
   if (!isOpen) return null;
 
-  const handleOverlayClick = () => onClose();
-
-  const handleContentClick = (event: MouseEvent<HTMLDivElement>) =>
-    event.stopPropagation();
-
   return createPortal(
-    <div className={styles.overlay} onClick={handleOverlayClick}>
-      <div className={styles.content} onClick={handleContentClick}>
+    <div className={styles.overlay}>
+      <div className={styles.content} role="dialog" aria-modal="true">
         <header className={styles.header}>
           <h2>{title}</h2>
           <button
@@ -49,9 +51,28 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             className={styles.closeButton}
             onClick={onClose}
             aria-label="Закрыть"
-          />
+          >
+            <Image
+              src="/images/icons/close.svg"
+              alt="Закрыть"
+              width={20}
+              height={20}
+            />
+          </button>
         </header>
         <div className={styles.body}>{children}</div>
+        {action != null && (
+          <div className={styles.actions}>
+            <button
+              type="button"
+              className={styles.cancelButton}
+              onClick={onClose}
+            >
+              Отмена
+            </button>
+            {action}
+          </div>
+        )}
       </div>
     </div>,
     document.body,

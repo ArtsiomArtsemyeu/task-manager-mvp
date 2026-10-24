@@ -14,6 +14,7 @@ import {
   TASK_STATES,
   isTaskPriority,
   isTaskState,
+  toDateTimeLocalValue,
 } from '@/src/entities/task';
 import { errorMessages } from '@/src/shared/config/error';
 import { Modal } from '@/src/shared/ui/components/modal';
@@ -33,17 +34,6 @@ type EditTaskFormData = {
   priority: TaskPriority;
   dueDate: string;
 };
-
-function toDateTimeLocalValue(isoDate: string): string {
-  const date = new Date(isoDate);
-  if (Number.isNaN(date.getTime())) {
-    return '';
-  }
-
-  const offset = date.getTimezoneOffset();
-  const local = new Date(date.getTime() - offset * 60_000);
-  return local.toISOString().slice(0, 16);
-}
 
 export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
   const {
@@ -93,8 +83,26 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
   };
 
   return (
-    <Modal isOpen={isOpen} title="Редактировать задачу" onClose={onClose}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <Modal
+      isOpen={isOpen}
+      title="Редактировать задачу"
+      onClose={onClose}
+      action={
+        <button
+          type="submit"
+          form="edit-task-form"
+          disabled={isPending}
+          className={styles.btnSubmit}
+        >
+          {isPending ? 'Сохранение...' : 'Сохранить'}
+        </button>
+      }
+    >
+      <form
+        id="edit-task-form"
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className={styles.inputGroup}>
           <label htmlFor="edit-task-name">Название</label>
           <input
@@ -166,10 +174,6 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
         </div>
 
         {state?.error && <ErrorHighlight message={state.error} />}
-
-        <button type="submit" disabled={isPending} className={styles.btnSubmit}>
-          {isPending ? 'Сохранение...' : 'Сохранить'}
-        </button>
       </form>
     </Modal>
   );

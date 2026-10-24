@@ -1,21 +1,15 @@
 import { expect, userEvent, within } from 'storybook/test';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { LoginForm } from './login';
+import { Login } from './login';
 import { errorMessages } from '@/src/shared/config/error';
 
-const meta: Meta<typeof LoginForm> = {
-  title: 'Features/LoginForm',
-  component: LoginForm,
+const meta: Meta<typeof Login> = {
+  title: 'Features/Login',
+  component: Login,
   tags: ['autodocs'],
-  args: {
-    stubCredentials: {
-      email: 'demo@example.com',
-      password: 'password123',
-    },
-  },
 };
 
-type Story = StoryObj<typeof LoginForm>;
+type Story = StoryObj<typeof Login>;
 
 export const Default: Story = {};
 
