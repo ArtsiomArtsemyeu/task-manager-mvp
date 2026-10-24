@@ -1,84 +1,84 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { Task } from "../model/task.model";
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Task } from '../model/task.model';
 import {
   calculateTaskCountByState,
   calculateTaskListProgress,
   sortTasks,
-} from "./task.util";
+} from './task.util';
 
 const makeTask = (overrides: Partial<Task> = {}): Task => ({
-  id: "1",
-  name: "Task",
-  description: "",
-  state: "new",
+  id: '1',
+  name: 'Task',
+  description: '',
+  state: 'new',
   priority: 1,
-  dueDate: "2030-01-01T00:00:00.000Z",
+  dueDate: '2030-01-01T00:00:00.000Z',
   ...overrides,
 });
 
 const taskNames = (tasks: Task[]): string[] => tasks.map((task) => task.name);
 
 const tasksByStates: Task[] = [
-  makeTask({ id: "1", state: "new" }),
-  makeTask({ id: "2", state: "new" }),
-  makeTask({ id: "3", state: "in progress" }),
-  makeTask({ id: "4", state: "done" }),
-  makeTask({ id: "5", state: "done" }),
-  makeTask({ id: "6", state: "done" }),
-  makeTask({ id: "7", state: "overdue" }),
+  makeTask({ id: '1', state: 'new' }),
+  makeTask({ id: '2', state: 'new' }),
+  makeTask({ id: '3', state: 'in progress' }),
+  makeTask({ id: '4', state: 'done' }),
+  makeTask({ id: '5', state: 'done' }),
+  makeTask({ id: '6', state: 'done' }),
+  makeTask({ id: '7', state: 'overdue' }),
 ];
 
-describe("calculateTaskCountByState", () => {
-  it("возвращает 0 для пустого списка задач", () => {
-    expect(calculateTaskCountByState([], "new")).toBe(0);
+describe('calculateTaskCountByState', () => {
+  it('возвращает 0 для пустого списка задач', () => {
+    expect(calculateTaskCountByState([], 'new')).toBe(0);
   });
 
-  it("возвращает 0, если задач с таким статусом нет в списке", () => {
+  it('возвращает 0, если задач с таким статусом нет в списке', () => {
     const tasks = [
-      makeTask({ id: "1", state: "new" }),
-      makeTask({ id: "2", state: "done" }),
+      makeTask({ id: '1', state: 'new' }),
+      makeTask({ id: '2', state: 'done' }),
     ];
 
-    expect(calculateTaskCountByState(tasks, "overdue")).toBe(0);
+    expect(calculateTaskCountByState(tasks, 'overdue')).toBe(0);
   });
 
-  it("считает задачи с определённым статусом", () => {
-    expect(calculateTaskCountByState(tasksByStates, "new")).toBe(2);
-    expect(calculateTaskCountByState(tasksByStates, "in progress")).toBe(1);
-    expect(calculateTaskCountByState(tasksByStates, "done")).toBe(3);
-    expect(calculateTaskCountByState(tasksByStates, "overdue")).toBe(1);
+  it('считает задачи с определённым статусом', () => {
+    expect(calculateTaskCountByState(tasksByStates, 'new')).toBe(2);
+    expect(calculateTaskCountByState(tasksByStates, 'in progress')).toBe(1);
+    expect(calculateTaskCountByState(tasksByStates, 'done')).toBe(3);
+    expect(calculateTaskCountByState(tasksByStates, 'overdue')).toBe(1);
   });
 });
 
-describe("calculateTaskListProgress", () => {
-  it("возвращает прогресс равный 0 для пустого списка задач", () =>
+describe('calculateTaskListProgress', () => {
+  it('возвращает прогресс равный 0 для пустого списка задач', () =>
     expect(calculateTaskListProgress([])).toBe(0));
 
-  it("возвращает округлённый процент выполненных задач", () => {
+  it('возвращает округлённый процент выполненных задач', () => {
     const tasks = [
-      makeTask({ id: "1", state: "done" }),
-      makeTask({ id: "2", state: "new" }),
-      makeTask({ id: "3", state: "done" }),
+      makeTask({ id: '1', state: 'done' }),
+      makeTask({ id: '2', state: 'new' }),
+      makeTask({ id: '3', state: 'done' }),
     ];
 
     expect(calculateTaskListProgress(tasks)).toBe(67);
   });
 });
 
-describe("sortTasks", () => {
+describe('sortTasks', () => {
   beforeEach(() => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-06-15T12:00:00.000Z"));
+    vi.setSystemTime(new Date('2026-06-15T12:00:00.000Z'));
   });
 
   afterEach(() => {
     vi.useRealTimers();
   });
 
-  it("не меняет порядок задач в исходном массиве", () => {
+  it('не меняет порядок задач в исходном массиве', () => {
     const tasks = [
-      makeTask({ id: "1", name: "Выполненная", state: "done" }),
-      makeTask({ id: "2", name: "Активная", state: "new" }),
+      makeTask({ id: '1', name: 'Выполненная', state: 'done' }),
+      makeTask({ id: '2', name: 'Активная', state: 'new' }),
     ];
     const originalTaskNamesOrder = taskNames(tasks);
 
@@ -87,166 +87,166 @@ describe("sortTasks", () => {
     expect(taskNames(tasks)).toEqual(originalTaskNamesOrder);
   });
 
-  it("возвращает пустой массив, если в списке нет задач", () =>
+  it('возвращает пустой массив, если в списке нет задач', () =>
     expect(sortTasks([])).toEqual([]));
 
-  it("незавершенные задачи идут перед выполненными задачами в списке", () => {
+  it('незавершенные задачи идут перед выполненными задачами в списке', () => {
     const tasks = [
-      makeTask({ id: "1", name: "Выполненная", state: "done" }),
-      makeTask({ id: "2", name: "Активная", state: "new" }),
-      makeTask({ id: "3", name: "Тоже выполненная", state: "done" }),
+      makeTask({ id: '1', name: 'Выполненная', state: 'done' }),
+      makeTask({ id: '2', name: 'Активная', state: 'new' }),
+      makeTask({ id: '3', name: 'Тоже выполненная', state: 'done' }),
     ];
 
     expect(taskNames(sortTasks(tasks))).toEqual([
-      "Активная",
-      "Выполненная",
-      "Тоже выполненная",
+      'Активная',
+      'Выполненная',
+      'Тоже выполненная',
     ]);
   });
 
-  it("просроченные задачи идут первыми среду незавершенных задач", () => {
+  it('просроченные задачи идут первыми среду незавершенных задач', () => {
     const tasks = [
       makeTask({
-        id: "1",
-        name: "Обычная",
-        state: "new",
-        dueDate: "2026-07-01T12:00:00.000Z",
+        id: '1',
+        name: 'Обычная',
+        state: 'new',
+        dueDate: '2026-07-01T12:00:00.000Z',
       }),
       makeTask({
-        id: "2",
-        name: "Просроченная по статусу",
-        state: "overdue",
-        dueDate: "2026-07-10T12:00:00.000Z",
+        id: '2',
+        name: 'Просроченная по статусу',
+        state: 'overdue',
+        dueDate: '2026-07-10T12:00:00.000Z',
       }),
       makeTask({
-        id: "3",
-        name: "Просроченная по дате",
-        state: "new",
-        dueDate: "2026-06-01T12:00:00.000Z",
+        id: '3',
+        name: 'Просроченная по дате',
+        state: 'new',
+        dueDate: '2026-06-01T12:00:00.000Z',
       }),
     ];
 
     expect(taskNames(sortTasks(tasks))).toEqual([
-      "Просроченная по дате",
-      "Просроченная по статусу",
-      "Обычная",
+      'Просроченная по дате',
+      'Просроченная по статусу',
+      'Обычная',
     ]);
   });
 
-  it("при одинковом статусе выше задача, у которой раньше дедлайн — выше в списке", () => {
+  it('при одинковом статусе выше задача, у которой раньше дедлайн — выше в списке', () => {
     const tasks = [
       makeTask({
-        id: "1",
-        name: "Позже",
-        dueDate: "2026-08-01T12:00:00.000Z",
+        id: '1',
+        name: 'Позже',
+        dueDate: '2026-08-01T12:00:00.000Z',
       }),
       makeTask({
-        id: "2",
-        name: "Раньше",
-        dueDate: "2026-07-01T12:00:00.000Z",
+        id: '2',
+        name: 'Раньше',
+        dueDate: '2026-07-01T12:00:00.000Z',
       }),
     ];
 
-    expect(taskNames(sortTasks(tasks))).toEqual(["Раньше", "Позже"]);
+    expect(taskNames(sortTasks(tasks))).toEqual(['Раньше', 'Позже']);
   });
 
-  it("при одинаковом дедлайне выше согласно приоритетy — выше в списке", () => {
-    const sameDueDate = "2026-07-01T12:00:00.000Z";
+  it('при одинаковом дедлайне выше согласно приоритетy — выше в списке', () => {
+    const sameDueDate = '2026-07-01T12:00:00.000Z';
     const tasks = [
       makeTask({
-        id: "1",
-        name: "Низкий приоритет",
+        id: '1',
+        name: 'Низкий приоритет',
         priority: 1,
         dueDate: sameDueDate,
       }),
       makeTask({
-        id: "2",
-        name: "Высокий приоритет",
+        id: '2',
+        name: 'Высокий приоритет',
         priority: 5,
         dueDate: sameDueDate,
       }),
     ];
 
     expect(taskNames(sortTasks(tasks))).toEqual([
-      "Высокий приоритет",
-      "Низкий приоритет",
+      'Высокий приоритет',
+      'Низкий приоритет',
     ]);
   });
 
-  it("выполненные задачи не считаются просроченными и остаются в конце", () => {
+  it('выполненные задачи не считаются просроченными и остаются в конце', () => {
     const tasks = [
       makeTask({
-        id: "1",
-        name: "Выполненная, но с прошлой датой",
-        state: "done",
-        dueDate: "2026-01-01T12:00:00.000Z",
+        id: '1',
+        name: 'Выполненная, но с прошлой датой',
+        state: 'done',
+        dueDate: '2026-01-01T12:00:00.000Z',
       }),
       makeTask({
-        id: "2",
-        name: "Просроченная",
-        state: "overdue",
-        dueDate: "2026-01-01T12:00:00.000Z",
+        id: '2',
+        name: 'Просроченная',
+        state: 'overdue',
+        dueDate: '2026-01-01T12:00:00.000Z',
       }),
       makeTask({
-        id: "3",
-        name: "Активная",
-        state: "new",
-        dueDate: "2026-07-01T12:00:00.000Z",
+        id: '3',
+        name: 'Активная',
+        state: 'new',
+        dueDate: '2026-07-01T12:00:00.000Z',
       }),
     ];
 
     expect(taskNames(sortTasks(tasks))).toEqual([
-      "Просроченная",
-      "Активная",
-      "Выполненная, но с прошлой датой",
+      'Просроченная',
+      'Активная',
+      'Выполненная, но с прошлой датой',
     ]);
   });
 
-  it("сортировка задач согласно всем правилам", () => {
+  it('сортировка задач согласно всем правилам', () => {
     const tasks = [
       makeTask({
-        id: "1",
-        name: "Выполненная",
-        state: "done",
+        id: '1',
+        name: 'Выполненная',
+        state: 'done',
         priority: 10,
-        dueDate: "2026-01-01T12:00:00.000Z",
+        dueDate: '2026-01-01T12:00:00.000Z',
       }),
       makeTask({
-        id: "2",
-        name: "Активная с поздним дедлайном",
-        state: "new",
+        id: '2',
+        name: 'Активная с поздним дедлайном',
+        state: 'new',
         priority: 1,
-        dueDate: "2026-09-01T12:00:00.000Z",
+        dueDate: '2026-09-01T12:00:00.000Z',
       }),
       makeTask({
-        id: "3",
-        name: "Просроченная",
-        state: "overdue",
+        id: '3',
+        name: 'Просроченная',
+        state: 'overdue',
         priority: 1,
-        dueDate: "2026-01-01T12:00:00.000Z",
+        dueDate: '2026-01-01T12:00:00.000Z',
       }),
       makeTask({
-        id: "4",
-        name: "Активная с ранним дедлайном",
-        state: "new",
+        id: '4',
+        name: 'Активная с ранним дедлайном',
+        state: 'new',
         priority: 1,
-        dueDate: "2026-07-01T12:00:00.000Z",
+        dueDate: '2026-07-01T12:00:00.000Z',
       }),
       makeTask({
-        id: "5",
-        name: "Активная с тем же дедлайном, но выше приоритет",
-        state: "new",
+        id: '5',
+        name: 'Активная с тем же дедлайном, но выше приоритет',
+        state: 'new',
         priority: 5,
-        dueDate: "2026-07-01T12:00:00.000Z",
+        dueDate: '2026-07-01T12:00:00.000Z',
       }),
     ];
 
     expect(taskNames(sortTasks(tasks))).toEqual([
-      "Просроченная",
-      "Активная с тем же дедлайном, но выше приоритет",
-      "Активная с ранним дедлайном",
-      "Активная с поздним дедлайном",
-      "Выполненная",
+      'Просроченная',
+      'Активная с тем же дедлайном, но выше приоритет',
+      'Активная с ранним дедлайном',
+      'Активная с поздним дедлайном',
+      'Выполненная',
     ]);
   });
 });

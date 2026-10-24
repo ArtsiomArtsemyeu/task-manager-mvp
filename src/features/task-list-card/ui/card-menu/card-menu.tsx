@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { clsx } from "clsx";
-import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
-import styles from "./card-menu.module.css";
+import { clsx } from 'clsx';
+import Image from 'next/image';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import styles from './card-menu.module.css';
 
 type CardMenuProps = {
   onRename: () => void;
@@ -54,17 +54,17 @@ export function CardMenu({ onRename, onDelete }: CardMenuProps) {
     };
 
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         closeMenu();
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleEscape);
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
     };
   }, [closeMenu, isOpen]);
 

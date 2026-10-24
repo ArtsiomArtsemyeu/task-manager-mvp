@@ -1,1 +1,1 @@
-export { readDataFromFile, writeDataToFile } from "./file.util";
+export { readDataFromFile, writeDataToFile } from './file.util';

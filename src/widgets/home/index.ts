@@ -1,1 +1,1 @@
-export { HomeWidget as Home } from "./home";
+export { HomeWidget as Home } from './home';

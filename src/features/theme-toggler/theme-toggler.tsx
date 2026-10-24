@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { clsx } from "clsx";
-import { useTheme } from "next-themes";
-import { useCallback, useEffect, useRef, useState } from "react";
-import type { ThemeConfig } from "./config/theme.config";
-import styles from "./theme-toggler.module.css";
-import { ThemeTogglerItem } from "./ui/theme-toggler-item/theme-toggler-item";
+import { clsx } from 'clsx';
+import { useTheme } from 'next-themes';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import type { ThemeConfig } from './config/theme.config';
+import styles from './theme-toggler.module.css';
+import { ThemeTogglerItem } from './ui/theme-toggler-item/theme-toggler-item';
 
 type ThemeTogglerProps = {
   themes: ThemeConfig[];
@@ -39,8 +39,8 @@ export function ThemeToggler({ themes }: ThemeTogglerProps) {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (

@@ -1,1 +1,1 @@
-export { ErrorHighlight } from "./error-highlight";
+export { ErrorHighlight } from './error-highlight';

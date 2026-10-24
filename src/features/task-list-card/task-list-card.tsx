@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useMemo } from "react";
-import styles from "./task-list-card.module.css";
-import { TaskMetrics } from "./ui/task-metrics/task-metrics";
-import { CardMenu } from "./ui/card-menu/card-menu";
+import Link from 'next/link';
+import { useMemo } from 'react';
+import styles from './task-list-card.module.css';
+import { TaskMetrics } from './ui/task-metrics/task-metrics';
+import { CardMenu } from './ui/card-menu/card-menu';
 import {
   calculateTaskCountByState,
   calculateTaskListProgress,
   isDeadlineWithin48Hours,
-} from "@/src/entities/task";
-import type { TaskListDto } from "@/src/entities/task-list";
-import { ProgressBar } from "@/src/shared/ui/components/progress-bar";
-import { Chip } from "@/src/shared/ui/components/chip";
+} from '@/src/entities/task';
+import type { TaskListDto } from '@/src/entities/task-list';
+import { ProgressBar } from '@/src/shared/ui/components/progress-bar';
+import { Chip } from '@/src/shared/ui/components/chip';
 
 interface TaskListCardProps {
   taskList: TaskListDto;
@@ -31,7 +31,7 @@ export function TaskListCard({
   );
 
   const hasOverdueTasks = useMemo(
-    () => calculateTaskCountByState(taskList.tasks, "overdue") > 0,
+    () => calculateTaskCountByState(taskList.tasks, 'overdue') > 0,
     [taskList],
   );
 

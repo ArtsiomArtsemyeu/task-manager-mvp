@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { ProgressBar } from "./progress-bar";
-
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { ProgressBar } from './progress-bar';
 
 const meta: Meta<typeof ProgressBar> = {
-  title: "Shared/ProgressBar",
+  title: 'Shared/ProgressBar',
   component: ProgressBar,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 };
 
 type Story = StoryObj<typeof ProgressBar>;

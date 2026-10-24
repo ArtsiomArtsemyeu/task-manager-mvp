@@ -4,14 +4,15 @@
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
-  --font-sans: var(--font-geist-sans), "Segoe UI", sans-serif;
+  --font-sans: var(--font-geist-sans), 'Segoe UI', sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --transition-theme: background-color 0.3s ease, color 0.3s ease,
-    border-color 0.3s ease, box-shadow 0.3s ease;
+  --transition-theme:
+    background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 :root,
-[data-theme="default"] {
+[data-theme='default'] {
   --background: #eef6f0;
   --foreground: #1a2e22;
   --muted: #5a7263;
@@ -50,7 +51,7 @@
   --toggler-hover: color-mix(in srgb, #ffffff 18%, transparent);
 }
 
-[data-theme="light"] {
+[data-theme='light'] {
   --background: #fbfcfe;
   --foreground: #334155;
   --muted: #7b8a9c;
@@ -89,7 +90,7 @@
   --toggler-hover: color-mix(in srgb, #0f766e 10%, transparent);
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --background: #0f1419;
   --foreground: #e8eef4;
   --muted: #9aa8b5;

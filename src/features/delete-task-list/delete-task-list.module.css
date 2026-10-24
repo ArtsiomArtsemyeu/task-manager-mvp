@@ -1,0 +1,70 @@
+.message {
+  margin: 0 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.messageText {
+  margin: 0;
+  color: var(--foreground, #4a4a4a);
+  line-height: 1.5;
+}
+
+.warning {
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm, 0.5rem);
+  background: var(--chip-red-bg, #fde8e8);
+  color: var(--chip-red-fg, #9b2c2c);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.btnCancel,
+.btnDanger {
+  flex: 1 1 8rem;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.btnCancel {
+  background: #f2f2f7;
+  color: #1d1d1f;
+}
+
+.btnCancel:hover {
+  background: #e5e5ea;
+}
+
+.btnDanger {
+  background: #ff3b30;
+  color: #ffffff;
+}
+
+.btnDanger:hover {
+  background: #e0352b;
+}
+
+.btnDanger:active {
+  background: #c42f26;
+}
+
+.btnCancel:disabled,
+.btnDanger:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

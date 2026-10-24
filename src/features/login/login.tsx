@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { startTransition, useActionState } from "react";
-import type { SubmitHandler} from "react-hook-form";
-import { useForm } from "react-hook-form";
-import styles from "./login.module.css";
-import type { LoginActionState } from "./api/login.action";
-import { loginAction } from "./api/login.action";
-import { errorMessages } from "@/src/shared/config/error";
-import { useFillFormStubsHotkey } from "@/src/shared/lib/fill-form-stubs";
-import { CircleLoader } from "@/src/shared/ui/components/circle-loader";
-import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
+import { startTransition, useActionState } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import styles from './login.module.css';
+import type { LoginActionState } from './api/login.action';
+import { loginAction } from './api/login.action';
+import { errorMessages } from '@/src/shared/config/error';
+import { useFillFormStubsHotkey } from '@/src/shared/lib/fill-form-stubs';
+import { CircleLoader } from '@/src/shared/ui/components/circle-loader';
+import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
 
 type LoginFormData = {
   email: string;
@@ -43,9 +43,7 @@ export function LoginForm({ stubCredentials }: LoginFormProps) {
   const onSubmit: SubmitHandler<LoginFormData> = (data: LoginFormData) => {
     startTransition(() => {
       const formData = new FormData();
-      Object.entries(data).forEach(([key, val]) =>
-        formData.append(key, val),
-      );
+      Object.entries(data).forEach(([key, val]) => formData.append(key, val));
       formAction(formData);
     });
   };
@@ -61,7 +59,7 @@ export function LoginForm({ stubCredentials }: LoginFormProps) {
                 id="email"
                 type="email"
                 autoComplete="email"
-                {...register("email", {
+                {...register('email', {
                   required: errorMessages.validation.emailRequired,
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -82,7 +80,7 @@ export function LoginForm({ stubCredentials }: LoginFormProps) {
                 id="password"
                 type="password"
                 autoComplete="current-password"
-                {...register("password", {
+                {...register('password', {
                   required: errorMessages.validation.passwordRequired,
                   minLength: {
                     value: 8,
@@ -105,7 +103,7 @@ export function LoginForm({ stubCredentials }: LoginFormProps) {
             disabled={isPending}
             className={styles.btnSubmit}
           >
-            {isPending ? "Загрузка..." : "Войти"}
+            {isPending ? 'Загрузка...' : 'Войти'}
           </button>
         </form>
       </div>

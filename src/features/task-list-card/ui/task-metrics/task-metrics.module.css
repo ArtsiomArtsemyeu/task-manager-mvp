@@ -1,45 +1,45 @@
 .host {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.45rem 0.65rem;
-    padding: 0.7rem 0.75rem;
-    border-radius: var(--radius-sm);
-    background: color-mix(in srgb, var(--accent-soft) 70%, transparent);
-    border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem 0.65rem;
+  padding: 0.7rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--accent-soft) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
 }
 
 .item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
 }
 
 .label {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
 }
 
 .value {
-    font-size: 0.95rem;
-    font-weight: 650;
-    font-variant-numeric: tabular-nums;
+  font-size: 0.95rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
 }
 
 .new {
-    color: var(--metric-new);
+  color: var(--metric-new);
 }
 
 .progress {
-    color: var(--metric-progress);
+  color: var(--metric-progress);
 }
 
 .done {
-    color: var(--metric-done);
+  color: var(--metric-done);
 }
 
 .overdue {
-    color: var(--metric-overdue);
+  color: var(--metric-overdue);
 }

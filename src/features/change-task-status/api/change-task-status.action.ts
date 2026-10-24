@@ -1,8 +1,8 @@
-"use server";
+'use server';
 
-import { revalidatePath } from "next/cache";
-import type { TaskState } from "@/src/entities/task";
-import { apiUrl, errorMessages } from "@/src/shared/config";
+import { revalidatePath } from 'next/cache';
+import type { TaskState } from '@/src/entities/task';
+import { apiUrl, errorMessages } from '@/src/shared/config';
 
 export async function changeTaskStatusAction(
   id: string,
@@ -14,8 +14,8 @@ export async function changeTaskStatusAction(
   }
 
   const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ state }),
   });
 
@@ -25,6 +25,6 @@ export async function changeTaskStatusAction(
 
   revalidatePath(`/tasks/${id}`);
   revalidatePath(`/lists/${taskListId}`);
-  revalidatePath("/lists");
+  revalidatePath('/lists');
   return { success: true };
 }

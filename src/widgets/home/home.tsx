@@ -1,6 +1,6 @@
-import styles from "./home.module.css";
-import { Login } from "@/src/features/login";
-import { defaultUser } from "@/src/shared/config";
+import styles from './home.module.css';
+import { Login } from '@/src/features/login';
+import { defaultUser } from '@/src/shared/config';
 
 export function HomeWidget() {
   return (

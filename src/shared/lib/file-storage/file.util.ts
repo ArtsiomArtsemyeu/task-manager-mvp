@@ -1,19 +1,19 @@
-import fs from "fs/promises";
-import path from "path";
+import fs from 'fs/promises';
+import path from 'path';
 
 const BASE_DATA_DIR = path.join(
   process.cwd(),
-  "src",
-  "shared",
-  "lib",
-  "file-storage",
-  "data",
+  'src',
+  'shared',
+  'lib',
+  'file-storage',
+  'data',
 );
 
 export async function readDataFromFile<T>(fileName: string): Promise<T> {
   try {
     const filePath = path.join(BASE_DATA_DIR, fileName);
-    const data = await fs.readFile(filePath, "utf8");
+    const data = await fs.readFile(filePath, 'utf8');
 
     return JSON.parse(data) as T;
   } catch (error) {
@@ -28,5 +28,5 @@ export async function writeDataToFile(
 ): Promise<void> {
   const filePath = path.join(BASE_DATA_DIR, fileName);
   await fs.mkdir(BASE_DATA_DIR, { recursive: true });
-  await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8");
+  await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
 }

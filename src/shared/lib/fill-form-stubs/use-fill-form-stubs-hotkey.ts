@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useHotkeys } from "react-hotkeys-hook";
+import { useHotkeys } from 'react-hotkeys-hook';
 import type {
   FieldValues,
   Path,
   PathValue,
   UseFormGetValues,
   UseFormSetValue,
-} from "react-hook-form";
+} from 'react-hook-form';
 
 type UseFillFormStubsHotkeyOptions<T extends FieldValues> = {
   getValues: UseFormGetValues<T>;
@@ -21,8 +21,8 @@ function isEmptyValue(value: unknown): boolean {
     return true;
   }
 
-  if (typeof value === "string") {
-    return value.trim() === "";
+  if (typeof value === 'string') {
+    return value.trim() === '';
   }
 
   return false;
@@ -35,12 +35,12 @@ export function useFillFormStubsHotkey<T extends FieldValues>({
   enabled = true,
 }: UseFillFormStubsHotkeyOptions<T>) {
   useHotkeys(
-    "alt+c",
+    'alt+c',
     (event) => {
       event.preventDefault();
 
       const currentValues = getValues();
-      const stubValues = typeof stubs === "function" ? stubs() : stubs;
+      const stubValues = typeof stubs === 'function' ? stubs() : stubs;
 
       (Object.keys(stubValues) as Path<T>[]).forEach((fieldName) => {
         const stubValue = stubValues[fieldName as keyof typeof stubValues];

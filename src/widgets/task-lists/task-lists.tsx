@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { startTransition, use, useCallback, useState } from "react";
-import styles from "./task-lists.module.css";
-import { TaskListCardItem } from "./ui/task-list-card-item/task-list-card-item";
-import { AddTaskListModal } from "@/src/features/add-task-list-modal";
-import type { TaskListDto } from "@/src/entities/task-list";
+import { startTransition, use, useCallback, useState } from 'react';
+import styles from './task-lists.module.css';
+import { TaskListCardItem } from './ui/task-list-card-item/task-list-card-item';
+import { AddTaskList } from '@/src/features/add-task-list';
+import type { TaskListDto } from '@/src/entities/task-list';
 
 interface TaskListsProps {
   taskListsPromise: Promise<TaskListDto[]>;
@@ -12,10 +12,9 @@ interface TaskListsProps {
 
 export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
   const taskLists: TaskListDto[] = use(taskListsPromise);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [deferredQuery, setDeferredQuery] = useState("");
-  const [isShowAddTaskListModal, setIsShowAddTaskListModal] =
-    useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [deferredQuery, setDeferredQuery] = useState('');
+  const [isShowAddTaskList, setIsShowAddTaskList] = useState<boolean>(false);
 
   const changeQuery = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,15 +27,9 @@ export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
     [],
   );
 
-  const showAddTaskListModal = useCallback(
-    () => setIsShowAddTaskListModal(true),
-    [],
-  );
+  const showAddTaskList = useCallback(() => setIsShowAddTaskList(true), []);
 
-  const closeAddTaskListModal = useCallback(
-    () => setIsShowAddTaskListModal(false),
-    [],
-  );
+  const closeAddTaskList = useCallback(() => setIsShowAddTaskList(false), []);
 
   const filteredTaskLists = taskLists.filter((taskList: TaskListDto) =>
     deferredQuery.trim()
@@ -58,7 +51,7 @@ export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
         <button
           type="button"
           className={styles.addButton}
-          onClick={showAddTaskListModal}
+          onClick={showAddTaskList}
         >
           Добавить новый список
         </button>
@@ -74,10 +67,7 @@ export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
           ))}
         </div>
       )}
-      <AddTaskListModal
-        isOpen={isShowAddTaskListModal}
-        onClose={closeAddTaskListModal}
-      />
+      <AddTaskList isOpen={isShowAddTaskList} onClose={closeAddTaskList} />
     </div>
   );
 }

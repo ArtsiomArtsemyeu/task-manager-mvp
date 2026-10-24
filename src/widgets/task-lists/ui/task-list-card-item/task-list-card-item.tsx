@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useCallback, useState } from "react";
-import { TaskListCard } from "@/src/features/task-list-card";
-import { RenameTaskListModal } from "@/src/features/rename-task-list-modal";
-import { DeleteTaskListModal } from "@/src/features/delete-task-list-modal";
-import type { TaskListDto } from "@/src/entities/task-list";
+import { useCallback, useState } from 'react';
+import { TaskListCard } from '@/src/features/task-list-card';
+import { RenameTaskList } from '@/src/features/rename-task-list';
+import { DeleteTaskList } from '@/src/features/delete-task-list';
+import type { TaskListDto } from '@/src/entities/task-list';
 
 type TaskListCardItemProps = {
   taskList: TaskListDto;
@@ -26,13 +26,13 @@ export function TaskListCardItem({ taskList }: TaskListCardItemProps) {
         onRename={openRenameModal}
         onDelete={openDeleteModal}
       />
-      <RenameTaskListModal
+      <RenameTaskList
         isOpen={isRenameOpen}
         taskListId={taskList.id}
         currentName={taskList.name}
         onClose={closeRenameModal}
       />
-      <DeleteTaskListModal
+      <DeleteTaskList
         isOpen={isDeleteOpen}
         taskListId={taskList.id}
         taskListName={taskList.name}

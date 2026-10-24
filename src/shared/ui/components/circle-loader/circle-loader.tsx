@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import styles from "./circle-loader.module.css";
+import styles from './circle-loader.module.css';
 
 interface CircleLoaderProps {
   show: boolean;

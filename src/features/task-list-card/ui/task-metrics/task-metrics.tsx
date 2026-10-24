@@ -1,7 +1,7 @@
-import { useMemo } from "react";
-import styles from "./task-metrics.module.css";
-import type { Task} from "@/src/entities/task";
-import { calculateTaskCountByState } from "@/src/entities/task";
+import { useMemo } from 'react';
+import styles from './task-metrics.module.css';
+import type { Task } from '@/src/entities/task';
+import { calculateTaskCountByState } from '@/src/entities/task';
 
 type TaskMetricsProps = {
   tasks: Task[];
@@ -9,19 +9,19 @@ type TaskMetricsProps = {
 
 export function TaskMetrics({ tasks }: TaskMetricsProps) {
   const newTaskCount = useMemo(
-    () => calculateTaskCountByState(tasks, "new"),
+    () => calculateTaskCountByState(tasks, 'new'),
     [tasks],
   );
   const inProgressTaskCount = useMemo(
-    () => calculateTaskCountByState(tasks, "in progress"),
+    () => calculateTaskCountByState(tasks, 'in progress'),
     [tasks],
   );
   const doneTaskCount = useMemo(
-    () => calculateTaskCountByState(tasks, "done"),
+    () => calculateTaskCountByState(tasks, 'done'),
     [tasks],
   );
   const overdueTaskCount = useMemo(
-    () => calculateTaskCountByState(tasks, "overdue"),
+    () => calculateTaskCountByState(tasks, 'overdue'),
     [tasks],
   );
 

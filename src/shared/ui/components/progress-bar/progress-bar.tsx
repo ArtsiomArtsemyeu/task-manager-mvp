@@ -1,4 +1,4 @@
-import styles from "./progress-bar.module.css";
+import styles from './progress-bar.module.css';
 
 export function ProgressBar({ progress = 0 }) {
   const validatedProgress = Math.min(Math.max(progress, 0), 100);

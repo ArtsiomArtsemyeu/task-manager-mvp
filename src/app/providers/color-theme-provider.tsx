@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from 'next-themes';
 
 export function ColorThemeProvider({
   children,
@@ -11,7 +11,7 @@ export function ColorThemeProvider({
     <ThemeProvider
       attribute="data-theme"
       defaultTheme="default"
-      themes={["default", "dark", "light"]}
+      themes={['default', 'dark', 'light']}
     >
       {children}
     </ThemeProvider>

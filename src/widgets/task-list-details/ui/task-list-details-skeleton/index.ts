@@ -1,1 +1,1 @@
-export { TaskListDetailsSkeleton } from "./task-list-details-skeleton";
+export { TaskListDetailsSkeleton } from './task-list-details-skeleton';

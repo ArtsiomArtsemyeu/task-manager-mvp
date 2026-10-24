@@ -1,8 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import styles from "./error-page.module.css";
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from './error-page.module.css';
 
-type ErrorStatus = "not-found" | "server-error";
+type ErrorStatus = 'not-found' | 'server-error';
 
 type ErrorPageProps = {
   status: ErrorStatus;
@@ -20,21 +20,21 @@ const copy: Record<
     iconAlt: string;
   }
 > = {
-  "not-found": {
-    code: "404",
-    title: "Страница не найдена.",
-    hint: "Такой страницы нет или она была перемещена. Вернитесь на главную и продолжите работу с задачами.",
-    ariaLabel: "Страница не найдена",
-    iconSrc: "/images/icons/not-found.svg",
-    iconAlt: "Иконка: страница не найдена",
+  'not-found': {
+    code: '404',
+    title: 'Страница не найдена.',
+    hint: 'Такой страницы нет или она была перемещена. Вернитесь на главную и продолжите работу с задачами.',
+    ariaLabel: 'Страница не найдена',
+    iconSrc: '/images/icons/not-found.svg',
+    iconAlt: 'Иконка: страница не найдена',
   },
-  "server-error": {
-    code: "500",
-    title: "Что-то пошло не так.",
-    hint: "Произошла внутренняя ошибка. Попробуйте ещё раз или вернитесь на главную страницу.",
-    ariaLabel: "Ошибка сервера",
-    iconSrc: "/images/icons/server-error.svg",
-    iconAlt: "Иконка: ошибка сервера",
+  'server-error': {
+    code: '500',
+    title: 'Что-то пошло не так.',
+    hint: 'Произошла внутренняя ошибка. Попробуйте ещё раз или вернитесь на главную страницу.',
+    ariaLabel: 'Ошибка сервера',
+    iconSrc: '/images/icons/server-error.svg',
+    iconAlt: 'Иконка: ошибка сервера',
   },
 };
 

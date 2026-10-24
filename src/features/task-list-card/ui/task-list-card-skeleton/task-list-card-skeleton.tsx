@@ -1,5 +1,5 @@
-import styles from "./task-list-card-skeleton.module.css";
-import { Skeleton } from "@/src/shared/ui/components/skeleton";
+import styles from './task-list-card-skeleton.module.css';
+import { Skeleton } from '@/src/shared/ui/components/skeleton';
 
 export function TaskListCardSkeleton() {
   return (

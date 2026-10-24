@@ -1,1 +1,1 @@
-export { ColorThemeProvider } from "./color-theme-provider";
+export { ColorThemeProvider } from './color-theme-provider';

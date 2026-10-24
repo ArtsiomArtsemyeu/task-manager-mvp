@@ -1,1 +1,1 @@
-export { isRecord, isStringArray, readJson } from "./type-guard.util";
+export { isRecord, isStringArray, readJson } from './type-guard.util';

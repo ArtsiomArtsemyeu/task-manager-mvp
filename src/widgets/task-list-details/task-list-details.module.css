@@ -46,8 +46,8 @@
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-areas:
-    "title right"
-    "filters right";
+    'title right'
+    'filters right';
   align-items: start;
   column-gap: 1.5rem;
   row-gap: 1rem;
@@ -369,9 +369,9 @@
   .topGrid {
     grid-template-columns: 1fr;
     grid-template-areas:
-      "title"
-      "right"
-      "filters";
+      'title'
+      'right'
+      'filters';
   }
 
   .rightCol {

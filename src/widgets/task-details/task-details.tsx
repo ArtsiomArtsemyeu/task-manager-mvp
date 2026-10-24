@@ -1,17 +1,14 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { clsx } from "clsx";
-import { startTransition, use, useCallback, useEffect, useState } from "react";
-import styles from "./task-details.module.css";
-import { EditTaskModal } from "@/src/features/edit-task-modal";
-import { DeleteTaskModal } from "@/src/features/delete-task-modal";
-import { changeTaskStatusAction } from "@/src/features/change-task-status";
-import type {
-  TaskDto,
-  TaskPriority,
-  TaskState} from "@/src/entities/task";
+import Image from 'next/image';
+import Link from 'next/link';
+import { clsx } from 'clsx';
+import { startTransition, use, useCallback, useState } from 'react';
+import styles from './task-details.module.css';
+import { EditTask } from '@/src/features/edit-task';
+import { DeleteTask } from '@/src/features/delete-task';
+import { changeTaskStatusAction } from '@/src/features/change-task-status';
+import type { TaskDto, TaskPriority, TaskState } from '@/src/entities/task';
 import {
   formatTaskDueDate,
   isDeadlineWithin48Hours,
@@ -19,9 +16,9 @@ import {
   isTaskState,
   TASK_PRIORITY_LABELS,
   TASK_STATE_LABELS,
-  TASK_STATES
-} from "@/src/entities/task";
-import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
+  TASK_STATES,
+} from '@/src/entities/task';
+import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
 
 type TaskDetailsProps = {
   taskPromise: Promise<TaskDto>;
@@ -38,7 +35,7 @@ function getPriorityClass(priority: number): string | undefined {
 }
 
 function getInitialState(state: string): TaskState {
-  return isTaskState(state) ? state : "new";
+  return isTaskState(state) ? state : 'new';
 }
 
 export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
@@ -48,16 +45,18 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
   const [status, setStatus] = useState<TaskState>(() =>
     getInitialState(task.state),
   );
+  const [statusSource, setStatusSource] = useState(task.state);
   const [statusError, setStatusError] = useState<string | null>(null);
 
-  useEffect(() => {
+  if (task.state !== statusSource) {
+    setStatusSource(task.state);
     setStatus(getInitialState(task.state));
-  }, [task.state]);
+  }
 
   const priority = isTaskPriority(task.priority)
     ? task.priority
     : (2 as TaskPriority);
-  const isOverdue = status === "overdue";
+  const isOverdue = status === 'overdue';
   const isSoon = !isOverdue && isDeadlineWithin48Hours(task);
 
   const openEditModal = useCallback(() => setIsEditOpen(true), []);
@@ -182,9 +181,7 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
 
           <div className={styles.field}>
             <span className={styles.label}>Приоритет</span>
-            <span
-              className={clsx(styles.priority, getPriorityClass(priority))}
-            >
+            <span className={clsx(styles.priority, getPriorityClass(priority))}>
               {TASK_PRIORITY_LABELS[priority]}
             </span>
           </div>
@@ -204,13 +201,13 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
         </div>
       </section>
 
-      <EditTaskModal
+      <EditTask
         isOpen={isEditOpen}
         taskListId={task.taskListId}
         task={{ ...task, state: status }}
         onClose={closeEditModal}
       />
-      <DeleteTaskModal
+      <DeleteTask
         isOpen={isDeleteOpen}
         taskListId={task.taskListId}
         taskId={task.id}

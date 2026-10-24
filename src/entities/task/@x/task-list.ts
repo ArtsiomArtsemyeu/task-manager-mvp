@@ -1,1 +1,1 @@
-export type { Task } from "../model/task.model";
+export type { Task } from '../model/task.model';

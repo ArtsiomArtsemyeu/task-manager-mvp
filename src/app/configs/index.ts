@@ -1,1 +1,1 @@
-export { supportedThemes } from "./theme-configs";
+export { supportedThemes } from './theme-configs';

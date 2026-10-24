@@ -1,1 +1,1 @@
-export { CircleLoader } from "./circle-loader";
+export { CircleLoader } from './circle-loader';

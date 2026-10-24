@@ -1,1 +1,1 @@
-export { getPortalBody } from "./get-portal-body";
+export { getPortalBody } from './get-portal-body';

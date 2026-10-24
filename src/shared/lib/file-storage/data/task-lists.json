@@ -25,9 +25,7 @@
     "id": "3775666c-a556-49c4-82fb-d90d0e81cd27",
     "name": "Здоровье и спорт",
     "userId": "055cf2ac-a56a-4d16-a897-4597c4ea3756",
-    "taskIds": [
-      "758343c3-8a08-4bc9-bc5d-214ade88119e"
-    ]
+    "taskIds": ["758343c3-8a08-4bc9-bc5d-214ade88119e"]
   },
   {
     "id": "af2b8a78-fcb6-45f6-b7ae-97b1c69c9bc7",
@@ -54,9 +52,7 @@
     "id": "22ce5a3e-1734-44ed-85f5-d4df85d941a9",
     "name": "Домашние обязанности",
     "userId": "055cf2ac-a56a-4d16-a897-4597c4ea3756",
-    "taskIds": [
-      "98db3499-9898-4ac9-8f06-6a9fd972ef76"
-    ]
+    "taskIds": ["98db3499-9898-4ac9-8f06-6a9fd972ef76"]
   },
   {
     "id": "3ebe2271-0f74-42cd-abe1-697dac0fb574",

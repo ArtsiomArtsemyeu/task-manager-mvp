@@ -1,9 +1,9 @@
-import { clsx } from "clsx";
-import styles from "./chip.module.css";
+import { clsx } from 'clsx';
+import styles from './chip.module.css';
 
 type ChipProps = {
   label: string;
-  color: "red" | "yellow";
+  color: 'red' | 'yellow';
 };
 
 export function Chip({ label, color }: ChipProps) {
@@ -11,8 +11,8 @@ export function Chip({ label, color }: ChipProps) {
     <div
       className={clsx(
         styles.host,
-        color === "red" && styles.red,
-        color === "yellow" && styles.yellow,
+        color === 'red' && styles.red,
+        color === 'yellow' && styles.yellow,
       )}
     >
       {label}

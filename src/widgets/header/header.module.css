@@ -16,7 +16,7 @@
   transition: var(--transition-theme);
 }
 
-:global([data-theme="light"]) .host {
+:global([data-theme='light']) .host {
   box-shadow: 0 6px 20px color-mix(in srgb, #94a3b8 18%, transparent);
 }
 
@@ -25,9 +25,5 @@
     min-height: 3.75rem;
     padding-block: 0.65rem;
     align-items: flex-start;
-  }
-
-  .logo {
-    max-width: calc(100% - 3rem);
   }
 }

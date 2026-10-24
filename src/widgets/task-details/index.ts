@@ -1,2 +1,2 @@
-export { TaskDetailsWidget } from "./task-details";
-export { TaskDetailsSkeleton } from "./ui/task-details-skeleton";
+export { TaskDetailsWidget } from './task-details';
+export { TaskDetailsSkeleton } from './ui/task-details-skeleton';

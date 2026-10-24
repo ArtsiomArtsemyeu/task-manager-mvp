@@ -1,1 +1,1 @@
-export { TaskDetailsSkeleton } from "./task-details-skeleton";
+export { TaskDetailsSkeleton } from './task-details-skeleton';

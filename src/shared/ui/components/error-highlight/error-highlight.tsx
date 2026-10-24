@@ -1,4 +1,4 @@
-import styles from "./error-highlight.module.css";
+import styles from './error-highlight.module.css';
 
 type ErrorHighlightProps = {
   message?: string;

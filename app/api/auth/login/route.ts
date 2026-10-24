@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
-import type { UserSession } from "@/src/entities/user";
-import { defaultUser, errorMessages } from "@/src/shared/config";
-import { isRecord, readJson } from "@/src/shared/utils/type-guard";
+import { NextResponse } from 'next/server';
+import type { UserSession } from '@/src/entities/user';
+import { defaultUser, errorMessages } from '@/src/shared/config';
+import { isRecord, readJson } from '@/src/shared/utils/type-guard';
 
 export async function POST(request: Request) {
   try {
@@ -9,8 +9,8 @@ export async function POST(request: Request) {
 
     if (
       !isRecord(body) ||
-      typeof body.email !== "string" ||
-      typeof body.password !== "string" ||
+      typeof body.email !== 'string' ||
+      typeof body.password !== 'string' ||
       !body.email ||
       !body.password
     ) {

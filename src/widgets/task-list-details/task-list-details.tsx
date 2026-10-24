@@ -1,25 +1,15 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { clsx } from "clsx";
-import {
-  startTransition,
-  use,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import styles from "./task-list-details.module.css";
-import { AddTaskModal } from "@/src/features/add-task-modal";
-import { EditTaskModal } from "@/src/features/edit-task-modal";
-import { DeleteTaskModal } from "@/src/features/delete-task-modal";
-import { changeTaskStatusAction } from "@/src/features/change-task-status";
-import type {
-  Task,
-  TaskPriority,
-  TaskState} from "@/src/entities/task";
+import Image from 'next/image';
+import Link from 'next/link';
+import { clsx } from 'clsx';
+import { startTransition, use, useCallback, useMemo, useState } from 'react';
+import styles from './task-list-details.module.css';
+import { AddTask } from '@/src/features/add-task';
+import { EditTask } from '@/src/features/edit-task';
+import { DeleteTask } from '@/src/features/delete-task';
+import { changeTaskStatusAction } from '@/src/features/change-task-status';
+import type { Task, TaskPriority, TaskState } from '@/src/entities/task';
 import {
   TASK_PRIORITY_LABELS,
   TASK_STATE_LABELS,
@@ -30,12 +20,12 @@ import {
   isTaskPriority,
   isTaskState,
   sortTasks,
-} from "@/src/entities/task";
-import type { TaskListDto } from "@/src/entities/task-list";
-import { ProgressBar } from "@/src/shared/ui/components/progress-bar";
-import { ErrorHighlight } from "@/src/shared/ui/components/error-highlight";
+} from '@/src/entities/task';
+import type { TaskListDto } from '@/src/entities/task-list';
+import { ProgressBar } from '@/src/shared/ui/components/progress-bar';
+import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
 
-type StatusFilter = "all" | TaskState;
+type StatusFilter = 'all' | TaskState;
 
 type TaskListDetailsProps = {
   taskListPromise: Promise<TaskListDto>;
@@ -56,24 +46,23 @@ export function TaskListDetailsWidget({
 }: TaskListDetailsProps) {
   const taskList = use(taskListPromise);
   const [tasks, setTasks] = useState(taskList.tasks);
+  const [tasksSource, setTasksSource] = useState(taskList.tasks);
   const [statusError, setStatusError] = useState<string | null>(null);
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [deletingTask, setDeletingTask] = useState<Task | null>(null);
 
-  useEffect(() => {
+  if (taskList.tasks !== tasksSource) {
+    setTasksSource(taskList.tasks);
     setTasks(taskList.tasks);
-  }, [taskList.tasks]);
+  }
 
-  const progress = useMemo(
-    () => calculateTaskListProgress(tasks),
-    [tasks],
-  );
+  const progress = useMemo(() => calculateTaskListProgress(tasks), [tasks]);
 
   const filteredTasks = useMemo(() => {
     const filtered =
-      statusFilter === "all"
+      statusFilter === 'all'
         ? tasks
         : tasks.filter((task) => task.state === statusFilter);
 
@@ -170,9 +159,9 @@ export function TaskListDetailsWidget({
               type="button"
               className={clsx(
                 styles.filterBtn,
-                statusFilter === "all" && styles.filterBtnActive,
+                statusFilter === 'all' && styles.filterBtnActive,
               )}
-              onClick={() => setStatusFilter("all")}
+              onClick={() => setStatusFilter('all')}
             >
               Все
             </button>
@@ -200,9 +189,9 @@ export function TaskListDetailsWidget({
           <div className={styles.empty}>
             <p className={styles.emptyTitle}>Задач не найдено</p>
             <p className={styles.emptyText}>
-              {statusFilter === "all"
-                ? "Создайте первую задачу для этого списка."
-                : "Попробуйте другой фильтр статуса."}
+              {statusFilter === 'all'
+                ? 'Создайте первую задачу для этого списка.'
+                : 'Попробуйте другой фильтр статуса.'}
             </p>
           </div>
         ) : (
@@ -222,7 +211,7 @@ export function TaskListDetailsWidget({
                   const priority = isTaskPriority(task.priority)
                     ? task.priority
                     : (2 as TaskPriority);
-                  const isOverdue = task.state === "overdue";
+                  const isOverdue = task.state === 'overdue';
                   const isSoon = !isOverdue && isDeadlineWithin48Hours(task);
 
                   return (
@@ -246,7 +235,7 @@ export function TaskListDetailsWidget({
                         <select
                           className={styles.statusSelect}
                           aria-label={`Статус задачи ${task.name}`}
-                          value={isTaskState(task.state) ? task.state : "new"}
+                          value={isTaskState(task.state) ? task.state : 'new'}
                           onChange={(event) => {
                             if (isTaskState(event.target.value)) {
                               onStatusChange(task.id, event.target.value);
@@ -323,19 +312,19 @@ export function TaskListDetailsWidget({
         )}
       </div>
 
-      <AddTaskModal
+      <AddTask
         isOpen={isAddOpen}
         taskListId={taskList.id}
         onClose={closeAddModal}
       />
-      <EditTaskModal
+      <EditTask
         isOpen={!!editingTask}
         taskListId={taskList.id}
         task={editingTask}
         onClose={closeEditModal}
       />
       {deletingTask ? (
-        <DeleteTaskModal
+        <DeleteTask
           isOpen
           taskListId={taskList.id}
           taskId={deletingTask.id}

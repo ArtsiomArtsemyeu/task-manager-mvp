@@ -150,8 +150,8 @@
   filter: brightness(0) invert(1);
 }
 
-:global([data-theme="light"]) .arrow,
-:global([data-theme="dark"]) .arrow {
+:global([data-theme='light']) .arrow,
+:global([data-theme='dark']) .arrow {
   filter: brightness(0);
 }
 
@@ -160,7 +160,6 @@
 }
 
 @keyframes float {
-
   0%,
   100% {
     transform: translateY(0);

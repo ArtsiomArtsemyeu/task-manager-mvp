@@ -1,25 +1,25 @@
-import "@/app/reset.css";
-import "@/app/global.css";
-import type { Metadata } from "next";
-import { Footer } from "@/src/widgets/footer";
-import { Header } from "@/src/widgets/header";
-import { Geist, Geist_Mono } from "next/font/google";
-import { supportedThemes } from "@/src/app/configs";
-import { ColorThemeProvider } from "@/src/app/providers";
+import '@/app/reset.css';
+import '@/app/global.css';
+import type { Metadata } from 'next';
+import { Footer } from '@/src/widgets/footer';
+import { Header } from '@/src/widgets/header';
+import { Geist, Geist_Mono } from 'next/font/google';
+import { supportedThemes } from '@/src/app/configs';
+import { ColorThemeProvider } from '@/src/app/providers';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "Менеджер задач",
-  description: "Приложение для управления задачами",
+  title: 'Менеджер задач',
+  description: 'Приложение для управления задачами',
 };
 
 export default function RootLayout({

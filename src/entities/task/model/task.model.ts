@@ -1,4 +1,4 @@
-import type { TaskState } from "../config/task.config";
+import type { TaskState } from '../config/task.config';
 
 export interface Task {
   id: string;

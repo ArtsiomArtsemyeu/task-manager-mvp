@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import type { MouseEvent } from "react";
-import React, { useEffect } from "react";
-import { createPortal } from "react-dom";
-import styles from "./modal.module.css";
+import type { MouseEvent } from 'react';
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import styles from './modal.module.css';
 
 type ModalProps = {
   isOpen: boolean;
@@ -17,18 +17,18 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
     if (!isOpen) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         onClose();
       }
     };
 
     const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
 

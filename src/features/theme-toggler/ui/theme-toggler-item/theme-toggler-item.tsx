@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { clsx } from "clsx";
-import { useCallback } from "react";
-import type { ThemeConfig } from "../../config/theme.config";
-import styles from "./theme-toggler-item.module.css";
+import { clsx } from 'clsx';
+import { useCallback } from 'react';
+import type { ThemeConfig } from '../../config/theme.config';
+import styles from './theme-toggler-item.module.css';
 
 type ThemeTogglerItemProps = {
   theme: ThemeConfig;

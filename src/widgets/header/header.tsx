@@ -1,5 +1,5 @@
-import styles from "./header.module.css";
-import { ThemeToggler, type ThemeConfig } from "@/src/features/theme-toggler";
+import styles from './header.module.css';
+import { ThemeToggler, type ThemeConfig } from '@/src/features/theme-toggler';
 
 type HeaderProps = {
   themes: ThemeConfig[];

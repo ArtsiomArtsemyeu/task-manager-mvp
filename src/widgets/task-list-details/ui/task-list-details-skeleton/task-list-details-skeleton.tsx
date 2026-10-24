@@ -1,5 +1,5 @@
-import styles from "./task-list-details-skeleton.module.css";
-import { Skeleton } from "@/src/shared/ui/components/skeleton";
+import styles from './task-list-details-skeleton.module.css';
+import { Skeleton } from '@/src/shared/ui/components/skeleton';
 
 const ROW_PLACEHOLDERS = 5;
 

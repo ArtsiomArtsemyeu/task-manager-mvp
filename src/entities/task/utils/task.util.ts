@@ -1,5 +1,5 @@
-import type { TaskState } from "../config/task.config";
-import type { Task } from "../model/task.model";
+import type { TaskState } from '../config/task.config';
+import type { Task } from '../model/task.model';
 
 export const calculateTaskCountByState = (
   tasks: Task[],
@@ -11,7 +11,7 @@ export const calculateTaskListProgress = (tasks: Task[]): number => {
     return 0;
   }
 
-  const completedCount = tasks.filter((task) => task.state === "done").length;
+  const completedCount = tasks.filter((task) => task.state === 'done').length;
   const percentage = (completedCount / tasks.length) * 100;
 
   return Math.round(percentage);
@@ -22,14 +22,14 @@ export const isDeadlineWithin48Hours = (task: Task): boolean => {
   return diff > 0 && diff <= 172_800_000;
 };
 
-const isDoneTask = (task: Task): boolean => task.state === "done";
+const isDoneTask = (task: Task): boolean => task.state === 'done';
 
 const isIncompleteOverdueTask = (task: Task): boolean => {
   if (isDoneTask(task)) {
     return false;
   }
 
-  if (task.state === "overdue") {
+  if (task.state === 'overdue') {
     return true;
   }
 
@@ -42,7 +42,7 @@ const getDueTime = (task: Task): number => {
   return Number.isNaN(dueTime) ? Number.POSITIVE_INFINITY : dueTime;
 };
 
-export const compareTasks = (left: Task, right: Task): number => {
+const compareTasks = (left: Task, right: Task): number => {
   const leftDone = isDoneTask(left);
   const rightDone = isDoneTask(right);
 
@@ -71,14 +71,14 @@ export const sortTasks = (tasks: Task[]): Task[] =>
 export const formatTaskDueDate = (isoDate: string): string => {
   const date = new Date(isoDate);
   if (Number.isNaN(date.getTime())) {
-    return "—";
+    return '—';
   }
 
-  return new Intl.DateTimeFormat("ru-RU", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
+  return new Intl.DateTimeFormat('ru-RU', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   }).format(date);
 };

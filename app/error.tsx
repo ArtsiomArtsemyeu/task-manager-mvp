@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { ErrorPage } from "@/src/widgets/error-page";
+import { useEffect } from 'react';
+import { ErrorPage } from '@/src/widgets/error-page';
 
 type ErrorProps = {
   error: Error & { digest?: string };
