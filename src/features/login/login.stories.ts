@@ -1,15 +1,31 @@
-import { expect, userEvent, within } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Login } from './login';
 import { errorMessages } from '@/src/shared/config/error';
+
+const VALID_EMAIL = 'storybook@example.com';
+const VALID_PASSWORD = 'Storybook123!';
 
 const meta: Meta<typeof Login> = {
   title: 'Features/Login',
   component: Login,
   tags: ['autodocs'],
+  args: {
+    action: fn(async () => null),
+  },
 };
 
 type Story = StoryObj<typeof Login>;
+
+async function fillAndSubmit(
+  canvas: ReturnType<typeof within>,
+  email: string,
+  password: string,
+) {
+  await userEvent.type(canvas.getByLabelText('Электронная почта'), email);
+  await userEvent.type(canvas.getByLabelText('Пароль'), password);
+  await userEvent.click(canvas.getByRole('button', { name: 'Войти' }));
+}
 
 export const Default: Story = {};
 
@@ -18,12 +34,12 @@ export const RequiredFields: Story = {
     docs: {
       description: {
         story:
-          'Отправка пустой формы. Валидация обязательных полей и отображение сообщений ошибок: Email обязателен и Пароль обязателен.',
+          'Отправка пустой формы. Валидация обязательных полей: Email обязателен и Пароль обязателен. Action не вызывается.',
       },
       story: { autoplay: true },
     },
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
     await userEvent.click(canvas.getByRole('button', { name: 'Войти' }));
@@ -34,6 +50,7 @@ export const RequiredFields: Story = {
     await expect(
       canvas.getByText(errorMessages.validation.passwordRequired),
     ).toBeInTheDocument();
+    await expect(args.action).not.toHaveBeenCalled();
   },
 };
 
@@ -42,24 +59,20 @@ export const InvalidEmail: Story = {
     docs: {
       description: {
         story:
-          'Ввод невалидного email приводит к отображению сообщения ошибки: Неверный формат email.',
+          'Невалидный email приводит к сообщению: Неверный формат email. Action не вызывается.',
       },
       story: { autoplay: true },
     },
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.type(
-      canvas.getByLabelText('Электронная почта'),
-      'user@localhost',
-    );
-    await userEvent.type(canvas.getByLabelText('Пароль'), 'password123');
-    await userEvent.click(canvas.getByRole('button', { name: 'Войти' }));
+    await fillAndSubmit(canvas, 'user@localhost', VALID_PASSWORD);
 
     await expect(
       canvas.getByText(errorMessages.validation.emailInvalid),
     ).toBeInTheDocument();
+    await expect(args.action).not.toHaveBeenCalled();
   },
 };
 
@@ -68,24 +81,113 @@ export const ShortPassword: Story = {
     docs: {
       description: {
         story:
-          'Валидный email и пароль короче 8 символов приводит к отображению сообщения ошибки: Минимум 8 символов.',
+          'Пароль короче 8 символов приводит к сообщению: Минимум 8 символов. Action не вызывается.',
+      },
+      story: { autoplay: true },
+    },
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await fillAndSubmit(canvas, VALID_EMAIL, 'short');
+
+    await expect(
+      canvas.getByText(errorMessages.validation.passwordMinLength),
+    ).toBeInTheDocument();
+    await expect(args.action).not.toHaveBeenCalled();
+  },
+};
+
+export const InvalidCredentials: Story = {
+  args: {
+    action: fn(async () => ({
+      error: errorMessages.error.invalidCredentials,
+    })),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Валидная форма и отказ сервера. Отображается ошибка: Неверный email или пароль.',
+      },
+      story: { autoplay: true },
+    },
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await fillAndSubmit(canvas, VALID_EMAIL, VALID_PASSWORD);
+
+    await waitFor(() => {
+      expect(args.action).toHaveBeenCalledOnce();
+    });
+    await expect(
+      canvas.getByText(errorMessages.error.invalidCredentials),
+    ).toBeInTheDocument();
+  },
+};
+
+export const SuccessfulSubmit: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Валидная форма успешно отправляется: action вызывается с email и password.',
+      },
+      story: { autoplay: true },
+    },
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await fillAndSubmit(canvas, VALID_EMAIL, VALID_PASSWORD);
+
+    await waitFor(() => {
+      expect(args.action).toHaveBeenCalledOnce();
+    });
+
+    const actionMock = args.action as ReturnType<typeof fn>;
+    const formData = actionMock.mock.calls[0]?.[1] as FormData;
+    await expect(formData.get('email')).toBe(VALID_EMAIL);
+    await expect(formData.get('password')).toBe(VALID_PASSWORD);
+    await expect(
+      canvas.queryByText(errorMessages.error.invalidCredentials),
+    ).not.toBeInTheDocument();
+    await expect(
+      canvas.getByRole('button', { name: 'Войти' }),
+    ).toBeInTheDocument();
+  },
+};
+
+export const TogglePasswordVisibility: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Клик по глазику показывает и скрывает введённый пароль.',
       },
       story: { autoplay: true },
     },
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    const passwordInput = canvas.getByLabelText('Пароль');
 
-    await userEvent.type(
-      canvas.getByLabelText('Электронная почта'),
-      'demo@example.com',
+    await userEvent.type(passwordInput, VALID_PASSWORD);
+    await expect(passwordInput).toHaveAttribute('type', 'password');
+
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Показать пароль' }),
     );
-    await userEvent.type(canvas.getByLabelText('Пароль'), 'short');
-    await userEvent.click(canvas.getByRole('button', { name: 'Войти' }));
-
+    await expect(passwordInput).toHaveAttribute('type', 'text');
     await expect(
-      canvas.getByText(errorMessages.validation.passwordMinLength),
+      canvas.getByRole('button', { name: 'Скрыть пароль' }),
     ).toBeInTheDocument();
+
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Скрыть пароль' }),
+    );
+    await expect(passwordInput).toHaveAttribute('type', 'password');
   },
 };
 

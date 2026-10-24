@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { ErrorPage } from '@/src/widgets/error-page';
+import { ErrorView } from '@/src/widgets/error-view';
 
 type ErrorProps = {
   error: Error & { digest?: string };
@@ -13,5 +13,5 @@ export default function Error({ error, reset }: ErrorProps) {
     console.error(error);
   }, [error]);
 
-  return <ErrorPage status="server-error" onRetry={reset} />;
+  return <ErrorView status="server-error" onRetry={reset} />;
 }

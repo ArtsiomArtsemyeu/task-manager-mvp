@@ -1,6 +1,7 @@
 'use client';
 
-import { startTransition, useActionState } from 'react';
+import Image from 'next/image';
+import { startTransition, useActionState, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import styles from './login.module.css';
@@ -16,12 +17,19 @@ type LoginFormData = {
   password: string;
 };
 
+type LoginProps = {
+  action?: (
+    prevState: LoginActionState,
+    formData: FormData,
+  ) => Promise<LoginActionState> | LoginActionState;
+};
+
 const LOGIN_FORM_STUBS: LoginFormData = {
   email: 'admin@example.com',
   password: 'Admin123!',
 };
 
-export function Login() {
+export function Login({ action = loginAction }: LoginProps = {}) {
   const {
     register,
     handleSubmit,
@@ -29,6 +37,7 @@ export function Login() {
     setValue,
     formState: { errors },
   } = useForm<LoginFormData>();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   useFillFormStubsHotkey({
     getValues,
@@ -39,7 +48,7 @@ export function Login() {
   const [state, formAction, isPending] = useActionState<
     LoginActionState,
     FormData
-  >(loginAction, null);
+  >(action, null);
 
   const onSubmit: SubmitHandler<LoginFormData> = (data: LoginFormData) => {
     startTransition(() => {
@@ -77,19 +86,41 @@ export function Login() {
 
             <div className={styles.inputGroup}>
               <label htmlFor="password">Пароль</label>
-              <input
-                id="password"
-                type="password"
-                autoComplete="current-password"
-                {...register('password', {
-                  required: errorMessages.validation.passwordRequired,
-                  minLength: {
-                    value: 8,
-                    message: errorMessages.validation.passwordMinLength,
-                  },
-                })}
-                className={styles.input}
-              />
+              <div className={styles.passwordField}>
+                <input
+                  id="password"
+                  type={isPasswordVisible ? 'text' : 'password'}
+                  autoComplete="current-password"
+                  {...register('password', {
+                    required: errorMessages.validation.passwordRequired,
+                    minLength: {
+                      value: 8,
+                      message: errorMessages.validation.passwordMinLength,
+                    },
+                  })}
+                  className={styles.input}
+                />
+                <button
+                  type="button"
+                  className={styles.passwordToggle}
+                  onClick={() => setIsPasswordVisible((prev) => !prev)}
+                  aria-label={
+                    isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'
+                  }
+                  aria-pressed={isPasswordVisible}
+                >
+                  <Image
+                    src={
+                      isPasswordVisible
+                        ? '/images/icons/eye-off.svg'
+                        : '/images/icons/eye.svg'
+                    }
+                    alt=""
+                    width={20}
+                    height={20}
+                  />
+                </button>
+              </div>
               {errors.password && (
                 <ErrorHighlight message={errors.password.message} />
               )}

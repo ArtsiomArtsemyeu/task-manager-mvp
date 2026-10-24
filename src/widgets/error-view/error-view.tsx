@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from './error-page.module.css';
+import styles from './error-view.module.css';
 
 type ErrorStatus = 'not-found' | 'server-error';
 
-type ErrorPageProps = {
+type ErrorViewProps = {
   status: ErrorStatus;
   onRetry?: () => void;
 };
@@ -38,11 +38,11 @@ const copy: Record<
   },
 };
 
-export function ErrorPage({ status, onRetry }: ErrorPageProps) {
+export function ErrorView({ status, onRetry }: ErrorViewProps) {
   const { code, title, hint, ariaLabel, iconSrc, iconAlt } = copy[status];
 
   return (
-    <section className={styles.host} aria-labelledby="error-page-title">
+    <section className={styles.host} aria-labelledby="error-view-title">
       <div className={styles.visual}>
         <span className={styles.code} aria-hidden="true">
           {code}
@@ -59,7 +59,7 @@ export function ErrorPage({ status, onRetry }: ErrorPageProps) {
       </div>
 
       <div className={styles.content}>
-        <h1 id="error-page-title" className={styles.title}>
+        <h1 id="error-view-title" className={styles.title}>
           {title}
         </h1>
         <p className={styles.hint}>{hint}</p>

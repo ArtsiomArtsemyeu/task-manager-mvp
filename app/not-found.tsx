@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ErrorPage } from '@/src/widgets/error-page';
+import { ErrorView } from '@/src/widgets/error-view';
 
 export const metadata: Metadata = {
   title: 'Страница не найдена | Менеджер задач',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function NotFound() {
-  return <ErrorPage status="not-found" />;
+  return <ErrorView status="not-found" />;
 }
