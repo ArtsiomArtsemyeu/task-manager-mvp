@@ -57,6 +57,7 @@ export function Modal({
               alt="Закрыть"
               width={20}
               height={20}
+              priority
             />
           </button>
         </div>
