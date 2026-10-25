@@ -10,13 +10,13 @@ Web-приложение для управления списками задач
 
 ## 📑 Содержание
 
-- [1. Техническая документация](#1--техническая-документация)
-  - [1.1. Технологии](#11--технологии-используемые-в-проекте)
-  - [1.2. Локальная разработка](#12--инструкция-для-локальной-разработки)
-  - [1.3. API](#13--api-appapi)
-  - [1.4. Поток данных](#14--описание-потока-данных-в-приложении)
-- [2. Описание функций](#2--описание-функций-приложения)
-  - [2.1. Карта экранов](#21--карта-экранов)
+- [1. Техническая документация](#section-1)
+  - [1.1. Технологии](#section-1-1)
+  - [1.2. Локальная разработка](#section-1-2)
+  - [1.3. API](#section-1-3)
+  - [1.4. Поток данных](#section-1-4)
+- [2. Описание функций](#section-2)
+  - [2.1. Карта экранов](#section-2-1)
 
 ---
 
@@ -24,26 +24,21 @@ Web-приложение для управления списками задач
 
 ### 1.1. 🧰 Технологии, используемые в проекте
 
-#### Описание технологий
-
 | Технология | Назначение |
 | :--------- | :--------- |
-| <img src="https://cdn.simpleicons.org/nextdotjs/000000" width="18" height="18" alt="" /> **Next.js** | Фреймворк (App Router): страницы, API routes, Server Actions, SSR/CSR. [Документация ↗](https://nextjs.org/docs) |
-| <img src="https://cdn.simpleicons.org/react/61DAFB" width="18" height="18" alt="" /> **React** | UI-библиотека для клиентских и серверных компонентов. [Документация ↗](https://react.dev) |
-| <img src="https://cdn.simpleicons.org/typescript/3178C6" width="18" height="18" alt="" /> **TypeScript** | Статическая типизация исходного кода. [Документация ↗](https://www.typescriptlang.org/docs) |
-| 🧩 **Feature-Sliced Design (FSD)** | Слои `app` / `widgets` / `features` / `entities` / `shared` с публичными API слайсов. [Документация ↗](https://feature-sliced.design) |
-| <img src="https://cdn.simpleicons.org/eslint/4B32C3" width="18" height="18" alt="" /> **ESLint** | Линтер: Next.js, TypeScript и FSD (`eslint-plugin-fsd-lint`). [Документация ↗](https://eslint.org/docs/latest) |
-| <img src="https://cdn.simpleicons.org/vitest/6E9F18" width="18" height="18" alt="" /> **Vitest** | Unit-тесты (в т.ч. browser через Playwright). [Документация ↗](https://vitest.dev) |
-| <img src="https://cdn.simpleicons.org/storybook/FF4785" width="18" height="18" alt="" /> **Storybook** | Изолированная разработка и просмотр UI. [Документация ↗](https://storybook.js.org/docs) |
-| 🎨 **next-themes** | Переключение темы (default / light / dark). [Репозиторий ↗](https://github.com/pacocoursey/next-themes) |
-| 📝 **react-hook-form** | Управление формами (вход, создание и редактирование). [Документация ↗](https://react-hook-form.com) |
-| 🔑 **jsonwebtoken** | Выдача и проверка JWT при аутентификации. [Репозиторий ↗](https://github.com/auth0/node-jsonwebtoken) |
-| 💅 **CSS Modules** | Локальные стили компонентов. [Репозиторий ↗](https://github.com/css-modules/css-modules) |
+| <img src="https://cdn.simpleicons.org/nextdotjs/000000" width="18" height="18" alt="" /> **Next.js** | Фреймворк (App Router): страницы, API routes, Server Actions, SSR/CSR.<br>[Документация ↗](https://nextjs.org/docs) |
+| <img src="https://cdn.simpleicons.org/react/61DAFB" width="18" height="18" alt="" /> **React** | UI-библиотека для клиентских и серверных компонентов.<br>[Документация ↗](https://react.dev) |
+| <img src="https://cdn.simpleicons.org/typescript/3178C6" width="18" height="18" alt="" /> **TypeScript** | Статическая типизация исходного кода.<br>[Документация ↗](https://www.typescriptlang.org/docs) |
+| 🧩 **Feature-Sliced Design (FSD)** | Слои `app` / `widgets` / `features` / `entities` / `shared` с публичными API слайсов.<br>[Документация ↗](https://feature-sliced.design) |
+| <img src="https://cdn.simpleicons.org/eslint/4B32C3" width="18" height="18" alt="" /> **ESLint** | Линтер: Next.js, TypeScript и FSD (`eslint-plugin-fsd-lint`).<br>[Документация ↗](https://eslint.org/docs/latest) |
+| <img src="https://cdn.simpleicons.org/vitest/6E9F18" width="18" height="18" alt="" /> **Vitest** | Unit-тесты (в т.ч. browser через Playwright).<br>[Документация ↗](https://vitest.dev) |
+| <img src="https://cdn.simpleicons.org/storybook/FF4785" width="18" height="18" alt="" /> **Storybook** | Изолированная разработка и просмотр UI.<br>[Документация ↗](https://storybook.js.org/docs) |
+| 🎨 **next-themes** | Переключение темы (default / light / dark).<br>[Репозиторий ↗](https://github.com/pacocoursey/next-themes) |
+| 📝 **react-hook-form** | Управление формами (вход, создание и редактирование).<br>[Документация ↗](https://react-hook-form.com) |
+| 🔑 **jsonwebtoken** | Выдача и проверка JWT при аутентификации.<br>[Репозиторий ↗](https://github.com/auth0/node-jsonwebtoken) |
+| 💅 **CSS Modules** | Локальные стили компонентов.<br>[Репозиторий ↗](https://github.com/css-modules/css-modules) |
 
 **📦 Текущие версии технологий**
-
-  
-
 
 | Технология | Версия |
 | :--------- | :----: |
@@ -61,27 +56,31 @@ Web-приложение для управления списками задач
 
 > Версии соответствуют установленным в проекте на момент обновления README. Актуальные значения — в `package.json` / `package-lock.json`.
 
-
-
 ---
+
+
 
 ### 1.2. 🛠️ Инструкция для локальной разработки
 
 #### 🚀 Быстрый старт
 
+**bash / zsh**
+
 ```bash
-git --version && node --version && npm --version   # проверки
 npm install
 npm run playwright:install                         # один раз (для тестов)
 npm run dev                                        # → http://localhost:3000
 ```
+**PowerShell**
 
+```powershell
+npm install
+npm run playwright:install                         # один раз (для тестов)
+npm run dev                                        # → http://localhost:3000
+```
 #### Локальный запуск проекта
 
 **Пошаговая установка**
-
-  
-
 
 **1. 🐙 Git** — установка и настройка (клонирование, ветки). [Скачать ↗](https://git-scm.com/downloads)
 
@@ -117,13 +116,11 @@ npm run playwright:install
 
 **6. 🔐 Переменные окружения**
 
-Файл `.env` уже в репозитории (stub для MVP). Локальные переопределения — в `.env.local` (в `.gitignore`).
-
 | Переменная | Описание |
 | :--------- | :------- |
 | `APP_BASE_URL` | Базовый URL (по умолчанию `http://localhost:3000`) |
-| `DEFAULT_USER_ID` | ID пользователя по умолчанию |
-| `DEFAULT_USER_EMAIL` | Email по умолчанию |
+| `DEFAULT_USER_ID` | Идентификатор пользователя по умолчанию |
+| `DEFAULT_USER_EMAIL` | Электронный адресс по умолчанию |
 | `DEFAULT_USER_PASSWORD` | Пароль по умолчанию |
 
 **7. ▶️ Dev-сервер**
@@ -143,10 +140,11 @@ npm run start   # запуск собранного приложения
 
 | Команда | Назначение |
 | :------ | :--------- |
-| `npm run typecheck` | ✅ Проверка TypeScript без эмита |
+| `npm run typecheck` | ✅ Проверка TypeScript |
 | `npm run lint` | 🧭 ESLint + правила FSD |
 | `npm run test` | 🧪 Unit-тесты (watch) |
-| `npm run test:run` | 🧪 Unit-тесты (один прогон) |
+| `npm run test:run` | 🧪 Unit-тесты |
+| `npm run test:storybook` |  📚 Storybook-тесты |
 | `npm run storybook` | 📚 Storybook на [localhost:6006](http://localhost:6006) |
 | `npm run build-storybook` | 📚 Статическая сборка Storybook |
 
@@ -195,8 +193,6 @@ Storybook: [http://localhost:6006](http://localhost:6006)
 npm run build-storybook
 ```
 
-
-
 ---
 
 ### 1.3. 🔌 API (`app/api`)
@@ -208,28 +204,23 @@ npm run build-storybook
 | 📋 Списки задач | `src/shared/lib/file-storage/data/task-lists.json` |
 | ✅ Задачи | `src/shared/lib/file-storage/data/tasks.json` |
 
-Чтение/запись: `readDataFromFile` / `writeDataToFile` (`src/shared/lib/file-storage`).
-
 **Статусы задачи (**`state`**):** `new` · `in progress` · `done` · `overdue`
 
 **📡 Таблица эндпоинтов**
 
-  
-
-
 | Метод | Путь | Параметры | Описание | Куда пишет |
 | :---: | :--- | :-------- | :------- | :--------- |
-| `POST` | `/api/auth/login` | **Body:** `email`, `password` | Проверяет `DEFAULT_USER_`* из `.env`. Ответ: `{ userSessionPayload: { userId, email } }`. JWT в cookie ставит Server Action, не этот роут. | Не пишет |
-| `GET` | `/api/data/task-lists` | — | Все списки (DTO + вложенные задачи). | Читает оба JSON |
-| `POST` | `/api/data/task-lists` | **Body:** `name` (обяз.); `taskIds`? | Создаёт список (`id` uuid, `userId` из `DEFAULT_USER_ID`). | `task-lists.json` |
-| `GET` | `/api/data/task-lists/[id]` | **Path:** `id` | Один список с задачами. `404`, если нет. | Читает оба JSON |
+| `POST` | `/api/auth/login` | **Body:** `email`, `password` | Проверяет `DEFAULT_USER_`* из `.env`. Ответ: `{ userSessionPayload: { userId, email } }`. JWT в cookie ставит Server Action, не этот роут. | - |
+| `GET` | `/api/data/task-lists` | — | Все списки (DTO + вложенные задачи). | `task-lists.json`, `tasks.json` |
+| `POST` | `/api/data/task-lists` | **Body:** `name` (обяз.); `taskIds` | Создаёт список (`id` uuid, `userId` из `DEFAULT_USER_ID`). | `task-lists.json` |
+| `GET` | `/api/data/task-lists/[id]` | **Path:** `id` | Один список с задачами. `404`, если нет. | `task-lists.json`, `tasks.json` |
 | `PUT` | `/api/data/task-lists/[id]` | **Path:** `id`; **Body:** `name` | Переименование. `404`, если нет. | `task-lists.json` |
 | `DELETE` | `/api/data/task-lists/[id]` | **Path:** `id` | Удаляет список (задачи в `tasks.json` не трогает). `404`, если нет. | `task-lists.json` |
 | `GET` | `/api/data/tasks` | — | Все задачи. | Читает `tasks.json` |
-| `POST` | `/api/data/tasks` | **Body:** `name`, `description`, `state`, `priority`, `dueDate`, `taskListId` | Создаёт задачу и добавляет `id` в `taskIds` списка. | оба JSON |
-| `GET` | `/api/data/tasks/[id]` | **Path:** `id` | Задача + `taskListId`, `taskListName`. `404`, если нет. | Читает оба JSON |
+| `POST` | `/api/data/tasks` | **Body:** `name`, `description`, `state`, `priority`, `dueDate`, `taskListId` | Создаёт задачу и добавляет `id` в `taskIds` списка. | `task-lists.json`, `tasks.json` |
+| `GET` | `/api/data/tasks/[id]` | **Path:** `id` | Задача + `taskListId`, `taskListName`. `404`, если нет. | `task-lists.json`, `tasks.json` |
 | `PUT` | `/api/data/tasks/[id]` | **Path:** `id`; **Body (опц.):** `name`, `description`, `state`, `priority`, `dueDate` | Обновление. Незаданные поля сохраняются. `404`, если нет. | `tasks.json` |
-| `DELETE` | `/api/data/tasks/[id]` | **Path:** `id` | Удаляет задачу и убирает `id` из `taskIds` всех списков. `404`, если нет. | оба JSON |
+| `DELETE` | `/api/data/tasks/[id]` | **Path:** `id` | Удаляет задачу и убирает `id` из `taskIds` всех списков. `404`, если нет. | `task-lists.json`, `tasks.json` |
 
 ---
 
@@ -253,28 +244,27 @@ npm run build-storybook
 
 ```mermaid
 flowchart LR
-  A["🔐 / Вход"] --> B["📋 /lists Списки"]
-  B --> C["📑 /lists/id Задачи"]
-  C --> D["📝 /tasks/id Детали"]
+  A["🔐 / Вход в систему"] --> B["📋 /lists Списки задач"]
+  B --> C["📑 /lists/id Список задач"]
+  C --> D["📝 /tasks/id Детали задачи"]
   D --> C
   C --> B
 ```
 
 | Экран | Маршрут | Что делает |
 | :---- | :------ | :--------- |
-| 🔐 Вход | `/` | JWT-сессия, переход к спискам |
-| 📋 Списки | `/lists` | Карточки, поиск, CRUD списков |
-| 📑 Список | `/lists/[id]` | Таблица задач, фильтры, статусы |
-| 📝 Задача | `/tasks/[id]` | Детали, edit / delete |
-| 🚫 404 / 💥 500 | — | `ErrorView` + retry на 500 |
+| 🔐 Вход | `/` | Аутентификация, авторизация |
+| 📋 Списки | `/lists` | Отображает списки задач |
+| 📑 Список | `/lists/[id]` | Отображат задачи списка задач |
+| 📝 Задача | `/tasks/[id]` | Отображает задачу |
 
 ### 🔐 Вход в систему
 
-- Главная (`/`) — форма входа для работы с задачами.
-- Email + пароль → JWT в cookie → редирект на `/lists`.
-- Stub-учётка из `.env`: `DEFAULT_USER_EMAIL`, `DEFAULT_USER_PASSWORD`.
+- Главная (`/`) — форма входа.
+- Электронный адрес + пароль → JWT в cookie → редирект на `/lists`.
+- Stub-учетная запись из `.env`: `DEFAULT_USER_EMAIL`, `DEFAULT_USER_PASSWORD`.
 - <img src="./public/images/icons/eye.svg" width="16" height="16" alt="" /> Показ / скрытие пароля в поле.
-- Клавиша **Alt+C** — подстановка stub-данных (совпадают с `.env` MVP).
+- Клавиша **Alt+C** — подстановка stub-данных.
 
 ### 📋 Списки задач (`/lists`)
 
