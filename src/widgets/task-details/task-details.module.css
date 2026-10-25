@@ -101,6 +101,10 @@
   opacity: 0.75;
 }
 
+:global([data-theme='dark']) .iconButton img {
+  filter: brightness(0) invert(1);
+}
+
 .iconButtonDanger:hover {
   background: var(--chip-red-bg);
 }

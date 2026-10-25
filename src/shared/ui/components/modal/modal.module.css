@@ -54,6 +54,14 @@
   opacity: 1;
 }
 
+.closeButton img {
+  display: block;
+}
+
+:global([data-theme='dark']) .closeButton img {
+  filter: brightness(0) invert(1);
+}
+
 .body {
   font-size: 1rem;
   line-height: 1.5;

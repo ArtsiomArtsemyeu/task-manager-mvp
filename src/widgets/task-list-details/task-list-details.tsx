@@ -125,9 +125,16 @@ export function TaskListDetailsWidget({
 
   return (
     <div className={styles.host}>
-      <header className={styles.header}>
+      <div className={styles.header}>
         <Link href="/lists" className={styles.backLink}>
-          ← К спискам
+          <Image
+            className={styles.backIcon}
+            src="/images/icons/arrow-left.svg"
+            alt="Стрелка влево"
+            width={16}
+            height={16}
+          />
+          К спискам
         </Link>
 
         <div className={styles.topGrid}>
@@ -152,11 +159,7 @@ export function TaskListDetailsWidget({
             </button>
           </div>
 
-          <div
-            className={styles.filters}
-            role="group"
-            aria-label="Фильтр по статусу"
-          >
+          <div className={styles.filters}>
             <button
               type="button"
               className={clsx(
@@ -182,7 +185,7 @@ export function TaskListDetailsWidget({
             ))}
           </div>
         </div>
-      </header>
+      </div>
 
       {statusError ? <ErrorHighlight message={statusError} /> : null}
 

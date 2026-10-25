@@ -172,4 +172,32 @@ export const OpenAddTask: Story = {
   },
 };
 
+export const ChangeTaskStatus: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Смена статуса задачи в таблице и пересчет прогресса списка.',
+      },
+      story: { autoplay: true },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByText('Прогресс 25%')).toBeInTheDocument();
+
+    const statusSelect = canvas.getByRole('combobox', {
+      name: 'Статус задачи Собрать требования',
+    });
+
+    await expect(statusSelect).toHaveValue('new');
+
+    await userEvent.selectOptions(statusSelect, 'done');
+
+    await expect(statusSelect).toHaveValue('done');
+    await expect(canvas.getByText('Прогресс 50%')).toBeInTheDocument();
+  },
+};
+
 export default meta;

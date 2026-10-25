@@ -44,7 +44,7 @@ export function Modal({
   return createPortal(
     <div className={styles.overlay}>
       <div className={styles.content} role="dialog" aria-modal="true">
-        <header className={styles.header}>
+        <div className={styles.header}>
           <h2>{title}</h2>
           <button
             type="button"
@@ -59,7 +59,7 @@ export function Modal({
               height={20}
             />
           </button>
-        </header>
+        </div>
         <div className={styles.body}>{children}</div>
         {action != null && (
           <div className={styles.actions}>

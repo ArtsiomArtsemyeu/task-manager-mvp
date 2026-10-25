@@ -39,6 +39,10 @@
   opacity: 0.85;
 }
 
+:global([data-theme='dark']) .triggerIcon {
+  filter: brightness(0) invert(1);
+}
+
 .menu {
   position: absolute;
   top: calc(100% + 0.25rem);
