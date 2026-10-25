@@ -1,21 +1,10 @@
 # ✅ Менеджер задач
 
-Web-приложение для управления списками задач (MVP).
+Web-приложение для управления списками задач.
 
-<p align="center">
-  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16.4.2-black?logo=nextdotjs&logoColor=white" />
-  <img alt="React" src="https://img.shields.io/badge/React-19.3-61DAFB?logo=react&logoColor=black" />
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white" />
-  <img alt="Vitest" src="https://img.shields.io/badge/Vitest-5.0-6E9F18?logo=vitest&logoColor=white" />
-  <img alt="Storybook" src="https://img.shields.io/badge/Storybook-10.6-FF4785?logo=storybook&logoColor=white" />
-  <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%E2%89%A5%2020-339933?logo=nodedotjs&logoColor=white" />
-</p>
+![Next.js](https://img.shields.io/badge/Next.js-16.4.2-black?logo=nextdotjs&logoColor=white)   ![React](https://img.shields.io/badge/React-19.3-61DAFB?logo=react&logoColor=black)   ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)   ![Vitest](https://img.shields.io/badge/Vitest-5.0-6E9F18?logo=vitest&logoColor=white)   ![Storybook](https://img.shields.io/badge/Storybook-10.6-FF4785?logo=storybook&logoColor=white)   ![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A5%2020-339933?logo=nodedotjs&logoColor=white)
 
-<p align="center">
-  <a href="#-быстрый-старт"><img alt="Quick start" src="https://img.shields.io/badge/%F0%9F%9A%80%20Быстрый%20старт-0ea5e9?style=for-the-badge" /></a>
-  <a href="#-api-appapi"><img alt="API" src="https://img.shields.io/badge/%F0%9F%94%8C%20API-6366f1?style=for-the-badge" /></a>
-  <a href="#2--описание-функций-приложения"><img alt="Features" src="https://img.shields.io/badge/%E2%9C%85%20Функции-22c55e?style=for-the-badge" /></a>
-</p>
+![Quick start](https://img.shields.io/badge/%F0%9F%9A%80%20Быстрый%20старт-0ea5e9?style=for-the-badge)   ![API](https://img.shields.io/badge/%F0%9F%94%8C%20API-6366f1?style=for-the-badge)   ![Features](https://img.shields.io/badge/%E2%9C%85%20Функции-22c55e?style=for-the-badge)
 
 ---
 
@@ -23,31 +12,11 @@ Web-приложение для управления списками задач
 
 - [1. Техническая документация](#1--техническая-документация)
   - [1.1. Технологии](#11--технологии-используемые-в-проекте)
-  - [Локальная разработка](#-инструкция-для-локальной-разработки)
+  - [1.2. Локальная разработка](#12--инструкция-для-локальной-разработки)
   - [1.3. API](#13--api-appapi)
+  - [1.4. Поток данных](#14--описание-потока-данных-в-приложении)
 - [2. Описание функций](#2--описание-функций-приложения)
-- [Карта экранов](#-карта-экранов)
-
----
-
-## 🗺️ Карта экранов
-
-```mermaid
-flowchart LR
-  A["🔐 / Вход"] --> B["📋 /lists Списки"]
-  B --> C["📑 /lists/id Задачи"]
-  C --> D["📝 /tasks/id Детали"]
-  D --> C
-  C --> B
-```
-
-| Экран | Маршрут | Что делает |
-| :---- | :------ | :--------- |
-| 🔐 Вход | `/` | JWT-сессия, переход к спискам |
-| 📋 Списки | `/lists` | Карточки, поиск, CRUD списков |
-| 📑 Список | `/lists/[id]` | Таблица задач, фильтры, статусы |
-| 📝 Задача | `/tasks/[id]` | Детали, edit / delete |
-| 🚫 404 / 💥 500 | — | `ErrorView` + retry на 500 |
+  - [2.1. Карта экранов](#21--карта-экранов)
 
 ---
 
@@ -71,10 +40,10 @@ flowchart LR
 | 🔑 **jsonwebtoken** | Выдача и проверка JWT при аутентификации. [Репозиторий ↗](https://github.com/auth0/node-jsonwebtoken) |
 | 💅 **CSS Modules** | Локальные стили компонентов. [Репозиторий ↗](https://github.com/css-modules/css-modules) |
 
-<details>
-<summary><strong>📦 Текущие версии технологий</strong> — нажмите, чтобы раскрыть</summary>
+**📦 Текущие версии технологий**
 
-<br />
+  
+
 
 | Технология | Версия |
 | :--------- | :----: |
@@ -92,11 +61,11 @@ flowchart LR
 
 > Версии соответствуют установленным в проекте на момент обновления README. Актуальные значения — в `package.json` / `package-lock.json`.
 
-</details>
+
 
 ---
 
-### 🛠️ Инструкция для локальной разработки
+### 1.2. 🛠️ Инструкция для локальной разработки
 
 #### 🚀 Быстрый старт
 
@@ -109,10 +78,10 @@ npm run dev                                        # → http://localhost:3000
 
 #### Локальный запуск проекта
 
-<details open>
-<summary><strong>Пошаговая установка</strong></summary>
+**Пошаговая установка**
 
-<br />
+  
+
 
 **1. 🐙 Git** — установка и настройка (клонирование, ветки). [Скачать ↗](https://git-scm.com/downloads)
 
@@ -170,8 +139,6 @@ npm run build   # production-сборка
 npm run start   # запуск собранного приложения
 ```
 
-</details>
-
 #### Запуск плагинов для проверки кода
 
 | Команда | Назначение |
@@ -183,10 +150,7 @@ npm run start   # запуск собранного приложения
 | `npm run storybook` | 📚 Storybook на [localhost:6006](http://localhost:6006) |
 | `npm run build-storybook` | 📚 Статическая сборка Storybook |
 
-<details>
-<summary><strong>Детали по проверкам</strong></summary>
-
-<br />
+**Детали по проверкам**
 
 ##### Проверка TypeScript
 
@@ -231,13 +195,13 @@ Storybook: [http://localhost:6006](http://localhost:6006)
 npm run build-storybook
 ```
 
-</details>
+
 
 ---
 
 ### 1.3. 🔌 API (`app/api`)
 
-Данные хранятся в JSON:
+Данные хранятся в JSON-файлы:
 
 | Файл | Путь |
 | :--- | :--- |
@@ -246,16 +210,16 @@ npm run build-storybook
 
 Чтение/запись: `readDataFromFile` / `writeDataToFile` (`src/shared/lib/file-storage`).
 
-**Статусы задачи (`state`):** `new` · `in progress` · `done` · `overdue`
+**Статусы задачи (**`state`**):** `new` · `in progress` · `done` · `overdue`
 
-<details>
-<summary><strong>📡 Таблица эндпоинтов</strong> — нажмите, чтобы раскрыть</summary>
+**📡 Таблица эндпоинтов**
 
-<br />
+  
+
 
 | Метод | Путь | Параметры | Описание | Куда пишет |
 | :---: | :--- | :-------- | :------- | :--------- |
-| `POST` | `/api/auth/login` | **Body:** `email`, `password` | Проверяет `DEFAULT_USER_*` из `.env`. Ответ: `{ userSessionPayload: { userId, email } }`. JWT в cookie ставит Server Action, не этот роут. | Не пишет |
+| `POST` | `/api/auth/login` | **Body:** `email`, `password` | Проверяет `DEFAULT_USER_`* из `.env`. Ответ: `{ userSessionPayload: { userId, email } }`. JWT в cookie ставит Server Action, не этот роут. | Не пишет |
 | `GET` | `/api/data/task-lists` | — | Все списки (DTO + вложенные задачи). | Читает оба JSON |
 | `POST` | `/api/data/task-lists` | **Body:** `name` (обяз.); `taskIds`? | Создаёт список (`id` uuid, `userId` из `DEFAULT_USER_ID`). | `task-lists.json` |
 | `GET` | `/api/data/task-lists/[id]` | **Path:** `id` | Один список с задачами. `404`, если нет. | Читает оба JSON |
@@ -267,11 +231,42 @@ npm run build-storybook
 | `PUT` | `/api/data/tasks/[id]` | **Path:** `id`; **Body (опц.):** `name`, `description`, `state`, `priority`, `dueDate` | Обновление. Незаданные поля сохраняются. `404`, если нет. | `tasks.json` |
 | `DELETE` | `/api/data/tasks/[id]` | **Path:** `id` | Удаляет задачу и убирает `id` из `taskIds` всех списков. `404`, если нет. | оба JSON |
 
-</details>
+---
+
+### 1.4. 🗄️ Описание организации данных в приложении
+
+#### Описание организации модели данных в приложении
+
+Список задач ссылается на задачи через `taskIds`.
+
+![Модель данных: список задач и задача](./docs/images/data-model.png)
+
+#### Описание потока данных в приложении
+
+![Поток данных от браузера до JSON-файлов и обратно](./docs/images/data-flow.png)
 
 ---
 
 ## 2. ✅ Описание функций приложения
+
+### 2.1. 🗺️ Карта экранов
+
+```mermaid
+flowchart LR
+  A["🔐 / Вход"] --> B["📋 /lists Списки"]
+  B --> C["📑 /lists/id Задачи"]
+  C --> D["📝 /tasks/id Детали"]
+  D --> C
+  C --> B
+```
+
+| Экран | Маршрут | Что делает |
+| :---- | :------ | :--------- |
+| 🔐 Вход | `/` | JWT-сессия, переход к спискам |
+| 📋 Списки | `/lists` | Карточки, поиск, CRUD списков |
+| 📑 Список | `/lists/[id]` | Таблица задач, фильтры, статусы |
+| 📝 Задача | `/tasks/[id]` | Детали, edit / delete |
+| 🚫 404 / 💥 500 | — | `ErrorView` + retry на 500 |
 
 ### 🔐 Вход в систему
 
@@ -286,7 +281,7 @@ npm run build-storybook
 - Карточки всех списков.
 - На карточке: название, число задач, метрики по статусам, прогресс, индикаторы просрочки и дедлайнов ≤ 48 ч.
 - Поиск по названию.
-- Создание списка (модалка); **Alt+C** — stub-название.
+- Создание списка (модальное окно); **Alt+C** — stub-название.
 - <img src="./public/images/icons/edit.svg" width="16" height="16" alt="" /> Переименование и <img src="./public/images/icons/trash.svg" width="16" height="16" alt="" /> удаление через меню карточки (<img src="./public/images/icons/more-vertical.svg" width="16" height="16" alt="" />).
 - Клик по карточке → `/lists/[id]`.
 
@@ -298,7 +293,7 @@ npm run build-storybook
 - Автосортировка: незавершённые выше; просроченные первыми → ближайший дедлайн → приоритет (без клика по колонкам).
 - Подсветка скорого дедлайна (≤ 48 ч) и просрочки.
 - Смена статуса в таблице с откатом при ошибке.
-- Add / edit / delete через модалки; **Alt+C** в форме добавления.
+- Add / edit / delete через модальные окна; **Alt+C** в форме добавления.
 - Переход на `/tasks/[id]`.
 - <img src="./public/images/icons/arrow-left.svg" width="16" height="16" alt="" /> Назад к `/lists`.
 
