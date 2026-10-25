@@ -18,7 +18,10 @@ export function CardMenu({
   const menuId = useId();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const toggleMenu = useCallback(() => setIsOpen((prev) => !prev), []);
+  const toggleMenu = useCallback(
+    () => setIsOpen((prev: boolean) => !prev),
+    [],
+  );
 
   const closeMenu = useCallback(() => setIsOpen(false), []);
 

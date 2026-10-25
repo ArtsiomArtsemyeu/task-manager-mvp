@@ -38,7 +38,7 @@ export function useFillFormStubsHotkey<T extends FieldValues>({
       const currentValues = getValues();
       const stubValues = typeof stubs === 'function' ? stubs() : stubs;
 
-      (Object.keys(stubValues) as Path<T>[]).forEach((fieldName) => {
+      (Object.keys(stubValues) as Path<T>[]).forEach((fieldName: Path<T>) => {
         const stubValue = stubValues[fieldName as keyof typeof stubValues];
 
         if (stubValue === undefined) {

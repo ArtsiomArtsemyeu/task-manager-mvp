@@ -71,7 +71,7 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
       let previousState: TaskState | undefined;
 
       setStatusError(null);
-      setStatus((current) => {
+      setStatus((current: TaskState) => {
         if (current === nextState) {
           return current;
         }
@@ -88,7 +88,7 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
 
       startTransition(() => {
         void changeTaskStatusAction(task.id, task.taskListId, nextState).then(
-          (result) => {
+          (result: { error?: string; success?: boolean }) => {
             if (!result.error) {
               return;
             }
@@ -170,7 +170,7 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
                   }
                 }}
               >
-                {TASK_STATES.map((state) => (
+                {TASK_STATES.map((state: TaskState) => (
                   <option key={state} value={state}>
                     {TASK_STATE_LABELS[state]}
                   </option>

@@ -18,7 +18,7 @@ export function TaskListsSkeleton() {
       </div>
 
       <div className={styles.list}>
-        {Array.from({ length: CARD_PLACEHOLDERS }).map((_, index) => (
+        {Array.from({ length: CARD_PLACEHOLDERS }).map((_: unknown, index: number) => (
           <TaskListCardSkeleton key={index} />
         ))}
       </div>

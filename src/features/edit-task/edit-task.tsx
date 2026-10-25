@@ -77,7 +77,9 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
         id: task.id,
         taskListId,
         ...data,
-      }).forEach(([key, val]) => formData.append(key, String(val)));
+      }).forEach(([key, val]: [string, string | number]) =>
+        formData.append(key, String(val)),
+      );
       formAction(formData);
     });
   };
@@ -134,7 +136,7 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
               className={styles.select}
               {...register('state', { required: true })}
             >
-              {TASK_STATES.map((taskState) => (
+              {TASK_STATES.map((taskState: TaskState) => (
                 <option key={taskState} value={taskState}>
                   {TASK_STATE_LABELS[taskState]}
                 </option>
@@ -149,7 +151,7 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
               className={styles.select}
               {...register('priority', { valueAsNumber: true, required: true })}
             >
-              {TASK_PRIORITIES.map((priority) => (
+              {TASK_PRIORITIES.map((priority: TaskPriority) => (
                 <option key={priority} value={priority}>
                   {TASK_PRIORITY_LABELS[priority]}
                 </option>

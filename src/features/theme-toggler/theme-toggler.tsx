@@ -85,7 +85,7 @@ export function ThemeToggler({ themes }: ThemeTogglerProps) {
 
       {isOpenDropdown && (
         <ul className={styles.dropdownMenu}>
-          {themes.map((themeItem) => (
+          {themes.map((themeItem: ThemeConfig) => (
             <ThemeTogglerItem
               key={`themeOption-${themeItem.value}`}
               theme={themeItem}

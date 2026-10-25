@@ -65,7 +65,9 @@ export function AddTaskList({ isOpen, onClose }: AddTaskListProps) {
   ) => {
     startTransition(() => {
       const formData = new FormData();
-      Object.entries(data).forEach(([key, val]) => formData.append(key, val));
+      Object.entries(data).forEach(([key, val]: [string, string]) =>
+        formData.append(key, val),
+      );
       formAction(formData);
     });
   };

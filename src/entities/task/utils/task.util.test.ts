@@ -19,7 +19,8 @@ const makeTask = (overrides: Partial<Task> = {}): Task => ({
   ...overrides,
 });
 
-const taskNames = (tasks: Task[]): string[] => tasks.map((task) => task.name);
+const taskNames = (tasks: Task[]): string[] =>
+  tasks.map((task: Task) => task.name);
 
 const tasksByStates: Task[] = [
   makeTask({ id: '1', state: 'new' }),

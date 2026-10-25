@@ -1,4 +1,5 @@
-import { expect, userEvent, within } from 'storybook/test';
+import { Suspense, useMemo, type ComponentProps } from 'react';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { TaskListDetailsWidget } from './task-list-details';
 import type { Task } from '@/src/entities/task';
@@ -61,25 +62,49 @@ const emptyTaskList: TaskListDto = {
   tasks: [],
 };
 
-const meta: Meta<typeof TaskListDetailsWidget> = {
+type StoryArgs = {
+  taskList: TaskListDto;
+  changeTaskStatus: NonNullable<
+    ComponentProps<typeof TaskListDetailsWidget>['changeTaskStatus']
+  >;
+};
+
+function TaskListDetailsStory({ taskList, changeTaskStatus }: StoryArgs) {
+  const taskListPromise = useMemo(
+    () => Promise.resolve(taskList),
+    [taskList],
+  );
+
+  return (
+    <Suspense fallback={null}>
+      <TaskListDetailsWidget
+        taskListPromise={taskListPromise}
+        changeTaskStatus={changeTaskStatus}
+      />
+    </Suspense>
+  );
+}
+
+const meta: Meta<StoryArgs> = {
   title: 'Widgets/TaskListDetails',
-  component: TaskListDetailsWidget,
+  component: TaskListDetailsStory,
   tags: ['autodocs'],
   args: {
-    taskListPromise: Promise.resolve(sampleTaskList),
+    taskList: sampleTaskList,
+    changeTaskStatus: fn(async () => ({ success: true })),
   },
   parameters: {
     layout: 'fullscreen',
   },
 };
 
-type Story = StoryObj<typeof TaskListDetailsWidget>;
+type Story = StoryObj<StoryArgs>;
 
 export const Default: Story = {};
 
 export const Empty: Story = {
   args: {
-    taskListPromise: Promise.resolve(emptyTaskList),
+    taskList: emptyTaskList,
   },
   parameters: {
     docs: {
@@ -116,7 +141,7 @@ export const FilterByDone: Story = {
 
 export const FilterEmptyResult: Story = {
   args: {
-    taskListPromise: Promise.resolve({
+    taskList: {
       ...sampleTaskList,
       tasks: [
         makeTask({
@@ -125,7 +150,7 @@ export const FilterEmptyResult: Story = {
           state: 'new',
         }),
       ],
-    }),
+    },
   },
   parameters: {
     docs: {
@@ -176,13 +201,12 @@ export const ChangeTaskStatus: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          'Смена статуса задачи в таблице и пересчет прогресса списка.',
+        story: 'Смена статуса задачи в таблице и пересчет прогресса списка.',
       },
       story: { autoplay: true },
     },
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
     await expect(canvas.getByText('Прогресс 25%')).toBeInTheDocument();
@@ -197,6 +221,7 @@ export const ChangeTaskStatus: Story = {
 
     await expect(statusSelect).toHaveValue('done');
     await expect(canvas.getByText('Прогресс 50%')).toBeInTheDocument();
+    await waitFor(() => expect(args.changeTaskStatus).toHaveBeenCalledOnce());
   },
 };
 

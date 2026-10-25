@@ -61,7 +61,9 @@ export function RenameTaskList({
       Object.entries({
         id: taskListId,
         ...data,
-      }).forEach(([key, val]) => formData.append(key, val));
+      }).forEach(([key, val]: [string, string]) =>
+        formData.append(key, val),
+      );
       formAction(formData);
     });
   };

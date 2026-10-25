@@ -13,7 +13,9 @@ export const calculateTaskListProgress = (tasks: Task[]): number => {
     return 0;
   }
 
-  const completedCount = tasks.filter((task) => task.state === 'done').length;
+  const completedCount = tasks.filter(
+    (task: Task) => task.state === 'done',
+  ).length;
   const percentage = (completedCount / tasks.length) * 100;
 
   return Math.round(percentage);

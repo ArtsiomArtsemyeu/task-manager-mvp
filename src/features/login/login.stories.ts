@@ -11,17 +11,18 @@ const meta: Meta<typeof Login> = {
   component: Login,
   tags: ['autodocs'],
   args: {
-    action: fn(async () => null),
+    action: fn(() => Promise.resolve(null)),
   },
 };
 
 type Story = StoryObj<typeof Login>;
 
 async function fillAndSubmit(
-  canvas: ReturnType<typeof within>,
+  canvasElement: HTMLElement,
   email: string,
   password: string,
 ) {
+  const canvas = within(canvasElement);
   await userEvent.type(canvas.getByLabelText('Электронная почта'), email);
   await userEvent.type(canvas.getByLabelText('Пароль'), password);
   await userEvent.click(canvas.getByRole('button', { name: 'Войти' }));
@@ -67,7 +68,7 @@ export const InvalidEmail: Story = {
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await fillAndSubmit(canvas, 'user@localhost', VALID_PASSWORD);
+    await fillAndSubmit(canvasElement, 'user@localhost', VALID_PASSWORD);
 
     await expect(
       canvas.getByText(errorMessages.validation.emailInvalid),
@@ -89,7 +90,7 @@ export const ShortPassword: Story = {
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await fillAndSubmit(canvas, VALID_EMAIL, 'short');
+    await fillAndSubmit(canvasElement, VALID_EMAIL, 'short');
 
     await expect(
       canvas.getByText(errorMessages.validation.passwordMinLength),
@@ -100,9 +101,11 @@ export const ShortPassword: Story = {
 
 export const InvalidCredentials: Story = {
   args: {
-    action: fn(async () => ({
-      error: errorMessages.error.invalidCredentials,
-    })),
+    action: fn(() =>
+      Promise.resolve({
+        error: errorMessages.error.invalidCredentials,
+      }),
+    ),
   },
   parameters: {
     docs: {
@@ -116,10 +119,10 @@ export const InvalidCredentials: Story = {
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await fillAndSubmit(canvas, VALID_EMAIL, VALID_PASSWORD);
+    await fillAndSubmit(canvasElement, VALID_EMAIL, VALID_PASSWORD);
 
-    await waitFor(() => {
-      expect(args.action).toHaveBeenCalledOnce();
+    await waitFor(async () => {
+      await expect(args.action).toHaveBeenCalledOnce();
     });
     await expect(
       canvas.getByText(errorMessages.error.invalidCredentials),
@@ -140,10 +143,10 @@ export const SuccessfulSubmit: Story = {
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await fillAndSubmit(canvas, VALID_EMAIL, VALID_PASSWORD);
+    await fillAndSubmit(canvasElement, VALID_EMAIL, VALID_PASSWORD);
 
-    await waitFor(() => {
-      expect(args.action).toHaveBeenCalledOnce();
+    await waitFor(async () => {
+      await expect(args.action).toHaveBeenCalledOnce();
     });
 
     const actionMock = args.action as ReturnType<typeof fn>;
@@ -163,8 +166,7 @@ export const TogglePasswordVisibility: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          'Клик по глазику показывает и скрывает введённый пароль.',
+        story: 'Клик по глазику показывает и скрывает введённый пароль.',
       },
       story: { autoplay: true },
     },

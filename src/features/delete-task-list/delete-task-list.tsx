@@ -34,8 +34,8 @@ export function DeleteTaskList({
   const onConfirm = () => {
     startTransition(() => {
       const formData = new FormData();
-      Object.entries({ id: taskListId }).forEach(([key, val]) =>
-        formData.append(key, val),
+      Object.entries({ id: taskListId }).forEach(
+        ([key, val]: [string, string]) => formData.append(key, val),
       );
       formAction(formData);
     });

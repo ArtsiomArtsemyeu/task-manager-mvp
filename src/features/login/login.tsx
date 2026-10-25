@@ -53,7 +53,9 @@ export function Login({ action = loginAction }: LoginProps = {}) {
   const onSubmit: SubmitHandler<LoginFormData> = (data: LoginFormData) => {
     startTransition(() => {
       const formData = new FormData();
-      Object.entries(data).forEach(([key, val]) => formData.append(key, val));
+      Object.entries(data).forEach(([key, val]: [string, string]) =>
+        formData.append(key, val),
+      );
       formAction(formData);
     });
   };
@@ -103,7 +105,9 @@ export function Login({ action = loginAction }: LoginProps = {}) {
                 <button
                   type="button"
                   className={styles.passwordToggle}
-                  onClick={() => setIsPasswordVisible((prev) => !prev)}
+                  onClick={() =>
+                    setIsPasswordVisible((prev: boolean) => !prev)
+                  }
                   aria-label={
                     isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'
                   }

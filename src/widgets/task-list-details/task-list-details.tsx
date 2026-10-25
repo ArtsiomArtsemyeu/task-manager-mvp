@@ -33,8 +33,15 @@ import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
 
 type StatusFilter = 'all' | TaskState;
 
+type ChangeTaskStatus = (
+  id: string,
+  taskListId: string,
+  state: TaskState,
+) => Promise<{ error?: string; success?: boolean }>;
+
 type TaskListDetailsProps = {
   taskListPromise: Promise<TaskListDto>;
+  changeTaskStatus?: ChangeTaskStatus;
 };
 
 const PRIORITY_CLASS_BY_LEVEL: Record<TaskPriorityLevel, string | undefined> = {
@@ -45,6 +52,7 @@ const PRIORITY_CLASS_BY_LEVEL: Record<TaskPriorityLevel, string | undefined> = {
 
 export function TaskListDetailsWidget({
   taskListPromise,
+  changeTaskStatus = changeTaskStatusAction,
 }: TaskListDetailsProps) {
   const taskList = use(taskListPromise);
   const [tasks, setTasks] = useState<Task[]>(taskList.tasks);
@@ -66,7 +74,7 @@ export function TaskListDetailsWidget({
     const filtered =
       statusFilter === 'all'
         ? tasks
-        : tasks.filter((task) => task.state === statusFilter);
+        : tasks.filter((task: Task) => task.state === statusFilter);
 
     return sortTasks(filtered);
   }, [statusFilter, tasks]);
@@ -81,8 +89,8 @@ export function TaskListDetailsWidget({
       let previousState: TaskState | undefined;
 
       setStatusError(null);
-      setTasks((prev) => {
-        const current = prev.find((task) => task.id === taskId);
+      setTasks((prev: Task[]) => {
+        const current = prev.find((task: Task) => task.id === taskId);
         if (
           !current ||
           !isTaskState(current.state) ||
@@ -92,7 +100,7 @@ export function TaskListDetailsWidget({
         }
 
         previousState = current.state;
-        return prev.map((task) =>
+        return prev.map((task: Task) =>
           task.id === taskId ? { ...task, state: nextState } : task,
         );
       });
@@ -104,14 +112,14 @@ export function TaskListDetailsWidget({
       const stateToRestore = previousState;
 
       startTransition(() => {
-        void changeTaskStatusAction(taskId, taskList.id, nextState).then(
-          (result) => {
+        void changeTaskStatus(taskId, taskList.id, nextState).then(
+          (result: { error?: string; success?: boolean }) => {
             if (!result.error) {
               return;
             }
 
-            setTasks((prev) =>
-              prev.map((task) =>
+            setTasks((prev: Task[]) =>
+              prev.map((task: Task) =>
                 task.id === taskId ? { ...task, state: stateToRestore } : task,
               ),
             );
@@ -120,7 +128,7 @@ export function TaskListDetailsWidget({
         );
       });
     },
-    [taskList.id],
+    [changeTaskStatus, taskList.id],
   );
 
   return (
@@ -170,7 +178,7 @@ export function TaskListDetailsWidget({
             >
               Все
             </button>
-            {TASK_STATES.map((state) => (
+            {TASK_STATES.map((state: TaskState) => (
               <button
                 key={state}
                 type="button"
@@ -212,7 +220,7 @@ export function TaskListDetailsWidget({
                 </tr>
               </thead>
               <tbody>
-                {filteredTasks.map((task) => {
+                {filteredTasks.map((task: Task) => {
                   const priority = isTaskPriority(task.priority)
                     ? task.priority
                     : (1 as TaskPriority);
@@ -247,7 +255,7 @@ export function TaskListDetailsWidget({
                             }
                           }}
                         >
-                          {TASK_STATES.map((state) => (
+                          {TASK_STATES.map((state: TaskState) => (
                             <option key={state} value={state}>
                               {TASK_STATE_LABELS[state]}
                             </option>

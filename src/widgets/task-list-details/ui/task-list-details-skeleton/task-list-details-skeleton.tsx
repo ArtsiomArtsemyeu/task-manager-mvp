@@ -28,7 +28,7 @@ export function TaskListDetailsSkeleton() {
         </div>
 
         <div className={styles.filters}>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {Array.from({ length: 5 }).map((_: unknown, index: number) => (
             <Skeleton key={index} width="5.5rem" height="2rem" />
           ))}
         </div>
@@ -43,7 +43,7 @@ export function TaskListDetailsSkeleton() {
           <Skeleton width="4rem" height="0.7rem" />
         </div>
 
-        {Array.from({ length: ROW_PLACEHOLDERS }).map((_, index) => (
+        {Array.from({ length: ROW_PLACEHOLDERS }).map((_: unknown, index: number) => (
           <div key={index} className={styles.row}>
             <div className={styles.nameBlock}>
               <Skeleton width="70%" height="1rem" />

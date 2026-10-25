@@ -1,1 +1,1 @@
-export { createToken, verifyToken } from './jwt.util';
+export { createToken } from './jwt.util';

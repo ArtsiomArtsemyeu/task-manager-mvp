@@ -8,7 +8,7 @@ export function TaskListCardSkeleton() {
       <Skeleton width="45%" height="0.9rem" />
 
       <div className={styles.metrics}>
-        {Array.from({ length: 4 }).map((_, index) => (
+        {Array.from({ length: 4 }).map((_: unknown, index: number) => (
           <div key={index} className={styles.metricItem}>
             <Skeleton width="60%" height="0.65rem" />
             <Skeleton width="2rem" height="0.95rem" />
