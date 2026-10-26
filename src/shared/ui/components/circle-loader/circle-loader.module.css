@@ -1,15 +1,19 @@
 .wrapper {
   position: relative;
+  max-width: 100%;
+}
+
+.spinnerSlot {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100px;
-  width: 100%;
+  pointer-events: none;
 }
 
 .host {
-  position: absolute;
-  z-index: 2;
   width: 50px;
   height: 50px;
   border: 5px solid #f3f3f3;
@@ -27,6 +31,7 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

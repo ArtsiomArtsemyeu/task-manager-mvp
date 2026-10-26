@@ -1,5 +1,6 @@
 'use client';
 
+import { clsx } from 'clsx';
 import styles from './circle-loader.module.css';
 
 interface CircleLoaderProps {
@@ -8,13 +9,14 @@ interface CircleLoaderProps {
 }
 
 export function CircleLoader({ children, show }: CircleLoaderProps) {
-  if (show) {
-    return (
-      <div className={styles.wrapper}>
-        <div className={styles.host}></div>
-        {children && <div className={styles.content}>{children}</div>}
-      </div>
-    );
-  }
-  return <>{children}</>;
+  return (
+    <div className={styles.wrapper}>
+      {show ? (
+        <div className={styles.spinnerSlot} aria-hidden>
+          <div className={styles.host} />
+        </div>
+      ) : null}
+      <div className={clsx(show && styles.content)}>{children}</div>
+    </div>
+  );
 }
