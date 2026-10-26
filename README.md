@@ -216,7 +216,7 @@ npm run build-storybook
 | `GET` | `/api/data/task-lists/[id]` | **Path:** `id` | Один список с задачами. `404`, если нет. | `task-lists.json`, `tasks.json` |
 | `PUT` | `/api/data/task-lists/[id]` | **Path:** `id`; **Body:** `name` | Переименование. `404`, если нет. | `task-lists.json` |
 | `DELETE` | `/api/data/task-lists/[id]` | **Path:** `id` | Удаляет список (задачи в `tasks.json` не трогает). `404`, если нет. | `task-lists.json` |
-| `GET` | `/api/data/tasks` | — | Все задачи. | Читает `tasks.json` |
+| `GET` | `/api/data/tasks` | — | Все задачи. | `tasks.json` |
 | `POST` | `/api/data/tasks` | **Body:** `name`, `description`, `state`, `priority`, `dueDate`, `taskListId` | Создаёт задачу и добавляет `id` в `taskIds` списка. | `task-lists.json`, `tasks.json` |
 | `GET` | `/api/data/tasks/[id]` | **Path:** `id` | Задача + `taskListId`, `taskListName`. `404`, если нет. | `task-lists.json`, `tasks.json` |
 | `PUT` | `/api/data/tasks/[id]` | **Path:** `id`; **Body (опц.):** `name`, `description`, `state`, `priority`, `dueDate` | Обновление. Незаданные поля сохраняются. `404`, если нет. | `tasks.json` |
@@ -290,13 +290,13 @@ flowchart LR
 
 - <img src="./public/images/icons/arrow-left.svg" width="16" height="16" alt="" /> Назад к списку (`К списку «…»`).
 - Заголовок, описание (или «Описание не указано»).
-- Приоритет, дедлайн с подсветкой soon / overdue.
+- Приоритет, дедлайн с подсветкой дедлайн в ближайшие 48 часов / просроченные.
 - Смена статуса с откатом при ошибке.
 - <img src="./public/images/icons/edit.svg" width="16" height="16" alt="" /> Редактирование и <img src="./public/images/icons/trash.svg" width="16" height="16" alt="" /> удаление; после удаления — возврат к списку.
 
-### 🎨 Цветовая тема
+### 🎨 Тема оформления
 
-- Переключатель в шапке (`next-themes`) <img src="./public/images/icons/color-bucket.svg" width="16" height="16" alt="" />.
+- Переключатель в шапке <img src="./public/images/icons/color-bucket.svg" width="16" height="16" alt="" />.
 - Режимы: **системная**, **светлая**, **тёмная**.
 - Выбор сохраняется и применяется ко всему UI.
 
