@@ -30,6 +30,7 @@ import {
 import type { TaskListDto } from '@/src/entities/task-list';
 import { ProgressBar } from '@/src/shared/ui/components/progress-bar';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
+import { Select } from '@/src/shared/ui/components/select';
 
 type StatusFilter = 'all' | TaskState;
 
@@ -245,8 +246,8 @@ export function TaskListDetailsWidget({
                         </div>
                       </td>
                       <td>
-                        <select
-                          className={styles.statusSelect}
+                        <Select
+                          size="sm"
                           aria-label={`Статус задачи ${task.name}`}
                           value={isTaskState(task.state) ? task.state : 'new'}
                           onChange={(event) => {
@@ -260,7 +261,7 @@ export function TaskListDetailsWidget({
                               {TASK_STATE_LABELS[state]}
                             </option>
                           ))}
-                        </select>
+                        </Select>
                       </td>
                       <td>
                         <span

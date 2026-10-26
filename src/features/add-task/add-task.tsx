@@ -18,6 +18,7 @@ import { errorMessages } from '@/src/shared/config/error';
 import { useFillFormStubsHotkey } from '@/src/shared/lib/fill-form-stubs';
 import { Modal } from '@/src/shared/ui/components/modal';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
+import { Select } from '@/src/shared/ui/components/select';
 
 type AddTaskProps = {
   isOpen: boolean;
@@ -148,9 +149,8 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
         <div className={styles.row}>
           <div className={styles.inputGroup}>
             <label htmlFor="add-task-state">Статус</label>
-            <select
+            <Select
               id="add-task-state"
-              className={styles.select}
               {...register('state', { required: true })}
             >
               {TASK_STATES.map((taskState: TaskState) => (
@@ -158,14 +158,13 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
                   {TASK_STATE_LABELS[taskState]}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
 
           <div className={styles.inputGroup}>
             <label htmlFor="add-task-priority">Приоритет</label>
-            <select
+            <Select
               id="add-task-priority"
-              className={styles.select}
               {...register('priority', { valueAsNumber: true, required: true })}
             >
               {TASK_PRIORITIES.map((priority: TaskPriority) => (
@@ -173,7 +172,7 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
                   {TASK_PRIORITY_LABELS[priority]}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
         </div>
 

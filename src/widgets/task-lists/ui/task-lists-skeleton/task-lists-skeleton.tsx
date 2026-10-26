@@ -13,8 +13,8 @@ export function TaskListsSkeleton() {
       aria-label="Загрузка списков задач"
     >
       <div className={styles.toolbar}>
-        <Skeleton width="min(100%, 28rem)" height="2.75rem" />
-        <Skeleton width="11rem" height="2.75rem" />
+        <Skeleton className={styles.search} height="2.75rem" />
+        <Skeleton className={styles.addButton} height="2.75rem" />
       </div>
 
       <div className={styles.list}>

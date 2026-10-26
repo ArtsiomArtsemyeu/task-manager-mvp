@@ -311,4 +311,4 @@ flowchart LR
 
 ## 3. Live-demo
 
-![Live-demo](./docs/images/LiveDemo.gif)
+![Live-demo](./docs/images/live-demo.gif)
