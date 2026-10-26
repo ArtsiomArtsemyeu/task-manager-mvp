@@ -5,8 +5,8 @@
   border-radius: 16px;
   border: 1px solid var(--card-border);
   box-shadow: var(--card-shadow);
-  width: 100%;
-  max-width: 400px;
+  width: 400px;
+  max-width: calc(100% - 32px);
   margin: 16px;
   box-sizing: border-box;
 }
@@ -88,6 +88,7 @@
 .formError {
   min-height: calc(0.875rem * 1.25 * 2);
   margin: -0.75rem 0 0.75rem;
+  overflow-wrap: break-word;
 }
 
 .btnSubmit {
