@@ -17,6 +17,7 @@ Web-приложение для управления списками задач
   - [1.4. Поток данных](#14-описание-организации-данных-в-приложении)
 - [2. Описание функций](#2-описание-функций-приложения)
   - [2.1. Карта экранов](#21-карта-экранов)
+- [3. Live-demo](#3-live-demo)
 
 ---
 
@@ -305,3 +306,9 @@ flowchart LR
 - Скелетоны на `/lists`, `/lists/[id]`, `/tasks/[id]` пока грузятся данные.
 - <img src="./public/images/icons/not-found.svg" width="16" height="16" alt="" /> 404 — `ErrorView` для неизвестного маршрута / сущности.
 - <img src="./public/images/icons/server-error.svg" width="16" height="16" alt="" /> 500 — экран ошибки с повтором действия.
+
+---
+
+## 3. Live-demo
+
+![Live-demo](./docs/images/LiveDemo.gif)
