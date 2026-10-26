@@ -119,7 +119,9 @@ export function Login({ action = loginAction }: LoginProps = {}) {
                         ? '/images/icons/eye-off.svg'
                         : '/images/icons/eye.svg'
                     }
-                    alt=""
+                    alt={
+                      isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'
+                    }
                     width={20}
                     height={20}
                   />
