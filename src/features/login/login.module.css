@@ -15,6 +15,10 @@
   margin-bottom: 20px;
 }
 
+.inputGroup:nth-last-child(2) {
+  margin-bottom: 14px;
+}
+
 .inputGroup label {
   display: block;
   margin-bottom: 0.4rem;
@@ -85,9 +89,13 @@
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
+.fieldError {
+  margin-top: 6px;
+}
+
 .formError {
-  min-height: calc(0.875rem * 1.25 * 2);
-  margin: -0.75rem 0 0.75rem;
+  min-height: calc(0.875rem * 1.25);
+  margin: 0 0 8px;
   overflow-wrap: break-word;
 }
 

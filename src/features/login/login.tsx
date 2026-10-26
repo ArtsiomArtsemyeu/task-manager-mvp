@@ -66,7 +66,7 @@ export function Login({ action = loginAction }: LoginProps = {}) {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <div className={styles.inputGroup}>
-              <label htmlFor="email">Электронная почта</label>
+              <label htmlFor="email">Электронный адрес</label>
               <input
                 id="email"
                 type="email"
@@ -82,7 +82,9 @@ export function Login({ action = loginAction }: LoginProps = {}) {
                 placeholder="name@example.com"
               />
               {errors.email && (
-                <ErrorHighlight message={errors.email.message} />
+                <div className={styles.fieldError}>
+                  <ErrorHighlight message={errors.email.message} />
+                </div>
               )}
             </div>
 
@@ -128,7 +130,9 @@ export function Login({ action = loginAction }: LoginProps = {}) {
                 </button>
               </div>
               {errors.password && (
-                <ErrorHighlight message={errors.password.message} />
+                <div className={styles.fieldError}>
+                  <ErrorHighlight message={errors.password.message} />
+                </div>
               )}
             </div>
             <div className={styles.formError} aria-live="polite">
