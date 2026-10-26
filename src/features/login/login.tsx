@@ -131,8 +131,8 @@ export function Login({ action = loginAction }: LoginProps = {}) {
                 <ErrorHighlight message={errors.password.message} />
               )}
             </div>
-            <div>
-              {state?.error && <ErrorHighlight message={state.error} />}
+            <div className={styles.formError} aria-live="polite">
+              <ErrorHighlight message={state?.error} />
             </div>
           </div>
 

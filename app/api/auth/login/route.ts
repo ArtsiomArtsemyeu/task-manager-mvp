@@ -20,7 +20,10 @@ export async function POST(request: Request) {
       );
     }
 
-    if (body.password !== defaultUser.password) {
+    if (
+      body.email !== defaultUser.email ||
+      body.password !== defaultUser.password
+    ) {
       return NextResponse.json(
         { error: errorMessages.error.invalidCredentials },
         { status: 401 },

@@ -85,6 +85,11 @@
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
+.formError {
+  min-height: calc(0.875rem * 1.25 * 2);
+  margin: -0.75rem 0 0.75rem;
+}
+
 .btnSubmit {
   width: 100%;
   padding: 12px;
