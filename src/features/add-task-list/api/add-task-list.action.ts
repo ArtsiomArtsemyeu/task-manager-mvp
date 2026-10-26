@@ -1,7 +1,8 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { getTranslations } from 'next-intl/server';
+import { apiUrl } from '@/src/shared/config';
+import { revalidateLocalizedPath } from '@/src/shared/lib/i18n/revalidate-localized-path';
 
 export type AddTaskListActionState = {
   error?: string;
@@ -12,10 +13,11 @@ export async function addTaskListAction(
   _prevState: AddTaskListActionState,
   formData: FormData,
 ): Promise<AddTaskListActionState> {
+  const t = await getTranslations();
   const name = formData.get('name');
 
   if (typeof name !== 'string' || !name.trim()) {
-    return { error: errorMessages.validation.nameRequired };
+    return { error: t('validation.nameRequired') };
   }
 
   const response = await fetch(apiUrl('/api/data/task-lists'), {
@@ -25,9 +27,9 @@ export async function addTaskListAction(
   });
 
   if (!response.ok) {
-    return { error: errorMessages.validation.invalidListName };
+    return { error: t('validation.invalidListName') };
   }
 
-  revalidatePath('/lists');
+  await revalidateLocalizedPath('/lists');
   return { success: true };
 }

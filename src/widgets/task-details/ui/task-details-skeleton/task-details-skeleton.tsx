@@ -1,13 +1,18 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
 import styles from './task-details-skeleton.module.css';
 import { Skeleton } from '@/src/shared/ui/components/skeleton';
 
 export function TaskDetailsSkeleton() {
+  const t = useTranslations();
+
   return (
     <div
       className={styles.host}
       role="status"
       aria-busy="true"
-      aria-label="Загрузка задачи"
+      aria-label={t('taskDetails.loadingAria')}
     >
       <Skeleton width="8.5rem" height="2.65rem" />
       <Skeleton width="min(100%, 22rem)" height="2rem" />

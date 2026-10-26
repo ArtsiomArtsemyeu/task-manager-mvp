@@ -1,4 +1,4 @@
 export interface ThemeConfig {
-  label: string;
+  labelKey: 'system' | 'light' | 'dark';
   value: string;
 }

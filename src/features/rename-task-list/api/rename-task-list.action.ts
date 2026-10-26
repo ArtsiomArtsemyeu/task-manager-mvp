@@ -1,7 +1,8 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { getTranslations } from 'next-intl/server';
+import { apiUrl } from '@/src/shared/config';
+import { revalidateLocalizedPath } from '@/src/shared/lib/i18n/revalidate-localized-path';
 
 export type RenameTaskListActionState = {
   error?: string;
@@ -12,15 +13,16 @@ export async function renameTaskListAction(
   _prevState: RenameTaskListActionState,
   formData: FormData,
 ): Promise<RenameTaskListActionState> {
+  const t = await getTranslations();
   const id = formData.get('id');
   const name = formData.get('name');
 
   if (typeof id !== 'string' || !id) {
-    return { error: errorMessages.validation.invalidTaskListId };
+    return { error: t('validation.invalidTaskListId') };
   }
 
   if (typeof name !== 'string' || !name.trim()) {
-    return { error: errorMessages.validation.nameRequired };
+    return { error: t('validation.nameRequired') };
   }
 
   const response = await fetch(apiUrl(`/api/data/task-lists/${id}`), {
@@ -30,9 +32,9 @@ export async function renameTaskListAction(
   });
 
   if (!response.ok) {
-    return { error: errorMessages.error.renameTaskListFailed };
+    return { error: t('errors.renameTaskListFailed') };
   }
 
-  revalidatePath('/lists');
+  await revalidateLocalizedPath('/lists');
   return { success: true };
 }

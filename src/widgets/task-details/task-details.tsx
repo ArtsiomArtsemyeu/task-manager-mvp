@@ -1,9 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { clsx } from 'clsx';
 import { startTransition, use, useCallback, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/src/i18n/navigation';
 import styles from './task-details.module.css';
 import { EditTask } from '@/src/features/edit-task';
 import { DeleteTask } from '@/src/features/delete-task';
@@ -20,8 +21,7 @@ import {
   isDeadlineWithin48Hours,
   isTaskPriority,
   isTaskState,
-  TASK_PRIORITY_LABELS,
-  TASK_STATE_LABELS,
+  TASK_STATE_MESSAGE_KEYS,
   TASK_STATES,
 } from '@/src/entities/task';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
@@ -41,6 +41,7 @@ function getInitialState(state: string): TaskState {
 }
 
 export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
+  const t = useTranslations();
   const task = use(taskPromise);
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
@@ -109,11 +110,11 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
           <Image
             className={styles.backIcon}
             src="/images/icons/arrow-left.svg"
-            alt="Стрелка влево"
+            alt={t('common.arrowLeft')}
             width={16}
             height={16}
           />
-          К списку «{task.taskListName}»
+          {t('taskDetails.back', { name: task.taskListName })}
         </Link>
 
         <h1 className={styles.title}>{task.name}</h1>
@@ -125,7 +126,7 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
         <div className={styles.metaRow}>
           <div className={styles.metaGroup}>
             <div className={styles.field}>
-              <span className={styles.label}>Приоритет</span>
+              <span className={styles.label}>{t('common.priority')}</span>
               <div className={styles.fieldValue}>
                 <span
                   className={clsx(
@@ -133,13 +134,13 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
                     PRIORITY_CLASS_BY_LEVEL[getTaskPriorityLevel(priority)],
                   )}
                 >
-                  {TASK_PRIORITY_LABELS[priority]}
+                  {t(`taskPriority.${String(priority)}`)}
                 </span>
               </div>
             </div>
 
             <div className={styles.field}>
-              <span className={styles.label}>Дедлайн</span>
+              <span className={styles.label}>{t('common.dueDate')}</span>
               <div className={styles.fieldValue}>
                 <span
                   className={clsx(
@@ -157,12 +158,12 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
           <div className={styles.metaTrailing}>
             <div className={clsx(styles.field, styles.statusField)}>
               <label className={styles.label} htmlFor="task-status">
-                Статус
+                {t('common.status')}
               </label>
               <select
                 id="task-status"
                 className={styles.statusSelect}
-                aria-label={`Статус задачи ${task.name}`}
+                aria-label={t('common.taskStatusAria', { name: task.name })}
                 value={status}
                 onChange={(event) => {
                   if (isTaskState(event.target.value)) {
@@ -172,7 +173,7 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
               >
                 {TASK_STATES.map((state: TaskState) => (
                   <option key={state} value={state}>
-                    {TASK_STATE_LABELS[state]}
+                    {t(`taskState.${TASK_STATE_MESSAGE_KEYS[state]}`)}
                   </option>
                 ))}
               </select>
@@ -182,12 +183,12 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
               <button
                 type="button"
                 className={styles.iconButton}
-                aria-label={`Редактировать задачу ${task.name}`}
+                aria-label={t('common.editTaskAria', { name: task.name })}
                 onClick={openEditModal}
               >
                 <Image
                   src="/images/icons/edit.svg"
-                  alt="Редактировать"
+                  alt={t('common.edit')}
                   width={16}
                   height={16}
                 />
@@ -195,12 +196,12 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
               <button
                 type="button"
                 className={clsx(styles.iconButton, styles.iconButtonDanger)}
-                aria-label={`Удалить задачу ${task.name}`}
+                aria-label={t('common.deleteTaskAria', { name: task.name })}
                 onClick={openDeleteModal}
               >
                 <Image
                   src="/images/icons/trash.svg"
-                  alt="Удалить"
+                  alt={t('common.delete')}
                   width={16}
                   height={16}
                 />
@@ -210,12 +211,12 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
         </div>
 
         <div className={styles.field}>
-          <span className={styles.label}>Описание</span>
+          <span className={styles.label}>{t('common.description')}</span>
           {task.description ? (
             <p className={styles.description}>{task.description}</p>
           ) : (
             <p className={clsx(styles.description, styles.descriptionEmpty)}>
-              Описание не указано
+              {t('taskDetails.noDescription')}
             </p>
           )}
         </div>

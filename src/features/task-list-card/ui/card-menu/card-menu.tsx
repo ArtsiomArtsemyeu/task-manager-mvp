@@ -3,6 +3,7 @@
 import { clsx } from 'clsx';
 import Image from 'next/image';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import styles from './card-menu.module.css';
 
 type CardMenuProps = {
@@ -14,6 +15,7 @@ export function CardMenu({
   onRenameTasksListName,
   onDeleteTasksList,
 }: CardMenuProps) {
+  const t = useTranslations();
   const menuRef = useRef<HTMLDivElement>(null);
   const menuId = useId();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -69,12 +71,12 @@ export function CardMenu({
         onClick={toggleMenu}
         aria-expanded={isOpen}
         aria-controls={menuId}
-        aria-label="Действия со списком"
+        aria-label={t('taskListCard.menuAria')}
       >
         <Image
           className={styles.triggerIcon}
           src="/images/icons/more-vertical.svg"
-          alt="Меню действий"
+          alt={t('taskListCard.menuAlt')}
           width={18}
           height={18}
         />
@@ -88,7 +90,7 @@ export function CardMenu({
               className={styles.menuItem}
               onClick={handleRenameTasksListName}
             >
-              Переименовать список
+              {t('taskListCard.rename')}
             </button>
           </li>
           <li>
@@ -97,7 +99,7 @@ export function CardMenu({
               className={clsx(styles.menuItem, styles.menuItemDanger)}
               onClick={handleDeleteTasksList}
             >
-              Удалить
+              {t('common.delete')}
             </button>
           </li>
         </ul>

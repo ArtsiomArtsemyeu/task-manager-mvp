@@ -1,9 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { clsx } from 'clsx';
 import { startTransition, use, useCallback, useMemo, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/src/i18n/navigation';
 import styles from './task-list-details.module.css';
 import { AddTask } from '@/src/features/add-task';
 import { EditTask } from '@/src/features/edit-task';
@@ -16,8 +17,7 @@ import type {
   TaskState,
 } from '@/src/entities/task';
 import {
-  TASK_PRIORITY_LABELS,
-  TASK_STATE_LABELS,
+  TASK_STATE_MESSAGE_KEYS,
   TASK_STATES,
   calculateTaskListProgress,
   formatTaskDueDate,
@@ -54,6 +54,7 @@ export function TaskListDetailsWidget({
   taskListPromise,
   changeTaskStatus = changeTaskStatusAction,
 }: TaskListDetailsProps) {
+  const t = useTranslations();
   const taskList = use(taskListPromise);
   const [tasks, setTasks] = useState<Task[]>(taskList.tasks);
   const [tasksSource, setTasksSource] = useState<Task[]>(taskList.tasks);
@@ -138,11 +139,11 @@ export function TaskListDetailsWidget({
           <Image
             className={styles.backIcon}
             src="/images/icons/arrow-left.svg"
-            alt="Стрелка влево"
+            alt={t('common.arrowLeft')}
             width={16}
             height={16}
           />
-          К спискам
+          {t('taskListDetails.back')}
         </Link>
 
         <div className={styles.topGrid}>
@@ -150,10 +151,12 @@ export function TaskListDetailsWidget({
 
           <div className={styles.rightCol}>
             <span className={styles.metaLabel}>
-              Количество задач: {tasks.length}
+              {t('taskListDetails.taskCount', { count: tasks.length })}
             </span>
             <div className={styles.progressWrap}>
-              <span className={styles.metaLabel}>Прогресс {progress}%</span>
+              <span className={styles.metaLabel}>
+                {t('taskListDetails.progress', { progress })}
+              </span>
               <div className={styles.progressBar}>
                 <ProgressBar progress={progress} />
               </div>
@@ -163,7 +166,7 @@ export function TaskListDetailsWidget({
               className={styles.addButton}
               onClick={openAddModal}
             >
-              Добавить задачу
+              {t('taskListDetails.addTask')}
             </button>
           </div>
 
@@ -176,7 +179,7 @@ export function TaskListDetailsWidget({
               )}
               onClick={() => setStatusFilter('all')}
             >
-              Все
+              {t('taskListDetails.filterAll')}
             </button>
             {TASK_STATES.map((state: TaskState) => (
               <button
@@ -188,7 +191,7 @@ export function TaskListDetailsWidget({
                 )}
                 onClick={() => setStatusFilter(state)}
               >
-                {TASK_STATE_LABELS[state]}
+                {t(`taskState.${TASK_STATE_MESSAGE_KEYS[state]}`)}
               </button>
             ))}
           </div>
@@ -200,11 +203,9 @@ export function TaskListDetailsWidget({
       <div className={styles.tableCard}>
         {filteredTasks.length === 0 ? (
           <div className={styles.empty}>
-            <p className={styles.emptyTitle}>Задач не найдено</p>
+            <p className={styles.emptyTitle}>{t('taskListDetails.emptyTitle')}</p>
             <p className={styles.emptyText}>
-              {statusFilter === 'all'
-                ? 'Создайте первую задачу для этого списка.'
-                : 'Попробуйте другой фильтр статуса.'}
+              {statusFilter === 'all' ? t('taskListDetails.emptyCreate') : t('taskListDetails.emptyFilter')}
             </p>
           </div>
         ) : (
@@ -212,11 +213,11 @@ export function TaskListDetailsWidget({
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th scope="col">Название</th>
-                  <th scope="col">Статус</th>
-                  <th scope="col">Приоритет</th>
-                  <th scope="col">Дедлайн</th>
-                  <th scope="col">Действия</th>
+                  <th scope="col">{t('taskListDetails.colName')}</th>
+                  <th scope="col">{t('taskListDetails.colStatus')}</th>
+                  <th scope="col">{t('taskListDetails.colPriority')}</th>
+                  <th scope="col">{t('taskListDetails.colDueDate')}</th>
+                  <th scope="col">{t('taskListDetails.colActions')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -247,7 +248,9 @@ export function TaskListDetailsWidget({
                       <td>
                         <select
                           className={styles.statusSelect}
-                          aria-label={`Статус задачи ${task.name}`}
+                          aria-label={t('common.taskStatusAria', {
+                            name: task.name,
+                          })}
                           value={isTaskState(task.state) ? task.state : 'new'}
                           onChange={(event) => {
                             if (isTaskState(event.target.value)) {
@@ -257,7 +260,7 @@ export function TaskListDetailsWidget({
                         >
                           {TASK_STATES.map((state: TaskState) => (
                             <option key={state} value={state}>
-                              {TASK_STATE_LABELS[state]}
+                              {t(`taskState.${TASK_STATE_MESSAGE_KEYS[state]}`)}
                             </option>
                           ))}
                         </select>
@@ -271,7 +274,7 @@ export function TaskListDetailsWidget({
                             ],
                           )}
                         >
-                          {TASK_PRIORITY_LABELS[priority]}
+                          {t(`taskPriority.${String(priority)}`)}
                         </span>
                       </td>
                       <td>
@@ -290,12 +293,14 @@ export function TaskListDetailsWidget({
                           <button
                             type="button"
                             className={styles.iconButton}
-                            aria-label={`Редактировать задачу ${task.name}`}
+                            aria-label={t('common.editTaskAria', {
+                              name: task.name,
+                            })}
                             onClick={() => setEditingTask(task)}
                           >
                             <Image
                               src="/images/icons/edit.svg"
-                              alt="Редактировать"
+                              alt={t('common.edit')}
                               width={16}
                               height={16}
                             />
@@ -306,12 +311,14 @@ export function TaskListDetailsWidget({
                               styles.iconButton,
                               styles.iconButtonDanger,
                             )}
-                            aria-label={`Удалить задачу ${task.name}`}
+                            aria-label={t('common.deleteTaskAria', {
+                              name: task.name,
+                            })}
                             onClick={() => setDeletingTask(task)}
                           >
                             <Image
                               src="/images/icons/trash.svg"
-                              alt="Удалить"
+                              alt={t('common.delete')}
                               width={16}
                               height={16}
                             />

@@ -1,0 +1,17 @@
+.localeItem {
+  padding: 0.55rem 0.75rem;
+  border-radius: calc(var(--radius-md) - 0.15rem);
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--dropdown-fg);
+  transition: background-color 0.15s ease;
+}
+
+.localeItem:hover {
+  background-color: var(--dropdown-hover);
+}
+
+.localeItemSelected {
+  background-color: var(--dropdown-selected);
+  font-weight: 600;
+}

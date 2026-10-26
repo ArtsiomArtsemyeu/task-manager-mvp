@@ -1,0 +1,182 @@
+{
+  "metadata": {
+    "appTitle": "Task Manager",
+    "appDescription": "An application for managing tasks",
+    "homeTitle": "Task Manager",
+    "listsTitle": "Task lists | Task Manager",
+    "listsDescription": "View and manage task lists",
+    "listTitle": "Task list | Task Manager",
+    "listDescription": "View and manage tasks in the selected list",
+    "taskTitle": "Task | Task Manager",
+    "taskDescription": "View and manage a task",
+    "notFoundTitle": "Page not found | Task Manager",
+    "notFoundDescription": "The requested page was not found."
+  },
+  "theme": {
+    "ariaLabel": "Choose theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "locale": {
+    "ariaLabel": "Choose language",
+    "ru": "Русский",
+    "en": "English"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "save": "Save",
+    "saving": "Saving...",
+    "create": "Create",
+    "creating": "Creating...",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "loading": "Loading...",
+    "name": "Name",
+    "description": "Description",
+    "status": "Status",
+    "priority": "Priority",
+    "dueDate": "Due date",
+    "actions": "Actions",
+    "optional": "Optional",
+    "cannotUndo": "This action cannot be undone.",
+    "arrowLeft": "Arrow left",
+    "arrowRight": "Arrow right",
+    "edit": "Edit",
+    "editTaskAria": "Edit task {name}",
+    "deleteTaskAria": "Delete task {name}",
+    "taskStatusAria": "Status of task {name}"
+  },
+  "taskState": {
+    "new": "New",
+    "inProgress": "In progress",
+    "done": "Done",
+    "overdue": "Overdue"
+  },
+  "taskPriority": {
+    "1": "Low",
+    "2": "Medium",
+    "3": "High"
+  },
+  "home": {
+    "title": "Sign in to your account to work with tasks"
+  },
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "submit": "Sign in",
+    "loading": "Loading..."
+  },
+  "validation": {
+    "requiredFields": "Fill in all required fields",
+    "fillAllFields": "Fill in all fields correctly",
+    "invalidJson": "Invalid JSON",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email format",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Minimum 8 characters",
+    "nameRequired": "Name is required",
+    "dueDateRequired": "Due date is required",
+    "invalidListName": "Invalid list name",
+    "invalidTaskListId": "Invalid list identifier",
+    "invalidTaskData": "Invalid task data",
+    "invalidStatusData": "Invalid status data"
+  },
+  "errors": {
+    "server": "Server error",
+    "invalidCredentials": "Invalid email or password",
+    "loginFailed": "Failed to sign in",
+    "taskListNotFound": "List not found",
+    "taskNotFound": "Task not found",
+    "taskListForTaskNotFound": "Task list for the task was not found",
+    "createTaskFailed": "Failed to create task",
+    "updateTaskFailed": "Failed to update task",
+    "deleteTaskFailed": "Failed to delete task",
+    "changeStatusFailed": "Failed to change status",
+    "deleteTaskListFailed": "Failed to delete list",
+    "renameTaskListFailed": "Failed to rename list"
+  },
+  "errorView": {
+    "notFoundTitle": "Page not found.",
+    "notFoundHint": "This page does not exist or has been moved. Go back to the home page and continue working with tasks.",
+    "notFoundAria": "Page not found",
+    "notFoundIconAlt": "Icon: page not found",
+    "serverTitle": "Something went wrong.",
+    "serverHint": "An internal error occurred. Try again or return to the home page.",
+    "serverAria": "Server error",
+    "serverIconAlt": "Icon: server error",
+    "goHome": "Go to home page",
+    "goHomeAria": "{ariaLabel}. Go to home page",
+    "retry": "Try again"
+  },
+  "taskLists": {
+    "searchPlaceholder": "Find a list…",
+    "searchAria": "Search lists",
+    "addList": "Add a new list",
+    "nothingFound": "Nothing found",
+    "loadingAria": "Loading task lists"
+  },
+  "taskListCard": {
+    "taskCount": "Number of tasks:",
+    "overdueChip": "Has overdue tasks",
+    "deadlineChip": "Deadline within the next 48 hours",
+    "menuAria": "List actions",
+    "menuAlt": "Actions menu",
+    "rename": "Rename list",
+    "delete": "Delete",
+    "new": "New",
+    "inProgress": "In progress",
+    "done": "Done",
+    "overdue": "Overdue"
+  },
+  "addTaskList": {
+    "title": "Add a new task list",
+    "placeholder": "For example, Work",
+    "create": "Create",
+    "loading": "Loading..."
+  },
+  "renameTaskList": {
+    "title": "Rename list"
+  },
+  "deleteTaskList": {
+    "title": "Delete list",
+    "confirm": "Are you sure you want to delete the list “{name}”?"
+  },
+  "taskListDetails": {
+    "back": "Back to lists",
+    "taskCount": "Number of tasks: {count}",
+    "progress": "Progress {progress}%",
+    "addTask": "Add task",
+    "filterAll": "All",
+    "emptyTitle": "No tasks found",
+    "emptyCreate": "Create the first task for this list.",
+    "emptyFilter": "Try a different status filter.",
+    "colName": "Name",
+    "colStatus": "Status",
+    "colPriority": "Priority",
+    "colDueDate": "Due date",
+    "colActions": "Actions",
+    "loadingAria": "Loading task list"
+  },
+  "addTask": {
+    "title": "Add task",
+    "namePlaceholder": "For example, Prepare a report",
+    "create": "Create",
+    "creating": "Creating..."
+  },
+  "editTask": {
+    "title": "Edit task"
+  },
+  "deleteTask": {
+    "title": "Delete task",
+    "confirm": "Are you sure you want to delete the task “{name}”?"
+  },
+  "taskDetails": {
+    "back": "Back to list “{name}”",
+    "noDescription": "No description provided",
+    "loadingAria": "Loading task"
+  }
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import { startTransition, useActionState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import type { DeleteTaskActionState } from './api/delete-task.action';
 import { deleteTaskAction } from './api/delete-task.action';
 import styles from './delete-task.module.css';
@@ -24,6 +25,7 @@ export function DeleteTask({
   redirectTo,
   onClose,
 }: DeleteTaskProps) {
+  const t = useTranslations();
   const [state, formAction, isPending] = useActionState<
     DeleteTaskActionState,
     FormData
@@ -50,7 +52,7 @@ export function DeleteTask({
   return (
     <Modal
       isOpen={isOpen}
-      title="Удалить задачу"
+      title={t('deleteTask.title')}
       onClose={onClose}
       action={
         <button
@@ -59,15 +61,15 @@ export function DeleteTask({
           onClick={onConfirm}
           disabled={isPending}
         >
-          {isPending ? 'Удаление...' : 'Удалить'}
+          {isPending ? t('common.deleting') : t('common.delete')}
         </button>
       }
     >
       <div className={styles.message}>
         <p className={styles.messageText}>
-          Вы уверены, что хотите удалить задачу «{taskName}»?
+          {t('deleteTask.confirm', { name: taskName })}
         </p>
-        <p className={styles.warning}>Это действие нельзя отменить.</p>
+        <p className={styles.warning}>{t('common.cannotUndo')}</p>
       </div>
 
       {state?.error && <ErrorHighlight message={state.error} />}

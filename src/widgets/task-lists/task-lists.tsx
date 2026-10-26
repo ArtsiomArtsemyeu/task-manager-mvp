@@ -1,6 +1,7 @@
 'use client';
 
 import { startTransition, use, useCallback, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import styles from './task-lists.module.css';
 import { TaskListCardItem } from './ui/task-list-card-item/task-list-card-item';
 import { AddTaskList } from '@/src/features/add-task-list';
@@ -11,6 +12,7 @@ interface TaskListsProps {
 }
 
 export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
+  const t = useTranslations();
   const taskLists: TaskListDto[] = use(taskListsPromise);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [deferredQuery, setDeferredQuery] = useState<string>('');
@@ -43,22 +45,22 @@ export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
         <input
           className={styles.search}
           type="search"
-          placeholder="Найти список…"
+          placeholder={t('taskLists.searchPlaceholder')}
           onChange={changeQuery}
           value={searchQuery}
-          aria-label="Поиск списков"
+          aria-label={t('taskLists.searchAria')}
         />
         <button
           type="button"
           className={styles.addButton}
           onClick={showAddTaskList}
         >
-          Добавить новый список
+          {t('taskLists.addList')}
         </button>
       </div>
       {filteredTaskLists.length === 0 && deferredQuery.trim() ? (
         <p className={styles.empty} role="status">
-          Ничего не найдено
+          {t('taskLists.nothingFound')}
         </p>
       ) : (
         <div className={styles.list}>

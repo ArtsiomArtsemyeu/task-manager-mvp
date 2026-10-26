@@ -1,8 +1,9 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { redirect } from '@/src/i18n/navigation';
+import { apiUrl } from '@/src/shared/config';
 import { createToken } from '@/src/shared/utils/jwt';
 import { isRecord, readJson } from '@/src/shared/utils/type-guard';
 
@@ -15,6 +16,7 @@ export async function loginAction(
   _prevState: LoginActionState,
   formData: FormData,
 ): Promise<LoginActionState> {
+  const t = await getTranslations();
   const email = formData.get('email');
   const password = formData.get('password');
 
@@ -25,13 +27,13 @@ export async function loginAction(
   });
 
   if (!response.ok) {
-    return { error: errorMessages.error.invalidCredentials };
+    return { error: t('errors.invalidCredentials') };
   }
 
   const body = await readJson(response);
 
   if (!isRecord(body) || !isRecord(body.userSessionPayload)) {
-    return { error: errorMessages.error.loginFailed };
+    return { error: t('errors.loginFailed') };
   }
 
   const jwtToken = createToken(body.userSessionPayload);
@@ -45,5 +47,7 @@ export async function loginAction(
     maxAge: 60 * 60 * 24 * 7,
   });
 
-  redirect('/lists');
+  const locale = await getLocale();
+  redirect({ href: '/lists', locale });
+  return null;
 }

@@ -3,10 +3,10 @@
 import { startTransition, useActionState, useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import type { RenameTaskListActionState } from './api/rename-task-list.action';
 import { renameTaskListAction } from './api/rename-task-list.action';
 import styles from './rename-task-list.module.css';
-import { errorMessages } from '@/src/shared/config/error';
 import { Modal } from '@/src/shared/ui/components/modal';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
 
@@ -27,6 +27,7 @@ export function RenameTaskList({
   currentName,
   onClose,
 }: RenameTaskListProps) {
+  const t = useTranslations();
   const {
     register,
     handleSubmit,
@@ -71,7 +72,7 @@ export function RenameTaskList({
   return (
     <Modal
       isOpen={isOpen}
-      title="Переименовать список"
+      title={t('renameTaskList.title')}
       onClose={onClose}
       action={
         <button
@@ -80,17 +81,17 @@ export function RenameTaskList({
           disabled={isPending}
           className={styles.btnSubmit}
         >
-          {isPending ? 'Сохранение...' : 'Сохранить'}
+          {isPending ? t('common.saving') : t('common.save')}
         </button>
       }
     >
       <form id="rename-task-list-form" onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputGroup}>
-          <label htmlFor="rename-task-list-name">Название</label>
+          <label htmlFor="rename-task-list-name">{t('common.name')}</label>
           <input
             id="rename-task-list-name"
             {...register('name', {
-              required: errorMessages.validation.nameRequired,
+              required: t('validation.nameRequired'),
             })}
             className={styles.input}
           />

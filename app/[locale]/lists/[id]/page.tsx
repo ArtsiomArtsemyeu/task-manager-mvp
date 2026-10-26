@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { getTaskList } from '@/src/entities/task-list/api';
@@ -9,16 +10,24 @@ import {
 } from '@/src/widgets/task-list-details';
 
 type TaskListPageProps = {
-  params: Promise<{ id: string }>;
+  params: Promise<{ locale: string; id: string }>;
 };
 
-export const metadata: Metadata = {
-  title: 'Список задач | Менеджер задач',
-  description: 'Просмотр и управление задачами выбранного списка',
-};
+export async function generateMetadata({
+  params,
+}: TaskListPageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+
+  return {
+    title: t('metadata.listTitle'),
+    description: t('metadata.listDescription'),
+  };
+}
 
 export default async function TaskListPage({ params }: TaskListPageProps) {
   const { id } = await params;
+
   const taskListPromise = getTaskList(id).catch((error: unknown) => {
     if (error instanceof HttpError && error.status === 404) {
       notFound();

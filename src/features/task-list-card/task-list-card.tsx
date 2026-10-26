@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/src/i18n/navigation';
 import styles from './task-list-card.module.css';
 import { TaskMetrics } from './ui/task-metrics/task-metrics';
 import { CardMenu } from './ui/card-menu/card-menu';
@@ -25,6 +26,7 @@ export function TaskListCard({
   onRename,
   onDelete,
 }: TaskListCardProps) {
+  const t = useTranslations();
   const taskListProgress = useMemo(
     () => calculateTaskListProgress(taskList.tasks),
     [taskList],
@@ -47,17 +49,17 @@ export function TaskListCard({
       <Link href={`/lists/${taskList.id}`} className={styles.link}>
         <div className={styles.title}>{taskList.name}</div>
         <div className={styles.count}>
-          Количество задач:
+          {t('taskListCard.taskCount')}
           <span className={styles.countValue}>{taskList.tasks.length}</span>
         </div>
         <TaskMetrics tasks={taskList.tasks} />
         <ProgressBar progress={taskListProgress} />
         <div className={styles.indicators}>
           {hasOverdueTasks && (
-            <Chip label="Есть просроченные задачи" color="red" />
+            <Chip label={t('taskListCard.overdueChip')} color="red" />
           )}
           {hasDeadlineTasks && (
-            <Chip label="Дедлайн в ближайшие 48 часов" color="yellow" />
+            <Chip label={t('taskListCard.deadlineChip')} color="yellow" />
           )}
         </div>
       </Link>

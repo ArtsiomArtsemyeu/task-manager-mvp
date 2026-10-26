@@ -7,12 +7,14 @@ import styles from './theme-toggler-item.module.css';
 
 type ThemeTogglerItemProps = {
   theme: ThemeConfig;
+  label: string;
   selected: boolean;
   onChange: (themeValue: string) => void;
 };
 
 export function ThemeTogglerItem({
   theme,
+  label,
   selected,
   onChange,
 }: ThemeTogglerItemProps) {
@@ -27,7 +29,7 @@ export function ThemeTogglerItem({
       className={clsx(styles.themeItem, selected && styles.themeItemSelected)}
       onClick={onClickThemeItem}
     >
-      {theme.label}
+      {label}
     </li>
   );
 }

@@ -9,6 +9,13 @@ export const TASK_STATE_LABELS: Record<TaskState, string> = {
   overdue: 'Просрочена',
 };
 
+export const TASK_STATE_MESSAGE_KEYS: Record<TaskState, string> = {
+  new: 'new',
+  'in progress': 'inProgress',
+  done: 'done',
+  overdue: 'overdue',
+};
+
 export const TASK_PRIORITIES = [1, 2, 3] as const;
 
 export type TaskPriority = (typeof TASK_PRIORITIES)[number];

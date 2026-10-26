@@ -4,10 +4,10 @@ import Image from 'next/image';
 import { startTransition, useActionState, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import styles from './login.module.css';
 import type { LoginActionState } from './api/login.action';
 import { loginAction } from './api/login.action';
-import { errorMessages } from '@/src/shared/config/error';
 import { useFillFormStubsHotkey } from '@/src/shared/lib/fill-form-stubs';
 import { CircleLoader } from '@/src/shared/ui/components/circle-loader';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
@@ -30,6 +30,7 @@ const LOGIN_FORM_STUBS: LoginFormData = {
 };
 
 export function Login({ action = loginAction }: LoginProps = {}) {
+  const t = useTranslations();
   const {
     register,
     handleSubmit,
@@ -66,16 +67,16 @@ export function Login({ action = loginAction }: LoginProps = {}) {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <div className={styles.inputGroup}>
-              <label htmlFor="email">Электронная почта</label>
+              <label htmlFor="email">{t('login.email')}</label>
               <input
                 id="email"
                 type="email"
                 autoComplete="email"
                 {...register('email', {
-                  required: errorMessages.validation.emailRequired,
+                  required: t('validation.emailRequired'),
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: errorMessages.validation.emailInvalid,
+                    message: t('validation.emailInvalid'),
                   },
                 })}
                 className={styles.input}
@@ -87,17 +88,17 @@ export function Login({ action = loginAction }: LoginProps = {}) {
             </div>
 
             <div className={styles.inputGroup}>
-              <label htmlFor="password">Пароль</label>
+              <label htmlFor="password">{t('login.password')}</label>
               <div className={styles.passwordField}>
                 <input
                   id="password"
                   type={isPasswordVisible ? 'text' : 'password'}
                   autoComplete="current-password"
                   {...register('password', {
-                    required: errorMessages.validation.passwordRequired,
+                    required: t('validation.passwordRequired'),
                     minLength: {
                       value: 8,
-                      message: errorMessages.validation.passwordMinLength,
+                      message: t('validation.passwordMinLength'),
                     },
                   })}
                   className={styles.input}
@@ -109,7 +110,7 @@ export function Login({ action = loginAction }: LoginProps = {}) {
                     setIsPasswordVisible((prev: boolean) => !prev)
                   }
                   aria-label={
-                    isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'
+                    isPasswordVisible ? t('login.hidePassword') : t('login.showPassword')
                   }
                   aria-pressed={isPasswordVisible}
                 >
@@ -120,7 +121,7 @@ export function Login({ action = loginAction }: LoginProps = {}) {
                         : '/images/icons/eye.svg'
                     }
                     alt={
-                      isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'
+                      isPasswordVisible ? t('login.hidePassword') : t('login.showPassword')
                     }
                     width={20}
                     height={20}
@@ -141,7 +142,7 @@ export function Login({ action = loginAction }: LoginProps = {}) {
             disabled={isPending}
             className={styles.btnSubmit}
           >
-            {isPending ? 'Загрузка...' : 'Войти'}
+            {isPending ? t('login.loading') : t('login.submit')}
           </button>
         </form>
       </div>

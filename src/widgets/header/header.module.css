@@ -16,6 +16,13 @@
   transition: var(--transition-theme);
 }
 
+.controls {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 :global([data-theme='light']) .host {
   box-shadow: 0 6px 20px color-mix(in srgb, #94a3b8 18%, transparent);
 }

@@ -2,15 +2,15 @@ import type { ThemeConfig } from '@/src/features/theme-toggler';
 
 export const supportedThemes: ThemeConfig[] = [
   {
-    label: 'Системная',
+    labelKey: 'system',
     value: 'default',
   },
   {
-    label: 'Светлая',
+    labelKey: 'light',
     value: 'light',
   },
   {
-    label: 'Темная',
+    labelKey: 'dark',
     value: 'dark',
   },
 ];

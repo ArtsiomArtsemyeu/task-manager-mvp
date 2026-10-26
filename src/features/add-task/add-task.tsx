@@ -3,18 +3,17 @@
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { startTransition, useActionState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import type { AddTaskActionState } from './api/add-task.action';
 import { addTaskAction } from './api/add-task.action';
 import styles from './add-task.module.css';
 import type { TaskPriority, TaskState } from '@/src/entities/task';
 import {
   TASK_PRIORITIES,
-  TASK_PRIORITY_LABELS,
-  TASK_STATE_LABELS,
+  TASK_STATE_MESSAGE_KEYS,
   TASK_STATES,
   getTomorrowDateTimeLocal,
 } from '@/src/entities/task';
-import { errorMessages } from '@/src/shared/config/error';
 import { useFillFormStubsHotkey } from '@/src/shared/lib/fill-form-stubs';
 import { Modal } from '@/src/shared/ui/components/modal';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
@@ -42,6 +41,7 @@ function getAddTaskFormStubs(): Partial<AddTaskFormData> {
 }
 
 export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
+  const t = useTranslations();
   const {
     register,
     handleSubmit,
@@ -104,7 +104,7 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
   return (
     <Modal
       isOpen={isOpen}
-      title="Добавить задачу"
+      title={t('addTask.title')}
       onClose={onClose}
       action={
         <button
@@ -113,7 +113,7 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
           disabled={isPending}
           className={styles.btnSubmit}
         >
-          {isPending ? 'Создание...' : 'Создать'}
+          {isPending ? t('addTask.creating') : t('addTask.create')}
         </button>
       }
     >
@@ -123,31 +123,31 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className={styles.inputGroup}>
-          <label htmlFor="add-task-name">Название</label>
+          <label htmlFor="add-task-name">{t('common.name')}</label>
           <input
             id="add-task-name"
             className={styles.input}
-            placeholder="Например, Подготовить отчёт"
+            placeholder={t('addTask.namePlaceholder')}
             {...register('name', {
-              required: errorMessages.validation.nameRequired,
+              required: t('validation.nameRequired'),
             })}
           />
           {errors.name && <ErrorHighlight message={errors.name.message} />}
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="add-task-description">Описание</label>
+          <label htmlFor="add-task-description">{t('common.description')}</label>
           <textarea
             id="add-task-description"
             className={styles.textarea}
-            placeholder="Необязательно"
+            placeholder={t('common.optional')}
             {...register('description')}
           />
         </div>
 
         <div className={styles.row}>
           <div className={styles.inputGroup}>
-            <label htmlFor="add-task-state">Статус</label>
+            <label htmlFor="add-task-state">{t('common.status')}</label>
             <select
               id="add-task-state"
               className={styles.select}
@@ -155,14 +155,14 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
             >
               {TASK_STATES.map((taskState: TaskState) => (
                 <option key={taskState} value={taskState}>
-                  {TASK_STATE_LABELS[taskState]}
+                  {t(`taskState.${TASK_STATE_MESSAGE_KEYS[taskState]}`)}
                 </option>
               ))}
             </select>
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="add-task-priority">Приоритет</label>
+            <label htmlFor="add-task-priority">{t('common.priority')}</label>
             <select
               id="add-task-priority"
               className={styles.select}
@@ -170,7 +170,7 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
             >
               {TASK_PRIORITIES.map((priority: TaskPriority) => (
                 <option key={priority} value={priority}>
-                  {TASK_PRIORITY_LABELS[priority]}
+                  {t(`taskPriority.${String(priority)}`)}
                 </option>
               ))}
             </select>
@@ -178,13 +178,13 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="add-task-due-date">Дедлайн</label>
+          <label htmlFor="add-task-due-date">{t('common.dueDate')}</label>
           <input
             id="add-task-due-date"
             type="datetime-local"
             className={styles.input}
             {...register('dueDate', {
-              required: errorMessages.validation.dueDateRequired,
+              required: t('validation.dueDateRequired'),
             })}
           />
           {errors.dueDate && (

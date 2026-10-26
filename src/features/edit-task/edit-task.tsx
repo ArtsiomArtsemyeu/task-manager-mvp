@@ -3,20 +3,19 @@
 import { startTransition, useActionState, useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import type { EditTaskActionState } from './api/edit-task.action';
 import { editTaskAction } from './api/edit-task.action';
 import styles from './edit-task.module.css';
 import type { Task, TaskPriority, TaskState } from '@/src/entities/task';
 import {
   TASK_PRIORITIES,
-  TASK_PRIORITY_LABELS,
-  TASK_STATE_LABELS,
+  TASK_STATE_MESSAGE_KEYS,
   TASK_STATES,
   isTaskPriority,
   isTaskState,
   toDateTimeLocalValue,
 } from '@/src/entities/task';
-import { errorMessages } from '@/src/shared/config/error';
 import { Modal } from '@/src/shared/ui/components/modal';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
 
@@ -36,6 +35,7 @@ type EditTaskFormData = {
 };
 
 export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
+  const t = useTranslations();
   const {
     register,
     handleSubmit,
@@ -87,7 +87,7 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
   return (
     <Modal
       isOpen={isOpen}
-      title="Редактировать задачу"
+      title={t('editTask.title')}
       onClose={onClose}
       action={
         <button
@@ -96,7 +96,7 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
           disabled={isPending}
           className={styles.btnSubmit}
         >
-          {isPending ? 'Сохранение...' : 'Сохранить'}
+          {isPending ? t('common.saving') : t('common.save')}
         </button>
       }
     >
@@ -106,31 +106,31 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className={styles.inputGroup}>
-          <label htmlFor="edit-task-name">Название</label>
+          <label htmlFor="edit-task-name">{t('common.name')}</label>
           <input
             id="edit-task-name"
             className={styles.input}
             placeholder="Например, Подготовить отчёт"
             {...register('name', {
-              required: errorMessages.validation.nameRequired,
+              required: t('validation.nameRequired'),
             })}
           />
           {errors.name && <ErrorHighlight message={errors.name.message} />}
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="edit-task-description">Описание</label>
+          <label htmlFor="edit-task-description">{t('common.description')}</label>
           <textarea
             id="edit-task-description"
             className={styles.textarea}
-            placeholder="Необязательно"
+            placeholder={t('common.optional')}
             {...register('description')}
           />
         </div>
 
         <div className={styles.row}>
           <div className={styles.inputGroup}>
-            <label htmlFor="edit-task-state">Статус</label>
+            <label htmlFor="edit-task-state">{t('common.status')}</label>
             <select
               id="edit-task-state"
               className={styles.select}
@@ -138,14 +138,14 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
             >
               {TASK_STATES.map((taskState: TaskState) => (
                 <option key={taskState} value={taskState}>
-                  {TASK_STATE_LABELS[taskState]}
+                  {t(`taskState.${TASK_STATE_MESSAGE_KEYS[taskState]}`)}
                 </option>
               ))}
             </select>
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="edit-task-priority">Приоритет</label>
+            <label htmlFor="edit-task-priority">{t('common.priority')}</label>
             <select
               id="edit-task-priority"
               className={styles.select}
@@ -153,7 +153,7 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
             >
               {TASK_PRIORITIES.map((priority: TaskPriority) => (
                 <option key={priority} value={priority}>
-                  {TASK_PRIORITY_LABELS[priority]}
+                  {t(`taskPriority.${String(priority)}`)}
                 </option>
               ))}
             </select>
@@ -161,13 +161,13 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="edit-task-due-date">Дедлайн</label>
+          <label htmlFor="edit-task-due-date">{t('common.dueDate')}</label>
           <input
             id="edit-task-due-date"
             type="datetime-local"
             className={styles.input}
             {...register('dueDate', {
-              required: errorMessages.validation.dueDateRequired,
+              required: t('validation.dueDateRequired'),
             })}
           />
           {errors.dueDate && (

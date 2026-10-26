@@ -1,6 +1,7 @@
 'use client';
 
 import { startTransition, useActionState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import type { DeleteTaskListActionState } from './api/delete-task-list.action';
 import { deleteTaskListAction } from './api/delete-task-list.action';
 import styles from './delete-task-list.module.css';
@@ -20,6 +21,7 @@ export function DeleteTaskList({
   taskListName,
   onClose,
 }: DeleteTaskListProps) {
+  const t = useTranslations();
   const [state, formAction, isPending] = useActionState<
     DeleteTaskListActionState,
     FormData
@@ -44,7 +46,7 @@ export function DeleteTaskList({
   return (
     <Modal
       isOpen={isOpen}
-      title="Удалить список"
+      title={t('deleteTaskList.title')}
       onClose={onClose}
       action={
         <button
@@ -53,15 +55,15 @@ export function DeleteTaskList({
           onClick={onConfirm}
           disabled={isPending}
         >
-          {isPending ? 'Удаление...' : 'Удалить'}
+          {isPending ? t('common.deleting') : t('common.delete')}
         </button>
       }
     >
       <div className={styles.message}>
         <p className={styles.messageText}>
-          Вы уверены, что хотите удалить список «{taskListName}»?
+          {t('deleteTaskList.confirm', { name: taskListName })}
         </p>
-        <p className={styles.warning}>Это действие нельзя отменить.</p>
+        <p className={styles.warning}>{t('common.cannotUndo')}</p>
       </div>
 
       {state?.error && <ErrorHighlight message={state.error} />}

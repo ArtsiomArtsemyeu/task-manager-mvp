@@ -3,10 +3,10 @@
 import { startTransition, useActionState, useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import type { AddTaskListActionState } from './api/add-task-list.action';
 import { addTaskListAction } from './api/add-task-list.action';
 import styles from './add-task-list.module.css';
-import { errorMessages } from '@/src/shared/config/error';
 import { useFillFormStubsHotkey } from '@/src/shared/lib/fill-form-stubs';
 import { Modal } from '@/src/shared/ui/components/modal';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
@@ -25,6 +25,7 @@ const ADD_TASK_LIST_FORM_STUBS: AddTaskListFormData = {
 };
 
 export function AddTaskList({ isOpen, onClose }: AddTaskListProps) {
+  const t = useTranslations();
   const {
     register,
     handleSubmit,
@@ -75,7 +76,7 @@ export function AddTaskList({ isOpen, onClose }: AddTaskListProps) {
   return (
     <Modal
       isOpen={isOpen}
-      title="Добавить новый список задач"
+      title={t('addTaskList.title')}
       onClose={onClose}
       action={
         <button
@@ -84,20 +85,20 @@ export function AddTaskList({ isOpen, onClose }: AddTaskListProps) {
           disabled={isPending}
           className={styles.btnSubmit}
         >
-          {isPending ? 'Загрузка...' : 'Создать'}
+          {isPending ? t('addTaskList.loading') : t('addTaskList.create')}
         </button>
       }
     >
       <form id="add-task-list-form" onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputGroup}>
-          <label htmlFor="add-task-list-name">Название</label>
+          <label htmlFor="add-task-list-name">{t('common.name')}</label>
           <input
             id="add-task-list-name"
             {...register('name', {
-              required: errorMessages.validation.nameRequired,
+              required: t('validation.nameRequired'),
             })}
             className={styles.input}
-            placeholder="Например, Работа"
+            placeholder={t('addTaskList.placeholder')}
           />
           {errors.name && <ErrorHighlight message={errors.name.message} />}
         </div>

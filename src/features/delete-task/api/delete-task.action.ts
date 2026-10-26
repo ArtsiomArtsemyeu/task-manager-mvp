@@ -1,8 +1,9 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { redirect } from '@/src/i18n/navigation';
+import { apiUrl } from '@/src/shared/config';
+import { revalidateLocalizedPath } from '@/src/shared/lib/i18n/revalidate-localized-path';
 
 export type DeleteTaskActionState = {
   error?: string;
@@ -13,6 +14,7 @@ export async function deleteTaskAction(
   _prevState: DeleteTaskActionState,
   formData: FormData,
 ): Promise<DeleteTaskActionState> {
+  const t = await getTranslations();
   const id = formData.get('id');
   const taskListId = formData.get('taskListId');
   const redirectTo = formData.get('redirectTo');
@@ -23,7 +25,7 @@ export async function deleteTaskAction(
     !id ||
     !taskListId
   ) {
-    return { error: errorMessages.validation.invalidTaskData };
+    return { error: t('validation.invalidTaskData') };
   }
 
   const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
@@ -31,15 +33,16 @@ export async function deleteTaskAction(
   });
 
   if (!response.ok) {
-    return { error: errorMessages.error.deleteTaskFailed };
+    return { error: t('errors.deleteTaskFailed') };
   }
 
-  revalidatePath(`/tasks/${id}`);
-  revalidatePath(`/lists/${taskListId}`);
-  revalidatePath('/lists');
+  await revalidateLocalizedPath(`/tasks/${id}`);
+  await revalidateLocalizedPath(`/lists/${taskListId}`);
+  await revalidateLocalizedPath('/lists');
 
   if (typeof redirectTo === 'string' && redirectTo.startsWith('/')) {
-    redirect(redirectTo);
+    const locale = await getLocale();
+    redirect({ href: redirectTo, locale });
   }
 
   return { success: true };

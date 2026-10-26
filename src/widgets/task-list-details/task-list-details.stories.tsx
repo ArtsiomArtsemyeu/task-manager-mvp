@@ -91,7 +91,7 @@ const meta: Meta<StoryArgs> = {
   tags: ['autodocs'],
   args: {
     taskList: sampleTaskList,
-    changeTaskStatus: fn(async () => ({ success: true })),
+    changeTaskStatus: fn(() => Promise.resolve({ success: true })),
   },
   parameters: {
     layout: 'fullscreen',
@@ -131,7 +131,6 @@ export const FilterByDone: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Выполнена' }));
 
     const rows = canvas.getAllByRole('row');
-    // header + one done task
     await expect(rows).toHaveLength(2);
     await expect(
       canvas.getByRole('link', { name: 'Обновить документацию' }),

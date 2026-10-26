@@ -1,7 +1,8 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { getTranslations } from 'next-intl/server';
+import { apiUrl } from '@/src/shared/config';
+import { revalidateLocalizedPath } from '@/src/shared/lib/i18n/revalidate-localized-path';
 
 export type DeleteTaskListActionState = {
   error?: string;
@@ -12,10 +13,11 @@ export async function deleteTaskListAction(
   _prevState: DeleteTaskListActionState,
   formData: FormData,
 ): Promise<DeleteTaskListActionState> {
+  const t = await getTranslations();
   const id = formData.get('id');
 
   if (typeof id !== 'string' || !id) {
-    return { error: errorMessages.validation.invalidTaskListId };
+    return { error: t('validation.invalidTaskListId') };
   }
 
   const response = await fetch(apiUrl(`/api/data/task-lists/${id}`), {
@@ -23,9 +25,9 @@ export async function deleteTaskListAction(
   });
 
   if (!response.ok) {
-    return { error: errorMessages.error.deleteTaskListFailed };
+    return { error: t('errors.deleteTaskListFailed') };
   }
 
-  revalidatePath('/lists');
+  await revalidateLocalizedPath('/lists');
   return { success: true };
 }

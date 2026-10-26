@@ -1,7 +1,8 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { getTranslations } from 'next-intl/server';
+import { apiUrl } from '@/src/shared/config';
+import { revalidateLocalizedPath } from '@/src/shared/lib/i18n/revalidate-localized-path';
 
 export type EditTaskActionState = {
   error?: string;
@@ -12,6 +13,7 @@ export async function editTaskAction(
   _prevState: EditTaskActionState,
   formData: FormData,
 ): Promise<EditTaskActionState> {
+  const t = await getTranslations();
   const id = formData.get('id');
   const name = formData.get('name');
   const state = formData.get('state');
@@ -34,7 +36,7 @@ export async function editTaskAction(
     Number.isNaN(priority) ||
     !dueDate
   ) {
-    return { error: errorMessages.validation.fillAllFields };
+    return { error: t('validation.fillAllFields') };
   }
 
   const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
@@ -50,11 +52,11 @@ export async function editTaskAction(
   });
 
   if (!response.ok) {
-    return { error: errorMessages.error.updateTaskFailed };
+    return { error: t('errors.updateTaskFailed') };
   }
 
-  revalidatePath(`/tasks/${id}`);
-  revalidatePath(`/lists/${taskListId}`);
-  revalidatePath('/lists');
+  await revalidateLocalizedPath(`/tasks/${id}`);
+  await revalidateLocalizedPath(`/lists/${taskListId}`);
+  await revalidateLocalizedPath('/lists');
   return { success: true };
 }

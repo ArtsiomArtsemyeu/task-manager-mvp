@@ -1,6 +1,7 @@
 'use client';
 
 import { clsx } from 'clsx';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ThemeConfig } from './config/theme.config';
@@ -12,6 +13,7 @@ type ThemeTogglerProps = {
 };
 
 export function ThemeToggler({ themes }: ThemeTogglerProps) {
+  const t = useTranslations();
   const { theme, setTheme } = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
@@ -49,7 +51,7 @@ export function ThemeToggler({ themes }: ThemeTogglerProps) {
         type="button"
         className={clsx(styles.dropdownButton, isOpenDropdown && styles.active)}
         onClick={onToggleDropdown}
-        aria-label="Выбор темы"
+        aria-label={t('theme.ariaLabel')}
         aria-haspopup
         aria-expanded={isOpenDropdown}
       >
@@ -89,6 +91,7 @@ export function ThemeToggler({ themes }: ThemeTogglerProps) {
             <ThemeTogglerItem
               key={`themeOption-${themeItem.value}`}
               theme={themeItem}
+              label={t(`theme.${themeItem.labelKey}`)}
               selected={theme === themeItem.value}
               onChange={changeTheme}
             />

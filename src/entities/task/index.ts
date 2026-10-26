@@ -14,6 +14,7 @@ export {
   isTaskPriority,
   TASK_PRIORITIES,
   TASK_STATE_LABELS,
+  TASK_STATE_MESSAGE_KEYS,
   TASK_PRIORITY_LABELS,
 } from './config/task.config';
 export type { Task } from './model/task.model';

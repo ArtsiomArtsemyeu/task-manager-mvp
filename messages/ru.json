@@ -1,0 +1,182 @@
+{
+  "metadata": {
+    "appTitle": "Менеджер задач",
+    "appDescription": "Приложение для управления задачами",
+    "homeTitle": "Менеджер задач",
+    "listsTitle": "Списки задач | Менеджер задач",
+    "listsDescription": "Просмотр и управление списками задач",
+    "listTitle": "Список задач | Менеджер задач",
+    "listDescription": "Просмотр и управление задачами выбранного списка",
+    "taskTitle": "Задача | Менеджер задач",
+    "taskDescription": "Просмотр и управление задачей",
+    "notFoundTitle": "Страница не найдена | Менеджер задач",
+    "notFoundDescription": "Запрашиваемая страница не найдена."
+  },
+  "theme": {
+    "ariaLabel": "Выбор темы",
+    "system": "Системная",
+    "light": "Светлая",
+    "dark": "Темная"
+  },
+  "locale": {
+    "ariaLabel": "Выбор языка",
+    "ru": "Русский",
+    "en": "English"
+  },
+  "common": {
+    "cancel": "Отмена",
+    "close": "Закрыть",
+    "save": "Сохранить",
+    "saving": "Сохранение...",
+    "create": "Создать",
+    "creating": "Создание...",
+    "delete": "Удалить",
+    "deleting": "Удаление...",
+    "loading": "Загрузка...",
+    "name": "Название",
+    "description": "Описание",
+    "status": "Статус",
+    "priority": "Приоритет",
+    "dueDate": "Дедлайн",
+    "actions": "Действия",
+    "optional": "Необязательно",
+    "cannotUndo": "Это действие нельзя отменить.",
+    "arrowLeft": "Стрелка влево",
+    "arrowRight": "Стрелка вправо",
+    "edit": "Редактировать",
+    "editTaskAria": "Редактировать задачу {name}",
+    "deleteTaskAria": "Удалить задачу {name}",
+    "taskStatusAria": "Статус задачи {name}"
+  },
+  "taskState": {
+    "new": "Новая",
+    "inProgress": "В работе",
+    "done": "Выполнена",
+    "overdue": "Просрочена"
+  },
+  "taskPriority": {
+    "1": "Низкий",
+    "2": "Средний",
+    "3": "Высокий"
+  },
+  "home": {
+    "title": "Для работы с задачами войдите в учетную запись"
+  },
+  "login": {
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "showPassword": "Показать пароль",
+    "hidePassword": "Скрыть пароль",
+    "submit": "Войти",
+    "loading": "Загрузка..."
+  },
+  "validation": {
+    "requiredFields": "Заполните все требуемые поля",
+    "fillAllFields": "Заполните все поля корректно",
+    "invalidJson": "Некорректный JSON",
+    "emailRequired": "Электронный адрес обязателен",
+    "emailInvalid": "Неверный формат электронного адреса",
+    "passwordRequired": "Пароль обязателен",
+    "passwordMinLength": "Минимум 8 символов",
+    "nameRequired": "Название обязательно",
+    "dueDateRequired": "Дедлайн обязателен",
+    "invalidListName": "Некорректное имя списка",
+    "invalidTaskListId": "Некорректный идентификатор списка",
+    "invalidTaskData": "Некорректные данные задачи",
+    "invalidStatusData": "Некорректные данные статуса"
+  },
+  "errors": {
+    "server": "Ошибка сервера",
+    "invalidCredentials": "Неверный электронный адрес или пароль",
+    "loginFailed": "Не удалось войти",
+    "taskListNotFound": "Список не найден",
+    "taskNotFound": "Задача не найдена",
+    "taskListForTaskNotFound": "Список задач для задачи не найден",
+    "createTaskFailed": "Не удалось создать задачу",
+    "updateTaskFailed": "Не удалось обновить задачу",
+    "deleteTaskFailed": "Не удалось удалить задачу",
+    "changeStatusFailed": "Не удалось изменить статус",
+    "deleteTaskListFailed": "Не удалось удалить список",
+    "renameTaskListFailed": "Не удалось переименовать список"
+  },
+  "errorView": {
+    "notFoundTitle": "Страница не найдена.",
+    "notFoundHint": "Такой страницы нет или она была перемещена. Вернитесь на главную и продолжите работу с задачами.",
+    "notFoundAria": "Страница не найдена",
+    "notFoundIconAlt": "Иконка: страница не найдена",
+    "serverTitle": "Что-то пошло не так.",
+    "serverHint": "Произошла внутренняя ошибка. Попробуйте ещё раз или вернитесь на главную страницу.",
+    "serverAria": "Ошибка сервера",
+    "serverIconAlt": "Иконка: ошибка сервера",
+    "goHome": "Перейти на главную страницу",
+    "goHomeAria": "{ariaLabel}. Перейти на главную страницу",
+    "retry": "Попробовать снова"
+  },
+  "taskLists": {
+    "searchPlaceholder": "Найти список…",
+    "searchAria": "Поиск списков",
+    "addList": "Добавить новый список",
+    "nothingFound": "Ничего не найдено",
+    "loadingAria": "Загрузка списков задач"
+  },
+  "taskListCard": {
+    "taskCount": "Количество задач:",
+    "overdueChip": "Есть просроченные задачи",
+    "deadlineChip": "Дедлайн в ближайшие 48 часов",
+    "menuAria": "Действия со списком",
+    "menuAlt": "Меню действий",
+    "rename": "Переименовать список",
+    "delete": "Удалить",
+    "new": "Новые",
+    "inProgress": "В работе",
+    "done": "Выполненные",
+    "overdue": "Просроченные"
+  },
+  "addTaskList": {
+    "title": "Добавить новый список задач",
+    "placeholder": "Например, Работа",
+    "create": "Создать",
+    "loading": "Загрузка..."
+  },
+  "renameTaskList": {
+    "title": "Переименовать список"
+  },
+  "deleteTaskList": {
+    "title": "Удалить список",
+    "confirm": "Вы уверены, что хотите удалить список «{name}»?"
+  },
+  "taskListDetails": {
+    "back": "К спискам",
+    "taskCount": "Количество задач: {count}",
+    "progress": "Прогресс {progress}%",
+    "addTask": "Добавить задачу",
+    "filterAll": "Все",
+    "emptyTitle": "Задач не найдено",
+    "emptyCreate": "Создайте первую задачу для этого списка.",
+    "emptyFilter": "Попробуйте другой фильтр статуса.",
+    "colName": "Название",
+    "colStatus": "Статус",
+    "colPriority": "Приоритет",
+    "colDueDate": "Дедлайн",
+    "colActions": "Действия",
+    "loadingAria": "Загрузка списка задач"
+  },
+  "addTask": {
+    "title": "Добавить задачу",
+    "namePlaceholder": "Например, Подготовить отчёт",
+    "create": "Создать",
+    "creating": "Создание..."
+  },
+  "editTask": {
+    "title": "Редактировать задачу"
+  },
+  "deleteTask": {
+    "title": "Удалить задачу",
+    "confirm": "Вы уверены, что хотите удалить задачу «{name}»?"
+  },
+  "taskDetails": {
+    "back": "К списку «{name}»",
+    "noDescription": "Описание не указано",
+    "loadingAria": "Загрузка задачи"
+  }
+}

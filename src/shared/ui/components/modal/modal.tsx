@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useTranslations } from 'next-intl';
 import styles from './modal.module.css';
 
 type ModalProps = {
@@ -20,6 +21,8 @@ export function Modal({
   children,
   action,
 }: ModalProps) {
+  const t = useTranslations();
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -50,11 +53,11 @@ export function Modal({
             type="button"
             className={styles.closeButton}
             onClick={onClose}
-            aria-label="Закрыть"
+            aria-label={t('common.close')}
           >
             <Image
               src="/images/icons/close.svg"
-              alt="Закрыть"
+              alt={t('common.close')}
               width={20}
               height={20}
               priority
@@ -69,7 +72,7 @@ export function Modal({
               className={styles.cancelButton}
               onClick={onClose}
             >
-              Отмена
+              {t('common.cancel')}
             </button>
             {action}
           </div>
