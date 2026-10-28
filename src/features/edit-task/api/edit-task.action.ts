@@ -1,7 +1,7 @@
 'use server';
 
 import { getTranslations } from 'next-intl/server';
-import { apiUrl } from '@/src/shared/config';
+import { API_PATHS, apiFetch } from '@/src/shared/config';
 import { revalidateLocalizedPath } from '@/src/shared/lib/i18n/revalidate-localized-path';
 
 export type EditTaskActionState = {
@@ -39,7 +39,7 @@ export async function editTaskAction(
     return { error: t('validation.fillAllFields') };
   }
 
-  const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
+  const response = await apiFetch(API_PATHS.task(id), {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

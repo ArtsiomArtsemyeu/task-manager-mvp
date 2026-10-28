@@ -2,7 +2,7 @@
 
 import { getTranslations } from 'next-intl/server';
 import type { TaskState } from '@/src/entities/task';
-import { apiUrl } from '@/src/shared/config';
+import { API_PATHS, apiFetch } from '@/src/shared/config';
 import { revalidateLocalizedPath } from '@/src/shared/lib/i18n/revalidate-localized-path';
 
 export async function changeTaskStatusAction(
@@ -16,7 +16,7 @@ export async function changeTaskStatusAction(
     return { error: t('validation.invalidStatusData') };
   }
 
-  const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
+  const response = await apiFetch(API_PATHS.task(id), {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ state }),

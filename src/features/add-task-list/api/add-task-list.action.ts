@@ -1,7 +1,7 @@
 'use server';
 
 import { getTranslations } from 'next-intl/server';
-import { apiUrl } from '@/src/shared/config';
+import { API_PATHS, apiFetch } from '@/src/shared/config';
 import { revalidateLocalizedPath } from '@/src/shared/lib/i18n/revalidate-localized-path';
 
 export type AddTaskListActionState = {
@@ -20,7 +20,7 @@ export async function addTaskListAction(
     return { error: t('validation.nameRequired') };
   }
 
-  const response = await fetch(apiUrl('/api/data/task-lists'), {
+  const response = await apiFetch(API_PATHS.taskLists, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name: name.trim() }),

@@ -2,7 +2,7 @@
 
 import { getLocale, getTranslations } from 'next-intl/server';
 import { redirect } from '@/src/i18n/navigation';
-import { apiUrl } from '@/src/shared/config';
+import { API_PATHS, apiFetch } from '@/src/shared/config';
 import { revalidateLocalizedPath } from '@/src/shared/lib/i18n/revalidate-localized-path';
 
 export type DeleteTaskActionState = {
@@ -28,7 +28,7 @@ export async function deleteTaskAction(
     return { error: t('validation.invalidTaskData') };
   }
 
-  const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
+  const response = await apiFetch(API_PATHS.task(id), {
     method: 'DELETE',
   });
 

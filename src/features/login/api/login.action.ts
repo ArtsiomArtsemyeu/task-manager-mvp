@@ -3,8 +3,8 @@
 import { cookies } from 'next/headers';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { redirect } from '@/src/i18n/navigation';
-import { apiUrl } from '@/src/shared/config';
-import { createToken } from '@/src/shared/utils/jwt';
+import { API_PATHS, apiUrl } from '@/src/shared/config';
+import { SESSION_COOKIE_NAME, createToken } from '@/src/shared/utils/jwt';
 import { isRecord, readJson } from '@/src/shared/utils/type-guard';
 
 export type LoginActionState = {
@@ -20,7 +20,7 @@ export async function loginAction(
   const email = formData.get('email');
   const password = formData.get('password');
 
-  const response = await fetch(apiUrl('/api/auth/login'), {
+  const response = await fetch(apiUrl(API_PATHS.authLogin), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -39,7 +39,7 @@ export async function loginAction(
   const jwtToken = createToken(body.userSessionPayload);
 
   const cookieStore = await cookies();
-  cookieStore.set('session_token', jwtToken, {
+  cookieStore.set(SESSION_COOKIE_NAME, jwtToken, {
     httpOnly: true,
     secure: true,
     sameSite: 'lax',
