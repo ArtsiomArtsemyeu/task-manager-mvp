@@ -5,6 +5,7 @@ import { locale as getLocaleParam } from 'next/root-params';
 import en from '@/messages/en.json';
 import ru from '@/messages/ru.json';
 import { routing, type AppLocale } from '@/src/i18n/routing';
+import { resolveRequestLocale } from '@/src/i18n/resolve-request-locale';
 
 const messagesByLocale = {
   ru,
@@ -15,11 +16,15 @@ export default getRequestConfig(async ({ locale: overrideLocale }) => {
   let locale = overrideLocale;
 
   if (!locale) {
-    const paramValue = await getLocaleParam();
-    if (hasLocale(routing.locales, paramValue)) {
-      locale = paramValue;
-    } else {
-      notFound();
+    try {
+      const paramValue = await getLocaleParam();
+      if (hasLocale(routing.locales, paramValue)) {
+        locale = paramValue;
+      } else {
+        notFound();
+      }
+    } catch {
+      locale = await resolveRequestLocale();
     }
   }
 

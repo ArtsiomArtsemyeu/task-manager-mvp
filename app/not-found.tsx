@@ -1,18 +1,33 @@
 import { NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from 'next';
+import enMessages from '@/messages/en.json';
 import ruMessages from '@/messages/ru.json';
+import { resolveRequestLocale } from '@/src/i18n/resolve-request-locale';
 import { ErrorView } from '@/src/widgets/error-view';
 
-export const metadata: Metadata = {
-  title: ruMessages.metadata.notFoundTitle,
-  description: ruMessages.metadata.notFoundDescription,
-};
+const messagesByLocale = {
+  ru: ruMessages,
+  en: enMessages,
+} as const;
 
-export default function RootNotFound() {
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await resolveRequestLocale();
+  const messages = messagesByLocale[locale];
+
+  return {
+    title: messages.metadata.notFoundTitle,
+    description: messages.metadata.notFoundDescription,
+  };
+}
+
+export default async function RootNotFound() {
+  const locale = await resolveRequestLocale();
+  const messages = messagesByLocale[locale];
+
   return (
-    <html lang="ru">
+    <html lang={locale}>
       <body>
-        <NextIntlClientProvider locale="ru" messages={ruMessages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <ErrorView status="not-found" />
         </NextIntlClientProvider>
       </body>

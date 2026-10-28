@@ -2,8 +2,8 @@
 
 import { clsx } from 'clsx';
 import { useLocale, useTranslations } from 'next-intl';
-import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
-import { usePathname, useRouter } from '@/src/i18n/navigation';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { getPathname, usePathname } from '@/src/i18n/navigation';
 import type { AppLocale } from '@/src/i18n/routing';
 import {
   supportedLocales,
@@ -15,20 +15,23 @@ import { LocaleTogglerItem } from './ui/locale-toggler-item/locale-toggler-item'
 export function LocaleToggler() {
   const t = useTranslations();
   const locale = useLocale() as AppLocale;
-  const router = useRouter();
   const pathname = usePathname();
-  const [, startTransition] = useTransition();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
   const changeLocale = useCallback(
     (nextLocale: AppLocale) => {
-      startTransition(() => {
-        router.replace(pathname, { locale: nextLocale });
-      });
       setIsOpenDropdown(false);
+      if (nextLocale === locale) {
+        return;
+      }
+
+      const nextPath = getPathname({ href: pathname, locale: nextLocale });
+      window.location.assign(
+        `${nextPath}${window.location.search}${window.location.hash}`,
+      );
     },
-    [pathname, router],
+    [locale, pathname],
   );
 
   const onToggleDropdown = useCallback(
@@ -60,7 +63,7 @@ export function LocaleToggler() {
         aria-haspopup
         aria-expanded={isOpenDropdown}
       >
-        {locale}
+        <span className={styles.icon} aria-hidden />
       </button>
 
       {isOpenDropdown && (

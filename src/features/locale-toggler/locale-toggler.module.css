@@ -17,15 +17,22 @@
   color: var(--header-fg);
   cursor: pointer;
   transition: background-color 0.2s ease;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
 }
 
 .dropdownButton:hover,
 .dropdownButton.active {
   background-color: var(--toggler-hover);
+}
+
+.icon {
+  display: block;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  opacity: 0.92;
+  background-color: currentColor;
+  mask: url('/images/icons/globe.svg') center / contain no-repeat;
+  -webkit-mask: url('/images/icons/globe.svg') center / contain no-repeat;
 }
 
 .dropdownMenu {
