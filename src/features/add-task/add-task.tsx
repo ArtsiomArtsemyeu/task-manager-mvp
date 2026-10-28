@@ -137,7 +137,9 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="add-task-description">{t('common.description')}</label>
+          <label htmlFor="add-task-description">
+            {t('common.description')}
+          </label>
           <textarea
             id="add-task-description"
             className={styles.textarea}
@@ -148,7 +150,7 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
 
         <div className={styles.row}>
           <div className={styles.inputGroup}>
-            <label htmlFor="add-task-state">Статус</label>
+            <label htmlFor="add-task-state">{t('common.status')}</label>
             <Select
               id="add-task-state"
               {...register('state', { required: true })}
@@ -162,7 +164,7 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="add-task-priority">Приоритет</label>
+            <label htmlFor="add-task-priority">{t('common.priority')}</label>
             <Select
               id="add-task-priority"
               {...register('priority', { valueAsNumber: true, required: true })}

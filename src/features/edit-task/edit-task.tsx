@@ -111,7 +111,7 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
           <input
             id="edit-task-name"
             className={styles.input}
-            placeholder="Например, Подготовить отчёт"
+            placeholder={t('addTask.namePlaceholder')}
             {...register('name', {
               required: t('validation.nameRequired'),
             })}
@@ -120,7 +120,9 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="edit-task-description">{t('common.description')}</label>
+          <label htmlFor="edit-task-description">
+            {t('common.description')}
+          </label>
           <textarea
             id="edit-task-description"
             className={styles.textarea}
