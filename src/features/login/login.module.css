@@ -5,14 +5,18 @@
   border-radius: 16px;
   border: 1px solid var(--card-border);
   box-shadow: var(--card-shadow);
-  width: 100%;
-  max-width: 400px;
+  width: 400px;
+  max-width: calc(100% - 32px);
   margin: 16px;
   box-sizing: border-box;
 }
 
 .inputGroup {
   margin-bottom: 20px;
+}
+
+.inputGroup:nth-last-child(2) {
+  margin-bottom: 14px;
 }
 
 .inputGroup label {
@@ -83,6 +87,16 @@
 .input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.fieldError {
+  margin-top: 6px;
+}
+
+.formError {
+  min-height: calc(0.875rem * 1.25);
+  margin: 0 0 8px;
+  overflow-wrap: break-word;
 }
 
 .btnSubmit {

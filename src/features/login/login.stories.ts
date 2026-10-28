@@ -23,7 +23,7 @@ async function fillAndSubmit(
   password: string,
 ) {
   const canvas = within(canvasElement);
-  await userEvent.type(canvas.getByLabelText('Электронная почта'), email);
+  await userEvent.type(canvas.getByLabelText('Электронный адрес'), email);
   await userEvent.type(canvas.getByLabelText('Пароль'), password);
   await userEvent.click(canvas.getByRole('button', { name: 'Войти' }));
 }

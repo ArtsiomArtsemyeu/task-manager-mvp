@@ -18,6 +18,7 @@ import {
 } from '@/src/entities/task';
 import { Modal } from '@/src/shared/ui/components/modal';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
+import { Select } from '@/src/shared/ui/components/select';
 
 type EditTaskProps = {
   isOpen: boolean;
@@ -131,9 +132,8 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
         <div className={styles.row}>
           <div className={styles.inputGroup}>
             <label htmlFor="edit-task-state">{t('common.status')}</label>
-            <select
+            <Select
               id="edit-task-state"
-              className={styles.select}
               {...register('state', { required: true })}
             >
               {TASK_STATES.map((taskState: TaskState) => (
@@ -141,14 +141,13 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
                   {t(`taskState.${TASK_STATE_MESSAGE_KEYS[taskState]}`)}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
 
           <div className={styles.inputGroup}>
             <label htmlFor="edit-task-priority">{t('common.priority')}</label>
-            <select
+            <Select
               id="edit-task-priority"
-              className={styles.select}
               {...register('priority', { valueAsNumber: true, required: true })}
             >
               {TASK_PRIORITIES.map((priority: TaskPriority) => (
@@ -156,7 +155,7 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
                   {t(`taskPriority.${String(priority)}`)}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
         </div>
 

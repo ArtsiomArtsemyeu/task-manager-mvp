@@ -1,0 +1,95 @@
+.host {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  color: var(--foreground);
+}
+
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  min-width: 0;
+  height: 2.85rem;
+  padding: 0 2.5rem 0 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-md);
+  background: var(--input-bg);
+  color: inherit;
+  font: inherit;
+  font-size: 0.95rem;
+  line-height: 1.25;
+  outline: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.select:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.chevron {
+  position: absolute;
+  top: 50%;
+  right: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: transform 0.2s ease;
+}
+
+.chevronIcon {
+  display: block;
+  opacity: 0.55;
+  filter: brightness(0);
+}
+
+:global([data-theme='dark']) .chevronIcon {
+  filter: brightness(0) invert(1);
+}
+
+.select:open + .chevron {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.sm {
+  min-width: 9.5rem;
+}
+
+.sm .select {
+  height: 2.45rem;
+  padding: 0 2.1rem 0 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+.sm .select:focus {
+  box-shadow: none;
+}
+
+.sm .chevron {
+  right: 0.55rem;
+}
+
+.sm .chevronIcon {
+  width: 14px;
+  height: 14px;
+}

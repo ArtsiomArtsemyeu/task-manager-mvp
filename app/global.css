@@ -129,6 +129,10 @@
   --toggler-hover: color-mix(in srgb, #ffffff 10%, transparent);
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   display: flex;
   flex-direction: column;

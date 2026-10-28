@@ -25,6 +25,7 @@ import {
   TASK_STATES,
 } from '@/src/entities/task';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
+import { Select } from '@/src/shared/ui/components/select';
 
 type TaskDetailsProps = {
   taskPromise: Promise<TaskDto>;
@@ -160,9 +161,9 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
               <label className={styles.label} htmlFor="task-status">
                 {t('common.status')}
               </label>
-              <select
+              <Select
                 id="task-status"
-                className={styles.statusSelect}
+                size="sm"
                 aria-label={t('common.taskStatusAria', { name: task.name })}
                 value={status}
                 onChange={(event) => {
@@ -176,7 +177,7 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
                     {t(`taskState.${TASK_STATE_MESSAGE_KEYS[state]}`)}
                   </option>
                 ))}
-              </select>
+              </Select>
             </div>
 
             <div className={styles.actions}>

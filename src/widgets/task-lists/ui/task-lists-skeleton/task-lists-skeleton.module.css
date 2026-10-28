@@ -12,6 +12,19 @@
   gap: 0.75rem 1rem;
 }
 
+.search {
+  flex: 1 1 16rem;
+  width: 100%;
+  min-width: 0;
+  border-radius: var(--radius-md);
+}
+
+.addButton {
+  flex: 0 0 auto;
+  width: 14.5rem;
+  border-radius: var(--radius-md);
+}
+
 .list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 17.5rem), 1fr));
@@ -23,5 +36,9 @@
   .toolbar {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .addButton {
+    width: 100%;
   }
 }

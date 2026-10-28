@@ -1,3 +1,5 @@
 .host {
   color: var(--chip-red-fg);
+  font-size: 0.875rem;
+  line-height: 1.25;
 }
