@@ -33,9 +33,8 @@ const tasksByStates: Task[] = [
 ];
 
 describe('calculateTaskCountByState', () => {
-  it('возвращает 0 для пустого списка задач', () => {
-    expect(calculateTaskCountByState([], 'new')).toBe(0);
-  });
+  it('возвращает 0 для пустого списка задач', () =>
+    expect(calculateTaskCountByState([], 'new')).toBe(0));
 
   it('возвращает 0, если задач с таким статусом нет в списке', () => {
     const tasks = [
@@ -75,9 +74,7 @@ describe('sortTasks', () => {
     vi.setSystemTime(new Date('2026-06-15T12:00:00.000Z'));
   });
 
-  afterEach(() => {
-    vi.useRealTimers();
-  });
+  afterEach(() => vi.useRealTimers());
 
   it('не меняет порядок задач в исходном массиве', () => {
     const tasks = [
@@ -256,9 +253,8 @@ describe('sortTasks', () => {
 });
 
 describe('toDateTimeLocalValue', () => {
-  it('возвращает пустую строку для невалидной даты', () => {
-    expect(toDateTimeLocalValue('not-a-date')).toBe('');
-  });
+  it('возвращает пустую строку для невалидной даты', () =>
+    expect(toDateTimeLocalValue('not-a-date')).toBe(''));
 
   it('возвращает значение в формате datetime-local', () => {
     const result = toDateTimeLocalValue('2026-10-24T12:00:00.000Z');
@@ -272,9 +268,7 @@ describe('getTomorrowDateTimeLocal', () => {
     vi.setSystemTime(new Date('2026-10-24T08:00:00.000Z'));
   });
 
-  afterEach(() => {
-    vi.useRealTimers();
-  });
+  afterEach(() => vi.useRealTimers());
 
   it('возвращает завтрашний полдень в формате datetime-local', () => {
     const result = getTomorrowDateTimeLocal();

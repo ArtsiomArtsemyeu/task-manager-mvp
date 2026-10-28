@@ -9,9 +9,7 @@ type ErrorProps = {
 };
 
 export default function Error({ error, reset }: ErrorProps) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
+  useEffect(() => console.error(error), [error]);
 
   return <ErrorView status="server-error" onRetry={reset} />;
 }
