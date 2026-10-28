@@ -2,7 +2,13 @@
 
 import Image from 'next/image';
 import { clsx } from 'clsx';
-import { startTransition, use, useCallback, useState } from 'react';
+import {
+  startTransition,
+  use,
+  useCallback,
+  useState,
+  type ChangeEvent,
+} from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/src/i18n/navigation';
 import styles from './task-details.module.css';
@@ -104,6 +110,15 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
     [task.id, task.taskListId],
   );
 
+  const onStatusSelectChange = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      if (isTaskState(event.target.value)) {
+        onStatusChange(event.target.value);
+      }
+    },
+    [onStatusChange],
+  );
+
   return (
     <div className={styles.host}>
       <div className={styles.header}>
@@ -166,11 +181,7 @@ export function TaskDetailsWidget({ taskPromise }: TaskDetailsProps) {
                 size="sm"
                 aria-label={t('common.taskStatusAria', { name: task.name })}
                 value={status}
-                onChange={(event) => {
-                  if (isTaskState(event.target.value)) {
-                    onStatusChange(event.target.value);
-                  }
-                }}
+                onChange={onStatusSelectChange}
               >
                 {TASK_STATES.map((state: TaskState) => (
                   <option key={state} value={state}>

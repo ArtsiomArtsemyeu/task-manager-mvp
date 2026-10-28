@@ -22,9 +22,7 @@ export function TaskListsWidget({ taskListsPromise }: TaskListsProps) {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setSearchQuery(event.target.value);
 
-      startTransition(() => {
-        setDeferredQuery(event.target.value);
-      });
+      startTransition(() => setDeferredQuery(event.target.value));
     },
     [],
   );

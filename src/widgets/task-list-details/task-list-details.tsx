@@ -202,27 +202,42 @@ export function TaskListDetailsWidget({
       {statusError ? <ErrorHighlight message={statusError} /> : null}
 
       <div className={styles.tableCard}>
-        {filteredTasks.length === 0 ? (
-          <div className={styles.empty}>
-            <p className={styles.emptyTitle}>{t('taskListDetails.emptyTitle')}</p>
-            <p className={styles.emptyText}>
-              {statusFilter === 'all' ? t('taskListDetails.emptyCreate') : t('taskListDetails.emptyFilter')}
-            </p>
-          </div>
-        ) : (
-          <div className={styles.tableScroll}>
-            <table className={styles.table}>
-              <thead>
+        <div className={styles.tableScroll}>
+          <table className={styles.table}>
+            <colgroup>
+              <col className={styles.colName} />
+              <col className={styles.colStatus} />
+              <col className={styles.colPriority} />
+              <col className={styles.colDue} />
+              <col className={styles.colActions} />
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">{t('taskListDetails.colName')}</th>
+                <th scope="col">{t('taskListDetails.colStatus')}</th>
+                <th scope="col">{t('taskListDetails.colPriority')}</th>
+                <th scope="col">{t('taskListDetails.colDueDate')}</th>
+                <th scope="col">{t('taskListDetails.colActions')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredTasks.length === 0 ? (
                 <tr>
-                  <th scope="col">{t('taskListDetails.colName')}</th>
-                  <th scope="col">{t('taskListDetails.colStatus')}</th>
-                  <th scope="col">{t('taskListDetails.colPriority')}</th>
-                  <th scope="col">{t('taskListDetails.colDueDate')}</th>
-                  <th scope="col">{t('taskListDetails.colActions')}</th>
+                  <td colSpan={5}>
+                    <div className={styles.empty}>
+                      <p className={styles.emptyTitle}>
+                        {t('taskListDetails.emptyTitle')}
+                      </p>
+                      <p className={styles.emptyText}>
+                        {statusFilter === 'all'
+                          ? t('taskListDetails.emptyCreate')
+                          : t('taskListDetails.emptyFilter')}
+                      </p>
+                    </div>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {filteredTasks.map((task: Task) => {
+              ) : (
+                filteredTasks.map((task: Task) => {
                   const priority = isTaskPriority(task.priority)
                     ? task.priority
                     : (1 as TaskPriority);
@@ -248,6 +263,7 @@ export function TaskListDetailsWidget({
                       </td>
                       <td>
                         <Select
+                          className={styles.statusSelect}
                           size="sm"
                           aria-label={t('common.taskStatusAria', {
                             name: task.name,
@@ -328,11 +344,11 @@ export function TaskListDetailsWidget({
                       </td>
                     </tr>
                   );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <AddTask

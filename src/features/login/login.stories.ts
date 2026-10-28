@@ -121,9 +121,7 @@ export const InvalidCredentials: Story = {
 
     await fillAndSubmit(canvasElement, VALID_EMAIL, VALID_PASSWORD);
 
-    await waitFor(async () => {
-      await expect(args.action).toHaveBeenCalledOnce();
-    });
+    await waitFor(async () => await expect(args.action).toHaveBeenCalledOnce());
     await expect(
       canvas.getByText(errorMessages.error.invalidCredentials),
     ).toBeInTheDocument();
@@ -145,9 +143,7 @@ export const SuccessfulSubmit: Story = {
 
     await fillAndSubmit(canvasElement, VALID_EMAIL, VALID_PASSWORD);
 
-    await waitFor(async () => {
-      await expect(args.action).toHaveBeenCalledOnce();
-    });
+    await waitFor(async () => await expect(args.action).toHaveBeenCalledOnce());
 
     const actionMock = args.action as ReturnType<typeof fn>;
     const formData = actionMock.mock.calls[0]?.[1] as FormData;
