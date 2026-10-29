@@ -240,8 +240,8 @@ export function TaskListDetailsWidget({
                   const isSoon = !isOverdue && isDeadlineWithin48Hours(task);
 
                   return (
-                    <tr key={task.id}>
-                      <td>
+                    <tr key={task.id} className={styles.taskRow}>
+                      <td data-label="Название">
                         <div className={styles.taskName}>
                           <Link
                             href={`/tasks/${task.id}`}
@@ -256,7 +256,7 @@ export function TaskListDetailsWidget({
                           ) : null}
                         </div>
                       </td>
-                      <td>
+                      <td data-label="Статус">
                         <Select
                           className={styles.statusSelect}
                           size="sm"
@@ -275,7 +275,7 @@ export function TaskListDetailsWidget({
                           ))}
                         </Select>
                       </td>
-                      <td>
+                      <td data-label="Приоритет">
                         <span
                           className={clsx(
                             styles.priority,
@@ -287,7 +287,7 @@ export function TaskListDetailsWidget({
                           {TASK_PRIORITY_LABELS[priority]}
                         </span>
                       </td>
-                      <td>
+                      <td data-label="Дедлайн">
                         <span
                           className={clsx(
                             styles.dueDate,
@@ -298,7 +298,7 @@ export function TaskListDetailsWidget({
                           {formatTaskDueDate(task.dueDate)}
                         </span>
                       </td>
-                      <td>
+                      <td data-label="Действия">
                         <div className={styles.actions}>
                           <button
                             type="button"

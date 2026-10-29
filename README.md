@@ -83,7 +83,7 @@ npm run dev                                        # → http://localhost:3000
 
 **Пошаговая установка**
 
-**1. 🐙 Git** — установка и настройка (клонирование, ветки). [Скачать ↗](https://git-scm.com/downloads)
+**1. 🐙 Git** — установка и настройка. [Скачать ↗](https://git-scm.com/downloads)
 
 ```bash
 git --version
@@ -121,8 +121,8 @@ npm run playwright:install
 | :--------- | :------- |
 | `APP_BASE_URL` | Базовый URL (по умолчанию `http://localhost:3000`) |
 | `DEFAULT_USER_ID` | Идентификатор пользователя по умолчанию |
-| `DEFAULT_USER_EMAIL` | Электронный адрес по умолчанию |
-| `DEFAULT_USER_PASSWORD` | Пароль по умолчанию |
+| `DEFAULT_USER_EMAIL` | Электронный адрес пользователя по умолчанию |
+| `DEFAULT_USER_PASSWORD` | Пароль пользователя по умолчанию |
 
 **7. ▶️ Dev-сервер**
 
@@ -133,7 +133,7 @@ npm run dev
 Приложение: [http://localhost:3000](http://localhost:3000)
 
 ```bash
-npm run build   # production-сборка
+npm run build   # production-сборка приложения
 npm run start   # запуск собранного приложения
 ```
 
@@ -267,7 +267,7 @@ flowchart LR
 - <img src="./public/images/icons/eye.svg" width="16" height="16" alt="" /> Отображение / скрытие пароля в поле ввода.
 - Клавиша **Alt+C** — подстановка stub-данных.
 
-### 📋 Списки задач (`/lists`)
+### 📋 Списки задач
 
 - Карточки всех списков.
 - Поиск по названию.
@@ -275,7 +275,7 @@ flowchart LR
 - <img src="./public/images/icons/edit.svg" width="16" height="16" alt="" /> Переименование и <img src="./public/images/icons/trash.svg" width="16" height="16" alt="" /> удаление через меню карточки (<img src="./public/images/icons/more-vertical.svg" width="16" height="16" alt="" />).
 - Клик по карточке → `/lists/[id]`.
 
-### 📑 Список задач (`/lists/[id]`)
+### 📑 Список задач
 
 - Заголовок, количество задач, прогресс.
 - Таблица: название, статус, приоритет, дедлайн, действия.
@@ -287,7 +287,7 @@ flowchart LR
 - Переход на `/tasks/[id]`.
 - <img src="./public/images/icons/arrow-left.svg" width="16" height="16" alt="" /> Назад к `/lists`.
 
-### 📝 Задача (`/tasks/[id]`)
+### 📝 Задача
 
 - <img src="./public/images/icons/arrow-left.svg" width="16" height="16" alt="" /> Назад к списку (`К списку «…»`).
 - Заголовок, описание (или «Описание не указано»).
@@ -303,8 +303,8 @@ flowchart LR
 
 ### ⚠️ Ошибки и загрузка
 
-- Скелетоны на `/lists`, `/lists/[id]`, `/tasks/[id]` пока грузятся данные.
-- <img src="./public/images/icons/not-found.svg" width="16" height="16" alt="" /> 404 — `ErrorView` для неизвестного маршрута / сущности.
+- Скелетоны на загрузку данных для страниц: `/lists`, `/lists/[id]`, `/tasks/[id]`.
+- <img src="./public/images/icons/not-found.svg" width="16" height="16" alt="" /> 404 — `ErrorView` для неизвестного маршрута / для ситуации, когда запрашиваемый ресурс не найден.
 - <img src="./public/images/icons/server-error.svg" width="16" height="16" alt="" /> 500 — экран ошибки с повтором действия.
 
 ---
