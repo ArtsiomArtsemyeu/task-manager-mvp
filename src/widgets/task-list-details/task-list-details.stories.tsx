@@ -91,7 +91,7 @@ const meta: Meta<StoryArgs> = {
   tags: ['autodocs'],
   args: {
     taskList: sampleTaskList,
-    changeTaskStatus: fn(async () => ({ success: true })),
+    changeTaskStatus: fn(() => Promise.resolve({ success: true })),
   },
   parameters: {
     layout: 'fullscreen',

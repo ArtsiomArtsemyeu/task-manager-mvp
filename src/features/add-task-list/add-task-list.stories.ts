@@ -42,9 +42,9 @@ export const RequiredName: Story = {
 
     await userEvent.click(body.getByRole('button', { name: 'Создать' }));
 
-    await expect(
-      body.getByText(errorMessages.validation.nameRequired),
-    ).toBeInTheDocument();
+    await expect(body.getByLabelText('Название')).toHaveAccessibleDescription(
+      errorMessages.validation.nameRequired,
+    );
   },
 };
 

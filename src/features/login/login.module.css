@@ -27,31 +27,7 @@
   color: var(--foreground);
 }
 
-.input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid var(--input-border);
-  border-radius: 8px;
-  font-size: 15px;
-  outline: none;
-  transition: all 0.2s ease;
-  background: var(--input-bg);
-  color: var(--foreground);
-  box-sizing: border-box;
-}
-
-.passwordField {
-  position: relative;
-}
-
-.passwordField .input {
-  padding-right: 44px;
-}
-
 .passwordToggle {
-  position: absolute;
-  top: 50%;
-  right: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -61,7 +37,6 @@
   background: transparent;
   color: var(--muted);
   cursor: pointer;
-  transform: translateY(-50%);
   opacity: 0.75;
   transition: opacity 0.2s ease;
 }
@@ -82,15 +57,6 @@
 
 :global([data-theme='dark']) .passwordToggle img {
   filter: brightness(0) invert(1);
-}
-
-.input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
-}
-
-.fieldError {
-  margin-top: 6px;
 }
 
 .formError {

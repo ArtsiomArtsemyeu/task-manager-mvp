@@ -16,9 +16,9 @@
   color: var(--foreground);
 }
 
-.input,
 .textarea {
   width: 100%;
+  min-height: 5rem;
   padding: 0.75rem 1rem;
   border: 1px solid var(--input-border);
   border-radius: var(--radius-md);
@@ -28,17 +28,12 @@
   font-size: 0.95rem;
   outline: none;
   box-sizing: border-box;
+  resize: vertical;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
 }
 
-.textarea {
-  min-height: 5rem;
-  resize: vertical;
-}
-
-.input:focus,
 .textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);

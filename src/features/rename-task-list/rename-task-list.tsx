@@ -7,8 +7,9 @@ import type { RenameTaskListActionState } from './api/rename-task-list.action';
 import { renameTaskListAction } from './api/rename-task-list.action';
 import styles from './rename-task-list.module.css';
 import { errorMessages } from '@/src/shared/config/error';
-import { Modal } from '@/src/shared/ui/components/modal';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
+import { Input } from '@/src/shared/ui/components/input';
+import { Modal } from '@/src/shared/ui/components/modal';
 
 type RenameTaskListProps = {
   isOpen: boolean;
@@ -87,14 +88,13 @@ export function RenameTaskList({
       <form id="rename-task-list-form" onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputGroup}>
           <label htmlFor="rename-task-list-name">Название</label>
-          <input
+          <Input
             id="rename-task-list-name"
+            error={errors.name?.message}
             {...register('name', {
               required: errorMessages.validation.nameRequired,
             })}
-            className={styles.input}
           />
-          {errors.name && <ErrorHighlight message={errors.name.message} />}
         </div>
 
         {state?.error && <ErrorHighlight message={state.error} />}

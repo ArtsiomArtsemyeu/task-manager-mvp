@@ -37,7 +37,7 @@ Web-приложение для управления списками задач
 | 🎨 **next-themes** | Переключение темы (default / light / dark).<br>[Репозиторий ↗](https://github.com/pacocoursey/next-themes) |
 | 📝 **react-hook-form** | Управление формами (вход, создание и редактирование).<br>[Документация ↗](https://react-hook-form.com) |
 | 🔑 **jsonwebtoken** | Выдача и проверка JWT при аутентификации.<br>[Репозиторий ↗](https://github.com/auth0/node-jsonwebtoken) |
-| 💅 **CSS Modules** | Локальные стили компонентов.<br>[Репозиторий ↗](https://github.com/css-modules/css-modules) |
+| <img src="https://cdn.simpleicons.org/css/1572B6" width="18" height="18" alt="" /> **CSS Modules** | Локальные стили компонентов.<br>[Репозиторий ↗](https://github.com/css-modules/css-modules) |
 
 **📦 Текущие версии технологий**
 

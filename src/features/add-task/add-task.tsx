@@ -16,8 +16,9 @@ import {
 } from '@/src/entities/task';
 import { errorMessages } from '@/src/shared/config/error';
 import { useFillFormStubsHotkey } from '@/src/shared/lib/fill-form-stubs';
-import { Modal } from '@/src/shared/ui/components/modal';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
+import { Input } from '@/src/shared/ui/components/input';
+import { Modal } from '@/src/shared/ui/components/modal';
 import { Select } from '@/src/shared/ui/components/select';
 
 type AddTaskProps = {
@@ -125,15 +126,14 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
       >
         <div className={styles.inputGroup}>
           <label htmlFor="add-task-name">Название</label>
-          <input
+          <Input
             id="add-task-name"
-            className={styles.input}
             placeholder="Например, Подготовить отчёт"
+            error={errors.name?.message}
             {...register('name', {
               required: errorMessages.validation.nameRequired,
             })}
           />
-          {errors.name && <ErrorHighlight message={errors.name.message} />}
         </div>
 
         <div className={styles.inputGroup}>
@@ -178,17 +178,14 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
 
         <div className={styles.inputGroup}>
           <label htmlFor="add-task-due-date">Дедлайн</label>
-          <input
+          <Input
             id="add-task-due-date"
             type="datetime-local"
-            className={styles.input}
+            error={errors.dueDate?.message}
             {...register('dueDate', {
               required: errorMessages.validation.dueDateRequired,
             })}
           />
-          {errors.dueDate && (
-            <ErrorHighlight message={errors.dueDate.message} />
-          )}
         </div>
 
         {state?.error && <ErrorHighlight message={state.error} />}

@@ -17,8 +17,9 @@ import {
   toDateTimeLocalValue,
 } from '@/src/entities/task';
 import { errorMessages } from '@/src/shared/config/error';
-import { Modal } from '@/src/shared/ui/components/modal';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
+import { Input } from '@/src/shared/ui/components/input';
+import { Modal } from '@/src/shared/ui/components/modal';
 import { Select } from '@/src/shared/ui/components/select';
 
 type EditTaskProps = {
@@ -108,15 +109,14 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
       >
         <div className={styles.inputGroup}>
           <label htmlFor="edit-task-name">Название</label>
-          <input
+          <Input
             id="edit-task-name"
-            className={styles.input}
             placeholder="Например, Подготовить отчёт"
+            error={errors.name?.message}
             {...register('name', {
               required: errorMessages.validation.nameRequired,
             })}
           />
-          {errors.name && <ErrorHighlight message={errors.name.message} />}
         </div>
 
         <div className={styles.inputGroup}>
@@ -161,17 +161,14 @@ export function EditTask({ isOpen, taskListId, task, onClose }: EditTaskProps) {
 
         <div className={styles.inputGroup}>
           <label htmlFor="edit-task-due-date">Дедлайн</label>
-          <input
+          <Input
             id="edit-task-due-date"
             type="datetime-local"
-            className={styles.input}
+            error={errors.dueDate?.message}
             {...register('dueDate', {
               required: errorMessages.validation.dueDateRequired,
             })}
           />
-          {errors.dueDate && (
-            <ErrorHighlight message={errors.dueDate.message} />
-          )}
         </div>
 
         {state?.error && <ErrorHighlight message={state.error} />}

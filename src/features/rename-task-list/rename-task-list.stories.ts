@@ -46,9 +46,9 @@ export const RequiredName: Story = {
     await userEvent.clear(nameInput);
     await userEvent.click(body.getByRole('button', { name: 'Сохранить' }));
 
-    await expect(
-      body.getByText(errorMessages.validation.nameRequired),
-    ).toBeInTheDocument();
+    await expect(nameInput).toHaveAccessibleDescription(
+      errorMessages.validation.nameRequired,
+    );
   },
 };
 

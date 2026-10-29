@@ -35,24 +35,3 @@
   font-weight: 500;
   color: var(--foreground);
 }
-
-.input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--input-border);
-  border-radius: var(--radius-md);
-  background: var(--input-bg);
-  color: var(--foreground);
-  font: inherit;
-  font-size: 0.95rem;
-  outline: none;
-  box-sizing: border-box;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
-}

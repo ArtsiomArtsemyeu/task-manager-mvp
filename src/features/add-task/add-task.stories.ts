@@ -43,12 +43,12 @@ export const RequiredFields: Story = {
 
     await userEvent.click(body.getByRole('button', { name: 'Создать' }));
 
-    await expect(
-      body.getByText(errorMessages.validation.nameRequired),
-    ).toBeInTheDocument();
-    await expect(
-      body.getByText(errorMessages.validation.dueDateRequired),
-    ).toBeInTheDocument();
+    await expect(body.getByLabelText('Название')).toHaveAccessibleDescription(
+      errorMessages.validation.nameRequired,
+    );
+    await expect(body.getByLabelText('Дедлайн')).toHaveAccessibleDescription(
+      errorMessages.validation.dueDateRequired,
+    );
   },
 };
 

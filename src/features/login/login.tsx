@@ -11,6 +11,7 @@ import { errorMessages } from '@/src/shared/config/error';
 import { useFillFormStubsHotkey } from '@/src/shared/lib/fill-form-stubs';
 import { CircleLoader } from '@/src/shared/ui/components/circle-loader';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
+import { Input } from '@/src/shared/ui/components/input';
 
 type LoginFormData = {
   email: string;
@@ -67,10 +68,12 @@ export function Login({ action = loginAction }: LoginProps = {}) {
           <div>
             <div className={styles.inputGroup}>
               <label htmlFor="email">Электронный адрес</label>
-              <input
+              <Input
                 id="email"
                 type="email"
                 autoComplete="email"
+                placeholder="name@example.com"
+                error={errors.email?.message}
                 {...register('email', {
                   required: errorMessages.validation.emailRequired,
                   pattern: {
@@ -78,62 +81,50 @@ export function Login({ action = loginAction }: LoginProps = {}) {
                     message: errorMessages.validation.emailInvalid,
                   },
                 })}
-                className={styles.input}
-                placeholder="name@example.com"
               />
-              {errors.email && (
-                <div className={styles.fieldError}>
-                  <ErrorHighlight message={errors.email.message} />
-                </div>
-              )}
             </div>
 
             <div className={styles.inputGroup}>
               <label htmlFor="password">Пароль</label>
-              <div className={styles.passwordField}>
-                <input
-                  id="password"
-                  type={isPasswordVisible ? 'text' : 'password'}
-                  autoComplete="current-password"
-                  {...register('password', {
-                    required: errorMessages.validation.passwordRequired,
-                    minLength: {
-                      value: 8,
-                      message: errorMessages.validation.passwordMinLength,
-                    },
-                  })}
-                  className={styles.input}
-                />
-                <button
-                  type="button"
-                  className={styles.passwordToggle}
-                  onClick={() =>
-                    setIsPasswordVisible((prev: boolean) => !prev)
-                  }
-                  aria-label={
-                    isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'
-                  }
-                  aria-pressed={isPasswordVisible}
-                >
-                  <Image
-                    src={
-                      isPasswordVisible
-                        ? '/images/icons/eye-off.svg'
-                        : '/images/icons/eye.svg'
+              <Input
+                id="password"
+                type={isPasswordVisible ? 'text' : 'password'}
+                autoComplete="current-password"
+                error={errors.password?.message}
+                {...register('password', {
+                  required: errorMessages.validation.passwordRequired,
+                  minLength: {
+                    value: 8,
+                    message: errorMessages.validation.passwordMinLength,
+                  },
+                })}
+                suffix={
+                  <button
+                    type="button"
+                    className={styles.passwordToggle}
+                    onClick={() =>
+                      setIsPasswordVisible((prev: boolean) => !prev)
                     }
-                    alt={
+                    aria-label={
                       isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'
                     }
-                    width={20}
-                    height={20}
-                  />
-                </button>
-              </div>
-              {errors.password && (
-                <div className={styles.fieldError}>
-                  <ErrorHighlight message={errors.password.message} />
-                </div>
-              )}
+                    aria-pressed={isPasswordVisible}
+                  >
+                    <Image
+                      src={
+                        isPasswordVisible
+                          ? '/images/icons/eye-off.svg'
+                          : '/images/icons/eye.svg'
+                      }
+                      alt={
+                        isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'
+                      }
+                      width={20}
+                      height={20}
+                    />
+                  </button>
+                }
+              />
             </div>
             <div className={styles.formError} aria-live="polite">
               <ErrorHighlight message={state?.error} />

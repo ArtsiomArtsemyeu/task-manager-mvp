@@ -46,11 +46,11 @@ export const RequiredFields: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Войти' }));
 
     await expect(
-      canvas.getByText(errorMessages.validation.emailRequired),
-    ).toBeInTheDocument();
-    await expect(
-      canvas.getByText(errorMessages.validation.passwordRequired),
-    ).toBeInTheDocument();
+      canvas.getByLabelText('Электронный адрес'),
+    ).toHaveAccessibleDescription(errorMessages.validation.emailRequired);
+    await expect(canvas.getByLabelText('Пароль')).toHaveAccessibleDescription(
+      errorMessages.validation.passwordRequired,
+    );
     await expect(args.action).not.toHaveBeenCalled();
   },
 };
@@ -71,8 +71,8 @@ export const InvalidEmail: Story = {
     await fillAndSubmit(canvasElement, 'user@localhost', VALID_PASSWORD);
 
     await expect(
-      canvas.getByText(errorMessages.validation.emailInvalid),
-    ).toBeInTheDocument();
+      canvas.getByLabelText('Электронный адрес'),
+    ).toHaveAccessibleDescription(errorMessages.validation.emailInvalid);
     await expect(args.action).not.toHaveBeenCalled();
   },
 };
@@ -92,9 +92,9 @@ export const ShortPassword: Story = {
 
     await fillAndSubmit(canvasElement, VALID_EMAIL, 'short');
 
-    await expect(
-      canvas.getByText(errorMessages.validation.passwordMinLength),
-    ).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Пароль')).toHaveAccessibleDescription(
+      errorMessages.validation.passwordMinLength,
+    );
     await expect(args.action).not.toHaveBeenCalled();
   },
 };
