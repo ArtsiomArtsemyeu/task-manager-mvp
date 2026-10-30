@@ -52,42 +52,42 @@
 }
 
 [data-theme='light'] {
-  --background: #fbfcfe;
-  --foreground: #334155;
-  --muted: #7b8a9c;
+  --background: #fbfefc;
+  --foreground: #2a4a3c;
+  --muted: #7d9789;
   --surface: #ffffff;
-  --surface-elevated: #f8fafc;
-  --border: color-mix(in srgb, #64748b 12%, transparent);
-  --accent: #2dd4bf;
-  --accent-soft: #e6fffb;
-  --header-bg: linear-gradient(135deg, #5eead4 0%, #2dd4bf 50%, #67e8f9 100%);
-  --header-fg: #0f766e;
-  --header-muted: color-mix(in srgb, #0f766e 68%, transparent);
-  --footer-bg: linear-gradient(135deg, #eef8f7 0%, #e8f4f8 100%);
-  --footer-fg: #5b6b7c;
-  --card-bg: linear-gradient(165deg, #ffffff 0%, #f7fcfb 100%);
-  --card-border: color-mix(in srgb, #2dd4bf 14%, transparent);
-  --card-shadow: 0 10px 28px color-mix(in srgb, #94a3b8 10%, transparent);
-  --card-shadow-hover: 0 16px 36px color-mix(in srgb, #94a3b8 16%, transparent);
-  --progress-track: #e8f7f5;
-  --progress-fill: linear-gradient(90deg, #5eead4, #22d3ee);
+  --surface-elevated: #f9fcfa;
+  --border: color-mix(in srgb, #2a4a3c 10%, transparent);
+  --accent: #5ec49a;
+  --accent-soft: #e8f8f0;
+  --header-bg: linear-gradient(135deg, #7ed4b0 0%, #5ec49a 48%, #9ae0c4 100%);
+  --header-fg: #1f4d3c;
+  --header-muted: color-mix(in srgb, #1f4d3c 68%, transparent);
+  --footer-bg: linear-gradient(135deg, #f5fbf8 0%, #eef8f3 100%);
+  --footer-fg: #6e8a7c;
+  --card-bg: linear-gradient(165deg, #ffffff 0%, #f8fcfa 100%);
+  --card-border: color-mix(in srgb, #5ec49a 14%, transparent);
+  --card-shadow: 0 10px 28px color-mix(in srgb, #2a4a3c 6%, transparent);
+  --card-shadow-hover: 0 16px 36px color-mix(in srgb, #2a4a3c 10%, transparent);
+  --progress-track: #e8f5ef;
+  --progress-fill: linear-gradient(90deg, #7ed4b0, #5ec49a);
   --input-bg: #ffffff;
-  --input-border: color-mix(in srgb, #94a3b8 22%, transparent);
-  --button-bg: #2dd4bf;
-  --button-fg: #0f766e;
+  --input-border: color-mix(in srgb, #2a4a3c 12%, transparent);
+  --button-bg: #5ec49a;
+  --button-fg: #1f4d3c;
   --metric-new: #3b82f6;
   --metric-progress: #f59e0b;
-  --metric-done: #10b981;
+  --metric-done: #5ec49a;
   --metric-overdue: #f87171;
   --chip-red-bg: #fff1f1;
   --chip-red-fg: #b91c1c;
   --chip-yellow-bg: #fffbeb;
   --chip-yellow-fg: #b45309;
   --dropdown-bg: #ffffff;
-  --dropdown-fg: #334155;
-  --dropdown-hover: #f1f5f9;
-  --dropdown-selected: #ccfbf1;
-  --toggler-hover: color-mix(in srgb, #0f766e 10%, transparent);
+  --dropdown-fg: #2a4a3c;
+  --dropdown-hover: #f3faf6;
+  --dropdown-selected: #e8f8f0;
+  --toggler-hover: color-mix(in srgb, #1f4d3c 10%, transparent);
 }
 
 [data-theme='dark'] {
@@ -127,10 +127,6 @@
   --dropdown-hover: #24303a;
   --dropdown-selected: #1a3331;
   --toggler-hover: color-mix(in srgb, #ffffff 10%, transparent);
-}
-
-html {
-  scrollbar-gutter: stable;
 }
 
 body {
