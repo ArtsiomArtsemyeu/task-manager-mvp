@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
 import { isTaskState } from '@/src/entities/task';
 import type { Task, TaskDto } from '@/src/entities/task';
+import { readTasks, writeTasks } from '@/src/entities/task/lib';
 import type { TaskList } from '@/src/entities/task-list';
+import { readTaskLists, writeTaskLists } from '@/src/entities/task-list/lib';
 import { errorMessages } from '@/src/shared/config';
-import {
-  readDataFromFile,
-  writeDataToFile,
-} from '@/src/shared/lib/file-storage';
 import { isRecord, readJson } from '@/src/shared/utils/type-guard';
 
 function optionalString(value: unknown, fallback: string): string | null {
@@ -17,9 +15,6 @@ function optionalString(value: unknown, fallback: string): string | null {
   return typeof value === 'string' ? value : null;
 }
 
-const TASKS_FILE_NAME = 'tasks.json';
-const TASK_LISTS_FILE_NAME = 'task-lists.json';
-
 type RouteParams = {
   params: Promise<{ id: string }>;
 };
@@ -27,7 +22,7 @@ type RouteParams = {
 export async function GET(_request: Request, { params }: RouteParams) {
   const { id } = await params;
 
-  const tasks = await readDataFromFile<Task[]>(TASKS_FILE_NAME);
+  const tasks = await readTasks();
   const taskItem = tasks.find((task: Task) => task.id === id);
 
   if (!taskItem) {
@@ -37,7 +32,7 @@ export async function GET(_request: Request, { params }: RouteParams) {
     );
   }
 
-  const taskLists = await readDataFromFile<TaskList[]>(TASK_LISTS_FILE_NAME);
+  const taskLists = await readTaskLists();
   const taskListItem = taskLists.find((taskList: TaskList) =>
     taskList.taskIds.includes(id),
   );
@@ -61,7 +56,7 @@ export async function GET(_request: Request, { params }: RouteParams) {
 export async function PUT(request: Request, { params }: RouteParams) {
   const { id } = await params;
 
-  const tasks = await readDataFromFile<Task[]>(TASKS_FILE_NAME);
+  const tasks = await readTasks();
   const taskItem = tasks.find((task: Task) => task.id === id);
 
   if (!taskItem) {
@@ -114,7 +109,7 @@ export async function PUT(request: Request, { params }: RouteParams) {
         : task,
     );
 
-    await writeDataToFile(TASKS_FILE_NAME, updatedTasks);
+    await writeTasks(updatedTasks);
 
     return NextResponse.json({ status: 200 });
   } catch (error) {
@@ -129,7 +124,7 @@ export async function PUT(request: Request, { params }: RouteParams) {
 export async function DELETE(_request: Request, { params }: RouteParams) {
   const { id } = await params;
 
-  const tasks = await readDataFromFile<Task[]>(TASKS_FILE_NAME);
+  const tasks = await readTasks();
   const taskItem = tasks.find((task: Task) => task.id === id);
 
   if (!taskItem) {
@@ -140,14 +135,14 @@ export async function DELETE(_request: Request, { params }: RouteParams) {
   }
 
   const updatedTasks = tasks.filter((task: Task) => task.id !== id);
-  await writeDataToFile(TASKS_FILE_NAME, updatedTasks);
+  await writeTasks(updatedTasks);
 
-  const taskLists = await readDataFromFile<TaskList[]>(TASK_LISTS_FILE_NAME);
+  const taskLists = await readTaskLists();
   const updatedTaskLists = taskLists.map((taskList: TaskList) => ({
     ...taskList,
     taskIds: taskList.taskIds.filter((taskId: string) => taskId !== id),
   }));
-  await writeDataToFile(TASK_LISTS_FILE_NAME, updatedTaskLists);
+  await writeTaskLists(updatedTaskLists);
 
   return NextResponse.json({ status: 200 });
 }

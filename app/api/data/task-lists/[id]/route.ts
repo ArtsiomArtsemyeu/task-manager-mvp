@@ -1,15 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { Task } from '@/src/entities/task';
+import { readTasks } from '@/src/entities/task/lib';
 import type { TaskList, TaskListDto } from '@/src/entities/task-list';
+import { readTaskLists, writeTaskLists } from '@/src/entities/task-list/lib';
 import { errorMessages } from '@/src/shared/config';
-import {
-  readDataFromFile,
-  writeDataToFile,
-} from '@/src/shared/lib/file-storage';
 import { isRecord, readJson } from '@/src/shared/utils/type-guard';
-
-const TASKS_FILE_NAME = 'tasks.json';
-const TASK_LISTS_FILE_NAME = 'task-lists.json';
 
 type RouteParams = {
   params: Promise<{ id: string }>;
@@ -18,7 +13,7 @@ type RouteParams = {
 export async function GET(_request: Request, { params }: RouteParams) {
   const { id } = await params;
 
-  const taskLists = await readDataFromFile<TaskList[]>(TASK_LISTS_FILE_NAME);
+  const taskLists = await readTaskLists();
   const taskListItem = taskLists.find(
     (taskList: TaskList) => taskList.id === id,
   );
@@ -30,7 +25,7 @@ export async function GET(_request: Request, { params }: RouteParams) {
     );
   }
 
-  const tasks = await readDataFromFile<Task[]>(TASKS_FILE_NAME);
+  const tasks = await readTasks();
   const taskListDto: TaskListDto = {
     id: taskListItem.id,
     name: taskListItem.name,
@@ -46,7 +41,7 @@ export async function GET(_request: Request, { params }: RouteParams) {
 export async function PUT(request: Request, { params }: RouteParams) {
   const { id } = await params;
 
-  const taskLists = await readDataFromFile<TaskList[]>(TASK_LISTS_FILE_NAME);
+  const taskLists = await readTaskLists();
   const taskListItem = taskLists.find(
     (taskList: TaskList) => taskList.id === id,
   );
@@ -72,7 +67,7 @@ export async function PUT(request: Request, { params }: RouteParams) {
   const updatedTaskList: TaskList[] = taskLists.map((taskList: TaskList) =>
     taskList.id === id ? { ...taskList, name: updatedName } : taskList,
   );
-  await writeDataToFile(TASK_LISTS_FILE_NAME, updatedTaskList);
+  await writeTaskLists(updatedTaskList);
 
   return NextResponse.json({ status: 200 });
 }
@@ -80,7 +75,7 @@ export async function PUT(request: Request, { params }: RouteParams) {
 export async function DELETE(_request: Request, { params }: RouteParams) {
   const { id } = await params;
 
-  const taskLists = await readDataFromFile<TaskList[]>(TASK_LISTS_FILE_NAME);
+  const taskLists = await readTaskLists();
   const taskListItem = taskLists.find(
     (taskList: TaskList) => taskList.id === id,
   );
@@ -95,7 +90,7 @@ export async function DELETE(_request: Request, { params }: RouteParams) {
   const updatedTaskLists = taskLists.filter(
     (taskList: TaskList) => taskList.id !== id,
   );
-  await writeDataToFile(TASK_LISTS_FILE_NAME, updatedTaskLists);
+  await writeTaskLists(updatedTaskLists);
 
   return NextResponse.json({ status: 200 });
 }
