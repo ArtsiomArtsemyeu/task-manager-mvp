@@ -1,17 +1,13 @@
 import 'server-only';
 
 import { v4 as uuidv4 } from 'uuid';
+import type { CreateTaskListBody } from '../model/task-list.schema';
 import type { TaskList } from '../model/task-list.model';
 import { readTaskLists, writeTaskLists } from './task-lists-storage';
 import { defaultUser } from '@/src/shared/config';
 
-type CreateTaskListInput = {
-  name: string;
-  taskIds?: string[];
-};
-
 export async function createTaskList(
-  input: CreateTaskListInput,
+  input: CreateTaskListBody,
 ): Promise<TaskList> {
   const newTaskList: TaskList = {
     id: uuidv4(),
@@ -37,5 +33,14 @@ export async function addTaskIdToTaskList(
       ? { ...taskList, taskIds: [...taskList.taskIds, taskId] }
       : taskList,
   );
+  await writeTaskLists(updatedTaskLists);
+}
+
+export async function removeTaskIdFromTaskLists(taskId: string): Promise<void> {
+  const taskLists = await readTaskLists();
+  const updatedTaskLists = taskLists.map((taskList) => ({
+    ...taskList,
+    taskIds: taskList.taskIds.filter((id) => id !== taskId),
+  }));
   await writeTaskLists(updatedTaskLists);
 }

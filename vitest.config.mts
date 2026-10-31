@@ -31,6 +31,9 @@ export default defineConfig({
             configDir: path.join(dirname, '.storybook'),
           }),
         ],
+        optimizeDeps: {
+          include: ['zod'],
+        },
         test: {
           name: 'storybook',
           browser: {

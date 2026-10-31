@@ -1,19 +1,19 @@
 import { NextResponse } from 'next/server';
-import { isTaskState } from '@/src/entities/task';
-import type { Task, TaskDto } from '@/src/entities/task';
-import { readTasks, writeTasks } from '@/src/entities/task/lib';
-import type { TaskList } from '@/src/entities/task-list';
-import { readTaskLists, writeTaskLists } from '@/src/entities/task-list/lib';
+import { updateTaskBodySchema } from '@/src/entities/task';
+import type { UpdateTaskBody } from '@/src/entities/task';
+import {
+  deleteTask,
+  findTaskById,
+  toTaskDto,
+  updateTask,
+} from '@/src/entities/task/lib';
+import {
+  findTaskListByTaskId,
+  removeTaskIdFromTaskLists,
+} from '@/src/entities/task-list/lib';
 import { errorMessages } from '@/src/shared/config';
-import { isRecord, readJson } from '@/src/shared/utils/type-guard';
-
-function optionalString(value: unknown, fallback: string): string | null {
-  if (value == null) {
-    return fallback;
-  }
-
-  return typeof value === 'string' ? value : null;
-}
+import { parseRequestJson, type ParseRequestResult } from '@/src/shared/lib/zod';
+import type { TaskList } from '@/src/entities/task-list';
 
 type RouteParams = {
   params: Promise<{ id: string }>;
@@ -21,9 +21,7 @@ type RouteParams = {
 
 export async function GET(_request: Request, { params }: RouteParams) {
   const { id } = await params;
-
-  const tasks = await readTasks();
-  const taskItem = tasks.find((task: Task) => task.id === id);
+  const { taskItem } = await findTaskById(id);
 
   if (!taskItem) {
     return NextResponse.json(
@@ -32,11 +30,7 @@ export async function GET(_request: Request, { params }: RouteParams) {
     );
   }
 
-  const taskLists = await readTaskLists();
-  const taskListItem = taskLists.find((taskList: TaskList) =>
-    taskList.taskIds.includes(id),
-  );
-
+  const taskListItem: TaskList | undefined = await findTaskListByTaskId(id);
   if (!taskListItem) {
     return NextResponse.json(
       { error: errorMessages.error.taskListForTaskNotFound },
@@ -44,20 +38,12 @@ export async function GET(_request: Request, { params }: RouteParams) {
     );
   }
 
-  const taskDto: TaskDto = {
-    ...taskItem,
-    taskListId: taskListItem.id,
-    taskListName: taskListItem.name,
-  };
-
-  return NextResponse.json(taskDto);
+  return NextResponse.json(toTaskDto(taskItem, taskListItem));
 }
 
 export async function PUT(request: Request, { params }: RouteParams) {
   const { id } = await params;
-
-  const tasks = await readTasks();
-  const taskItem = tasks.find((task: Task) => task.id === id);
+  const { tasks, taskItem } = await findTaskById(id);
 
   if (!taskItem) {
     return NextResponse.json(
@@ -66,66 +52,22 @@ export async function PUT(request: Request, { params }: RouteParams) {
     );
   }
 
-  try {
-    const body = await readJson(request);
-
-    if (!isRecord(body)) {
-      return NextResponse.json(
-        { error: errorMessages.validation.invalidJson },
-        { status: 400 },
-      );
-    }
-
-    const name = optionalString(body.name, taskItem.name);
-    const description = optionalString(body.description, taskItem.description);
-    const dueDate = optionalString(body.dueDate, taskItem.dueDate);
-    const state = body.state == null ? taskItem.state : body.state;
-    const priority = body.priority == null ? taskItem.priority : body.priority;
-
-    if (
-      name === null ||
-      description === null ||
-      dueDate === null ||
-      typeof state !== 'string' ||
-      !isTaskState(state) ||
-      typeof priority !== 'number'
-    ) {
-      return NextResponse.json(
-        { error: errorMessages.validation.invalidJson },
-        { status: 400 },
-      );
-    }
-
-    const updatedTasks = tasks.map((task: Task) =>
-      task.id === id
-        ? {
-            ...task,
-            name,
-            description,
-            state,
-            priority,
-            dueDate,
-          }
-        : task,
-    );
-
-    await writeTasks(updatedTasks);
-
-    return NextResponse.json({ status: 200 });
-  } catch (error) {
-    console.error(error);
+  const updateTaskBody: ParseRequestResult<UpdateTaskBody> = await parseRequestJson(request, updateTaskBodySchema);
+  if (!updateTaskBody.success) {
     return NextResponse.json(
       { error: errorMessages.validation.invalidJson },
       { status: 400 },
     );
   }
+
+  await updateTask(id, tasks, taskItem, updateTaskBody.data);
+
+  return NextResponse.json({ status: 200 });
 }
 
 export async function DELETE(_request: Request, { params }: RouteParams) {
   const { id } = await params;
-
-  const tasks = await readTasks();
-  const taskItem = tasks.find((task: Task) => task.id === id);
+  const { tasks, taskItem } = await findTaskById(id);
 
   if (!taskItem) {
     return NextResponse.json(
@@ -134,15 +76,8 @@ export async function DELETE(_request: Request, { params }: RouteParams) {
     );
   }
 
-  const updatedTasks = tasks.filter((task: Task) => task.id !== id);
-  await writeTasks(updatedTasks);
-
-  const taskLists = await readTaskLists();
-  const updatedTaskLists = taskLists.map((taskList: TaskList) => ({
-    ...taskList,
-    taskIds: taskList.taskIds.filter((taskId: string) => taskId !== id),
-  }));
-  await writeTaskLists(updatedTaskLists);
+  await deleteTask(id, tasks);
+  await removeTaskIdFromTaskLists(id);
 
   return NextResponse.json({ status: 200 });
 }

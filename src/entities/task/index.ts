@@ -20,3 +20,9 @@ export type { Task } from './model/task.model';
 export type { TaskDto } from './model/task-dto.model';
 export type { TaskState, TaskPriority } from './config/task.config';
 export type { TaskPriorityLevel } from './utils/task.util';
+export {
+  createTaskBodySchema,
+  updateTaskBodySchema,
+  taskStateSchema,
+} from './model/task.schema';
+export type { CreateTaskBody, UpdateTaskBody } from './model/task.schema';

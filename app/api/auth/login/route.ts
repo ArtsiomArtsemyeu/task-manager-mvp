@@ -1,19 +1,14 @@
 import { NextResponse } from 'next/server';
+import { loginBodySchema } from '@/src/entities/user';
 import type { UserSession } from '@/src/entities/user';
 import { defaultUser, errorMessages } from '@/src/shared/config';
-import { isRecord, readJson } from '@/src/shared/utils/type-guard';
+import { parseRequestJson } from '@/src/shared/lib/zod';
 
 export async function POST(request: Request) {
   try {
-    const body = await readJson(request);
+    const loginBody = await parseRequestJson(request, loginBodySchema);
 
-    if (
-      !isRecord(body) ||
-      typeof body.email !== 'string' ||
-      typeof body.password !== 'string' ||
-      !body.email ||
-      !body.password
-    ) {
+    if (!loginBody.success) {
       return NextResponse.json(
         { error: errorMessages.validation.requiredFields },
         { status: 400 },
@@ -21,8 +16,8 @@ export async function POST(request: Request) {
     }
 
     if (
-      body.email !== defaultUser.email ||
-      body.password !== defaultUser.password
+      loginBody.data.email !== defaultUser.email ||
+      loginBody.data.password !== defaultUser.password
     ) {
       return NextResponse.json(
         { error: errorMessages.error.invalidCredentials },

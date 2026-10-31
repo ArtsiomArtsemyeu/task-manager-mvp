@@ -1,10 +1,15 @@
 import { NextResponse } from 'next/server';
-import type { Task } from '@/src/entities/task';
 import { readTasks } from '@/src/entities/task/lib';
-import type { TaskList, TaskListDto } from '@/src/entities/task-list';
-import { readTaskLists, writeTaskLists } from '@/src/entities/task-list/lib';
+import { updateTaskListBodySchema } from '@/src/entities/task-list';
+import type { TaskList, UpdateTaskListBody } from '@/src/entities/task-list';
+import {
+  readTaskLists,
+  toTaskListDto,
+  writeTaskLists,
+} from '@/src/entities/task-list/lib';
 import { errorMessages } from '@/src/shared/config';
-import { isRecord, readJson } from '@/src/shared/utils/type-guard';
+import { parseRequestJson, type ParseRequestResult } from '@/src/shared/lib/zod';
+import type { Task } from '@/src/entities/task';
 
 type RouteParams = {
   params: Promise<{ id: string }>;
@@ -13,8 +18,8 @@ type RouteParams = {
 export async function GET(_request: Request, { params }: RouteParams) {
   const { id } = await params;
 
-  const taskLists = await readTaskLists();
-  const taskListItem = taskLists.find(
+  const taskLists: TaskList[] = await readTaskLists();
+  const taskListItem: TaskList | undefined = taskLists.find(
     (taskList: TaskList) => taskList.id === id,
   );
 
@@ -25,24 +30,15 @@ export async function GET(_request: Request, { params }: RouteParams) {
     );
   }
 
-  const tasks = await readTasks();
-  const taskListDto: TaskListDto = {
-    id: taskListItem.id,
-    name: taskListItem.name,
-    userId: taskListItem.userId,
-    tasks: taskListItem.taskIds
-      .map((taskId: string) => tasks.find((task: Task) => task.id === taskId))
-      .filter((taskItem: Task | undefined): taskItem is Task => !!taskItem),
-  };
-
-  return NextResponse.json(taskListDto);
+  const tasks: Task[] = await readTasks();
+  return NextResponse.json(toTaskListDto(taskListItem, tasks));
 }
 
 export async function PUT(request: Request, { params }: RouteParams) {
   const { id } = await params;
 
-  const taskLists = await readTaskLists();
-  const taskListItem = taskLists.find(
+  const taskLists: TaskList[] = await readTaskLists();
+  const taskListItem: TaskList | undefined = taskLists.find(
     (taskList: TaskList) => taskList.id === id,
   );
 
@@ -53,19 +49,22 @@ export async function PUT(request: Request, { params }: RouteParams) {
     );
   }
 
-  const body = await readJson(request);
+  const updateTaskListBody: ParseRequestResult<UpdateTaskListBody> = await parseRequestJson(
+    request,
+    updateTaskListBodySchema,
+  );
 
-  if (!isRecord(body) || typeof body.name !== 'string') {
+  if (!updateTaskListBody.success) {
     return NextResponse.json(
       { error: errorMessages.validation.invalidJson },
       { status: 400 },
     );
   }
 
-  const updatedName = body.name;
-
   const updatedTaskList: TaskList[] = taskLists.map((taskList: TaskList) =>
-    taskList.id === id ? { ...taskList, name: updatedName } : taskList,
+    taskList.id === id
+      ? { ...taskList, name: updateTaskListBody.data.name }
+      : taskList,
   );
   await writeTaskLists(updatedTaskList);
 
@@ -75,8 +74,8 @@ export async function PUT(request: Request, { params }: RouteParams) {
 export async function DELETE(_request: Request, { params }: RouteParams) {
   const { id } = await params;
 
-  const taskLists = await readTaskLists();
-  const taskListItem = taskLists.find(
+  const taskLists: TaskList[] = await readTaskLists();
+  const taskListItem: TaskList | undefined = taskLists.find(
     (taskList: TaskList) => taskList.id === id,
   );
 
@@ -87,7 +86,7 @@ export async function DELETE(_request: Request, { params }: RouteParams) {
     );
   }
 
-  const updatedTaskLists = taskLists.filter(
+  const updatedTaskLists: TaskList[] = taskLists.filter(
     (taskList: TaskList) => taskList.id !== id,
   );
   await writeTaskLists(updatedTaskLists);

@@ -22,6 +22,10 @@ const config: StorybookConfig = {
           '@/src/shared/utils/jwt': path.join(storybookDir, 'jwt.ts'),
         },
       },
+      optimizeDeps: {
+        include: ['zod'],
+        entries: ['src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+      },
     });
   },
 };

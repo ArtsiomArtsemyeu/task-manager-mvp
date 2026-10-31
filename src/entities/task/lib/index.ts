@@ -1,2 +1,8 @@
 export { readTasks, writeTasks } from './tasks-storage';
-export { createTask } from './tasks.service';
+export {
+  findTaskById,
+  createTask,
+  updateTask,
+  deleteTask,
+  toTaskDto,
+} from './tasks.util';

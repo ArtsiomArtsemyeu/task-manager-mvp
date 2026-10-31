@@ -1,56 +1,35 @@
 import type { Task } from '@/src/entities/task';
 import { readTasks } from '@/src/entities/task/lib';
 import { NextResponse } from 'next/server';
-import type { TaskList, TaskListDto } from '@/src/entities/task-list';
-import { createTaskList, readTaskLists } from '@/src/entities/task-list/lib';
-import { errorMessages } from '@/src/shared/config';
+import { createTaskListBodySchema } from '@/src/entities/task-list';
+import type { CreateTaskListBody, TaskList } from '@/src/entities/task-list';
 import {
-  isRecord,
-  isStringArray,
-  readJson,
-} from '@/src/shared/utils/type-guard';
+  createTaskList,
+  readTaskLists,
+  toTaskListsDto,
+} from '@/src/entities/task-list/lib';
+import { errorMessages } from '@/src/shared/config';
+import { parseRequestJson } from '@/src/shared/lib/zod';
+import type { ParseRequestResult } from '@/src/shared/lib/zod';
 
 export async function GET() {
-  const taskLists = await readTaskLists();
-  const tasks = await readTasks();
+  const taskLists: TaskList[] = await readTaskLists();
+  const tasks: Task[] = await readTasks();
 
-  const taskListsDto: TaskListDto[] = taskLists.map(
-    (taskListItem: TaskList) => ({
-      id: taskListItem.id,
-      name: taskListItem.name,
-      userId: taskListItem.userId,
-      tasks: taskListItem.taskIds
-        .map((taskId: string) => tasks.find((task: Task) => taskId === task.id))
-        .filter((taskItem: Task | undefined) => !!taskItem),
-    }),
-  );
-
-  return NextResponse.json(taskListsDto);
+  return NextResponse.json(toTaskListsDto(taskLists, tasks));
 }
 
 export async function POST(request: Request) {
-  try {
-    const body = await readJson(request);
+  const createTaskListBody: ParseRequestResult<CreateTaskListBody> =
+    await parseRequestJson(request, createTaskListBodySchema);
 
-    if (!isRecord(body) || typeof body.name !== 'string') {
-      return NextResponse.json(
-        { error: errorMessages.validation.invalidJson },
-        { status: 400 },
-      );
-    }
-
-    const newTaskList = await createTaskList({
-      name: body.name,
-      taskIds: isStringArray(body.taskIds) ? body.taskIds : undefined,
-    });
-
-    return NextResponse.json(newTaskList, { status: 201 });
-  } catch (error) {
-    console.error(error);
-
+  if (!createTaskListBody.success) {
     return NextResponse.json(
       { error: errorMessages.validation.invalidJson },
       { status: 400 },
     );
   }
+
+  const newTaskList: TaskList = await createTaskList(createTaskListBody.data);
+  return NextResponse.json(newTaskList, { status: 201 });
 }
