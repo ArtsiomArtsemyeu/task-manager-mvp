@@ -1,7 +1,12 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { errorMessages } from '@/src/shared/config';
+import {
+  authorizedFetch,
+  redirectIfUnauthorized,
+} from '@/src/shared/lib/session';
+import { taskListPath } from '@/src/shared/utils/api';
 
 export type RenameTaskListActionState = {
   error?: string;
@@ -23,11 +28,13 @@ export async function renameTaskListAction(
     return { error: errorMessages.validation.nameRequired };
   }
 
-  const response = await fetch(apiUrl(`/api/data/task-lists/${id}`), {
+  const response = await authorizedFetch(taskListPath(id), {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name: name.trim() }),
   });
+
+  redirectIfUnauthorized(response);
 
   if (!response.ok) {
     return { error: errorMessages.error.renameTaskListFailed };

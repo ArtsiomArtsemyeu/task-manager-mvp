@@ -2,7 +2,12 @@
 
 import { revalidatePath } from 'next/cache';
 import type { TaskState } from '@/src/entities/task';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { errorMessages } from '@/src/shared/config';
+import {
+  authorizedFetch,
+  redirectIfUnauthorized,
+} from '@/src/shared/lib/session';
+import { taskPath } from '@/src/shared/utils/api';
 
 export async function changeTaskStatusAction(
   id: string,
@@ -13,11 +18,13 @@ export async function changeTaskStatusAction(
     return { error: errorMessages.validation.invalidStatusData };
   }
 
-  const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
+  const response = await authorizedFetch(taskPath(id), {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ state }),
   });
+
+  redirectIfUnauthorized(response);
 
   if (!response.ok) {
     return { error: errorMessages.error.changeStatusFailed };

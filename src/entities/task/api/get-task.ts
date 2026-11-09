@@ -1,17 +1,18 @@
 import 'server-only';
 
 import type { TaskDto } from '../model/task-dto.model';
-import { apiUrl } from '@/src/shared/config';
 import { HttpError } from '@/src/shared/lib/http-error';
+import { authorizedFetch } from '@/src/shared/lib/session';
+import { taskPath } from '@/src/shared/utils/api';
 
-export function getTask(id: string): Promise<TaskDto> {
-  return fetch(apiUrl(`/api/data/tasks/${id}`), {
+export async function getTask(id: string): Promise<TaskDto> {
+  const response = await authorizedFetch(taskPath(id), {
     cache: 'no-store',
-  }).then((response: Response) => {
-    if (!response.ok) {
-      throw new HttpError(response.status);
-    }
-
-    return response.json() as Promise<TaskDto>;
   });
+
+  if (!response.ok) {
+    throw new HttpError(response.status);
+  }
+
+  return response.json() as Promise<TaskDto>;
 }

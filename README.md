@@ -120,6 +120,7 @@ npm run playwright:install
 | Переменная | Описание |
 | :--------- | :------- |
 | `APP_BASE_URL` | Базовый URL (по умолчанию `http://localhost:3000`) |
+| `JWT_SECRET` | Секрет подписи JWT |
 | `DEFAULT_USER_ID` | Идентификатор пользователя по умолчанию |
 | `DEFAULT_USER_EMAIL` | Электронный адрес пользователя по умолчанию |
 | `DEFAULT_USER_PASSWORD` | Пароль пользователя по умолчанию |
@@ -206,6 +207,8 @@ npm run build-storybook
 | ✅ Задачи | `src/shared/lib/file-storage/data/tasks.json` |
 
 **Статусы задачи (**`state`**):** `new` · `in progress` · `done` · `overdue`
+
+API роуты `/api/data/*` проверяют заголовок `Authorization: Bearer <token>`. Без действующей сессии ответ `401`. `POST /api/auth/login` остаётся открытым. Страницы `/lists` и `/tasks` по-прежнему проверяют cookie `session_token`.
 
 **📡 Таблица эндпоинтов**
 

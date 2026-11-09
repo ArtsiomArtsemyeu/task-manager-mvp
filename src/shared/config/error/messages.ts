@@ -16,6 +16,7 @@ export const messages = {
   },
   error: {
     server: 'Ошибка сервера',
+    unauthorized: 'Требуется авторизация',
     invalidCredentials: 'Неверный электронный адрес или пароль',
     loginFailed: 'Не удалось войти',
     taskListNotFound: 'Список не найден',

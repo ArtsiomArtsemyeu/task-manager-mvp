@@ -1,7 +1,12 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { errorMessages } from '@/src/shared/config';
+import {
+  authorizedFetch,
+  redirectIfUnauthorized,
+} from '@/src/shared/lib/session';
+import { taskListPath } from '@/src/shared/utils/api';
 
 export type DeleteTaskListActionState = {
   error?: string;
@@ -18,9 +23,11 @@ export async function deleteTaskListAction(
     return { error: errorMessages.validation.invalidTaskListId };
   }
 
-  const response = await fetch(apiUrl(`/api/data/task-lists/${id}`), {
+  const response = await authorizedFetch(taskListPath(id), {
     method: 'DELETE',
   });
+
+  redirectIfUnauthorized(response);
 
   if (!response.ok) {
     return { error: errorMessages.error.deleteTaskListFailed };

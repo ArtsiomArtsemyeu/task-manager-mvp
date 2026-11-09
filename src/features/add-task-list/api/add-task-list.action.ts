@@ -1,7 +1,12 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { errorMessages } from '@/src/shared/config';
+import {
+  authorizedFetch,
+  redirectIfUnauthorized,
+} from '@/src/shared/lib/session';
+import { taskListsPath } from '@/src/shared/utils/api';
 
 export type AddTaskListActionState = {
   error?: string;
@@ -18,11 +23,13 @@ export async function addTaskListAction(
     return { error: errorMessages.validation.nameRequired };
   }
 
-  const response = await fetch(apiUrl('/api/data/task-lists'), {
+  const response = await authorizedFetch(taskListsPath(), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name: name.trim() }),
   });
+
+  redirectIfUnauthorized(response);
 
   if (!response.ok) {
     return { error: errorMessages.validation.invalidListName };

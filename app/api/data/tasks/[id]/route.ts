@@ -12,7 +12,10 @@ import {
   removeTaskIdFromTaskLists,
 } from '@/src/entities/task-list/lib';
 import { errorMessages } from '@/src/shared/config';
-import { parseRequestJson, type ParseRequestResult } from '@/src/shared/lib/zod';
+import {
+  parseRequestJson,
+  type ParseRequestResult,
+} from '@/src/shared/lib/zod';
 import type { TaskList } from '@/src/entities/task-list';
 
 type RouteParams = {
@@ -52,7 +55,8 @@ export async function PUT(request: Request, { params }: RouteParams) {
     );
   }
 
-  const updateTaskBody: ParseRequestResult<UpdateTaskBody> = await parseRequestJson(request, updateTaskBodySchema);
+  const updateTaskBody: ParseRequestResult<UpdateTaskBody> =
+    await parseRequestJson(request, updateTaskBodySchema);
   if (!updateTaskBody.success) {
     return NextResponse.json(
       { error: errorMessages.validation.invalidJson },

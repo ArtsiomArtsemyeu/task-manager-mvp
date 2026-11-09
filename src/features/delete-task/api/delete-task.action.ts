@@ -2,7 +2,12 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { errorMessages } from '@/src/shared/config';
+import {
+  authorizedFetch,
+  redirectIfUnauthorized,
+} from '@/src/shared/lib/session';
+import { taskPath } from '@/src/shared/utils/api';
 
 export type DeleteTaskActionState = {
   error?: string;
@@ -26,9 +31,11 @@ export async function deleteTaskAction(
     return { error: errorMessages.validation.invalidTaskData };
   }
 
-  const response = await fetch(apiUrl(`/api/data/tasks/${id}`), {
+  const response = await authorizedFetch(taskPath(id), {
     method: 'DELETE',
   });
+
+  redirectIfUnauthorized(response);
 
   if (!response.ok) {
     return { error: errorMessages.error.deleteTaskFailed };

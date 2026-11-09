@@ -1,17 +1,18 @@
 import 'server-only';
 
 import type { TaskListDto } from '../model/task-list-dto.model';
-import { apiUrl } from '@/src/shared/config';
 import { HttpError } from '@/src/shared/lib/http-error';
+import { authorizedFetch } from '@/src/shared/lib/session';
+import { taskListsPath } from '@/src/shared/utils/api';
 
-export function getTaskLists(): Promise<TaskListDto[]> {
-  return fetch(apiUrl('/api/data/task-lists'), {
+export async function getTaskLists(): Promise<TaskListDto[]> {
+  const response = await authorizedFetch(taskListsPath(), {
     cache: 'no-store',
-  }).then((response: Response) => {
-    if (!response.ok) {
-      throw new HttpError(response.status);
-    }
-
-    return response.json() as Promise<TaskListDto[]>;
   });
+
+  if (!response.ok) {
+    throw new HttpError(response.status);
+  }
+
+  return response.json() as Promise<TaskListDto[]>;
 }

@@ -1,7 +1,12 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import { errorMessages } from '@/src/shared/config';
+import {
+  authorizedFetch,
+  redirectIfUnauthorized,
+} from '@/src/shared/lib/session';
+import { tasksPath } from '@/src/shared/utils/api';
 
 export type AddTaskActionState = {
   error?: string;
@@ -34,7 +39,7 @@ export async function addTaskAction(
     return { error: errorMessages.validation.fillAllFields };
   }
 
-  const response = await fetch(apiUrl('/api/data/tasks'), {
+  const response = await authorizedFetch(tasksPath(), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -46,6 +51,8 @@ export async function addTaskAction(
       dueDate: new Date(dueDate).toISOString(),
     }),
   });
+
+  redirectIfUnauthorized(response);
 
   if (!response.ok) {
     return { error: errorMessages.error.createTaskFailed };

@@ -8,7 +8,10 @@ import {
   writeTaskLists,
 } from '@/src/entities/task-list/lib';
 import { errorMessages } from '@/src/shared/config';
-import { parseRequestJson, type ParseRequestResult } from '@/src/shared/lib/zod';
+import {
+  parseRequestJson,
+  type ParseRequestResult,
+} from '@/src/shared/lib/zod';
 import type { Task } from '@/src/entities/task';
 
 type RouteParams = {
@@ -49,10 +52,8 @@ export async function PUT(request: Request, { params }: RouteParams) {
     );
   }
 
-  const updateTaskListBody: ParseRequestResult<UpdateTaskListBody> = await parseRequestJson(
-    request,
-    updateTaskListBodySchema,
-  );
+  const updateTaskListBody: ParseRequestResult<UpdateTaskListBody> =
+    await parseRequestJson(request, updateTaskListBodySchema);
 
   if (!updateTaskListBody.success) {
     return NextResponse.json(
