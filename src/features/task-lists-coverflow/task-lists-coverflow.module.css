@@ -1,0 +1,71 @@
+.host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: clamp(17rem, 34vh, 20rem);
+  outline: none;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.stage:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: var(--radius-lg);
+}
+
+.track {
+  position: absolute;
+  inset: 0;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+.dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--foreground) 22%, transparent);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    width 0.2s ease;
+}
+
+.dot[data-active='true'] {
+  width: 1.35rem;
+  background: var(--accent);
+}
+
+.dot:hover {
+  transform: scale(1.15);
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .stage {
+    height: 18rem;
+  }
+}

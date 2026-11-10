@@ -1,0 +1,63 @@
+.dropdownContainer {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.dropdownButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--header-fg);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdownButton:hover,
+.dropdownButton.active {
+  background-color: var(--toggler-hover);
+}
+
+.icon {
+  display: block;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  opacity: 0.92;
+  background-color: currentColor;
+  -webkit-mask: url('/images/icons/user.svg') center / contain no-repeat;
+  mask: url('/images/icons/user.svg') center / contain no-repeat;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  z-index: 1000;
+  width: min(22.5rem, calc(100vw - 2rem));
+  margin: 0;
+  padding: 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--dropdown-bg);
+  color: var(--dropdown-fg);
+  box-shadow: 0 12px 28px color-mix(in srgb, #000000 18%, transparent);
+  will-change: transform, opacity, filter;
+}
+
+.loginForm {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 1.25rem;
+  border: none;
+  border-radius: calc(var(--radius-md) - 0.15rem);
+  box-shadow: none;
+  background: transparent;
+}

@@ -23,9 +23,19 @@
     "darkTheme": "Темная"
   },
   "home": {
-    "signInToManageTasks": "Для работы с задачами войдите в учетную запись"
+    "headline": "Ясные списки.\nФокус на самое основное.",
+    "support": "Соберите дела в живые доски и пройдите день без лишнего шума.",
+    "ctaSignIn": "Попробовать",
+    "stubs": {
+      "work": "Работа",
+      "home": "Дом",
+      "health": "Здоровье",
+      "study": "Учёба",
+      "finance": "Финансы"
+    }
   },
   "login": {
+    "openForm": "Открыть форму входа",
     "emailLabel": "Электронный адрес",
     "passwordLabel": "Пароль",
     "showPassword": "Показать пароль",
@@ -90,6 +100,11 @@
     "addNewTaskList": "Добавить новый список",
     "noTaskListsFound": "Ничего не найдено",
     "loadingTaskLists": "Загрузка списков задач"
+  },
+  "taskListsCoverflow": {
+    "label": "Галерея списков задач",
+    "pagination": "Пагинация списков задач",
+    "goToList": "Перейти к списку {name}"
   },
   "taskListCard": {
     "taskCountLabel": "Количество задач:",

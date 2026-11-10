@@ -1,7 +1,7 @@
 import '@/app/reset.css';
 import '@/app/global.css';
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Unbounded } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { supportedThemes } from '@/src/app/configs';
@@ -18,6 +18,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+});
+
+const unbounded = Unbounded({
+  variable: '--font-unbounded',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['500', '700', '800'],
+  display: 'swap',
 });
 
 type LocaleLayoutProps = {
@@ -50,7 +57,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${unbounded.variable}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >

@@ -2,11 +2,11 @@
 
 import { clsx } from 'clsx';
 import { useTranslations } from 'next-intl';
-import { useTheme } from 'next-themes';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ThemeConfig } from './config/theme.config';
 import styles from './theme-toggler.module.css';
 import { ThemeTogglerItem } from './ui/theme-toggler-item/theme-toggler-item';
+import { useTheme } from '@/src/shared/lib/color-theme';
 
 type ThemeTogglerProps = {
   themes: ThemeConfig[];

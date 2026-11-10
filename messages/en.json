@@ -23,9 +23,19 @@
     "darkTheme": "Dark"
   },
   "home": {
-    "signInToManageTasks": "Sign in to work with tasks"
+    "headline": "Clear lists.\nFocus on what matters.",
+    "support": "Gather work into living boards and move through the day without noise.",
+    "ctaSignIn": "Try it",
+    "stubs": {
+      "work": "Work",
+      "home": "Home",
+      "health": "Health",
+      "study": "Study",
+      "finance": "Finance"
+    }
   },
   "login": {
+    "openForm": "Open sign in form",
     "emailLabel": "Email",
     "passwordLabel": "Password",
     "showPassword": "Show password",
@@ -90,6 +100,11 @@
     "addNewTaskList": "Add a new list",
     "noTaskListsFound": "Nothing found",
     "loadingTaskLists": "Loading task lists"
+  },
+  "taskListsCoverflow": {
+    "label": "Task lists gallery",
+    "pagination": "Task lists pagination",
+    "goToList": "Go to list {name}"
   },
   "taskListCard": {
     "taskCountLabel": "Number of tasks:",

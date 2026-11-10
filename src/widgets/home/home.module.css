@@ -1,11 +1,8 @@
 .host {
   display: flex;
+  flex: 1;
   flex-direction: column;
-  row-gap: 5px;
-  align-items: center;
-}
-
-.title {
-  font-size: 18px;
-  font-weight: 500;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
 }

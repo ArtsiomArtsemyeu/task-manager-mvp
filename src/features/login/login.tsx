@@ -1,5 +1,6 @@
 'use client';
 
+import { clsx } from 'clsx';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { startTransition, useActionState, useState } from 'react';
@@ -19,6 +20,7 @@ type LoginFormData = {
 };
 
 type LoginProps = {
+  className?: string;
   action?: (
     locale: string,
     prevState: LoginActionState,
@@ -31,7 +33,7 @@ const LOGIN_FORM_STUBS: LoginFormData = {
   password: 'Admin123!',
 };
 
-export function Login({ action }: LoginProps = {}) {
+export function Login({ action, className }: LoginProps = {}) {
   const t = useTranslations();
   const locale = useLocale();
   const {
@@ -70,7 +72,7 @@ export function Login({ action }: LoginProps = {}) {
 
   return (
     <CircleLoader show={isPending}>
-      <div className={styles.host}>
+      <div className={clsx(styles.host, className)}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <div className={styles.inputGroup}>

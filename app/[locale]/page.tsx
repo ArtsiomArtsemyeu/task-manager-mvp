@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { Home } from '@/src/widgets/home';
 import { assertLocale } from '@/src/shared/i18n';
+import { Home } from '@/src/widgets/home';
 
 type HomePageProps = {
   params: Promise<{ locale: string }>;

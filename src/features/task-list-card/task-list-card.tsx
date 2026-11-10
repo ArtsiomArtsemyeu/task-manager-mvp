@@ -1,5 +1,6 @@
 'use client';
 
+import { clsx } from 'clsx';
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import styles from './task-list-card.module.css';
@@ -15,18 +16,25 @@ import { Link } from '@/src/shared/i18n';
 import { ProgressBar } from '@/src/shared/ui/components/progress-bar';
 import { Chip } from '@/src/shared/ui/components/chip';
 
-interface TaskListCardProps {
+type TaskListCardProps = {
   taskList: TaskListDto;
-  onRename: () => void;
-  onDelete: () => void;
-}
+  elevateOnHover?: boolean;
+  contentSize?: 'default' | 'large';
+  interactive?: boolean;
+  onRename?: () => void;
+  onDelete?: () => void;
+};
 
 export function TaskListCard({
   taskList,
+  elevateOnHover = true,
+  contentSize = 'default',
+  interactive = true,
   onRename,
   onDelete,
 }: TaskListCardProps) {
   const t = useTranslations();
+  const isInteractive = interactive && onRename != null && onDelete != null;
   const taskListProgress = useMemo(
     () => calculateTaskListProgress(taskList.tasks),
     [taskList],
@@ -42,25 +50,47 @@ export function TaskListCard({
     [taskList],
   );
 
-  return (
-    <div className={styles.host}>
-      <CardMenu onRenameTasksListName={onRename} onDeleteTasksList={onDelete} />
+  const content = (
+    <>
+      <div className={styles.title}>{taskList.name}</div>
+      <div className={styles.count}>
+        {t('taskListCard.taskCountLabel')}
+        <span className={styles.countValue}>{taskList.tasks.length}</span>
+      </div>
+      <TaskMetrics tasks={taskList.tasks} />
+      <ProgressBar progress={taskListProgress} />
+      <div className={styles.indicators}>
+        {hasOverdueTasks ? (
+          <Chip label={t('taskListCard.hasOverdueTasks')} color="red" />
+        ) : null}
+        {hasDeadlineTasks ? (
+          <Chip label={t('taskListCard.dueWithin48Hours')} color="yellow" />
+        ) : null}
+      </div>
+    </>
+  );
 
-      <Link href={`/lists/${taskList.id}`} className={styles.link}>
-        <div className={styles.title}>{taskList.name}</div>
-        <div className={styles.count}>
-          {t('taskListCard.taskCountLabel')}
-          <span className={styles.countValue}>{taskList.tasks.length}</span>
-        </div>
-        <TaskMetrics tasks={taskList.tasks} />
-        <ProgressBar progress={taskListProgress} />
-        <div className={styles.indicators}>
-          {hasOverdueTasks && <Chip label={t('taskListCard.hasOverdueTasks')} color="red" />}
-          {hasDeadlineTasks && (
-            <Chip label={t('taskListCard.dueWithin48Hours')} color="yellow" />
-          )}
-        </div>
-      </Link>
+  return (
+    <div
+      className={clsx(
+        styles.host,
+        !elevateOnHover && styles.staticHost,
+        contentSize === 'large' && styles.largeContent,
+      )}
+    >
+      {isInteractive ? (
+        <>
+          <CardMenu
+            onRenameTasksListName={onRename}
+            onDeleteTasksList={onDelete}
+          />
+          <Link href={`/lists/${taskList.id}`} className={styles.link}>
+            {content}
+          </Link>
+        </>
+      ) : (
+        <div className={styles.link}>{content}</div>
+      )}
     </div>
   );
 }

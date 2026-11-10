@@ -24,10 +24,9 @@
   gap: 0.5rem;
 }
 
-.togglerFallback {
-  display: inline-block;
-  width: 2.5rem;
-  height: 2.5rem;
+.controlSkeleton {
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
 }
 
 :global([data-theme='light']) .host {

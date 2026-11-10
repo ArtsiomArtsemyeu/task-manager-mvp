@@ -21,6 +21,11 @@
   box-shadow: var(--card-shadow-hover);
 }
 
+.staticHost:hover,
+.staticHost:focus-within {
+  transform: none;
+}
+
 .link {
   display: flex;
   flex-direction: column;
@@ -66,4 +71,23 @@
   gap: 0.4rem;
   margin-top: auto;
   padding-top: 0.25rem;
+}
+
+.largeContent .link {
+  gap: 1rem;
+  padding: 1.25rem 1.5rem 1.25rem 1.25rem;
+}
+
+.largeContent .title {
+  font-size: 1.28rem;
+  line-height: 1.25;
+}
+
+.largeContent .count {
+  font-size: 1rem;
+}
+
+.largeContent .indicators {
+  gap: 0.45rem;
+  padding-top: 0.3rem;
 }
