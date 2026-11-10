@@ -1,6 +1,9 @@
+'use client';
+
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import styles from './error-view.module.css';
+import { Link } from '@/src/shared/i18n';
 
 type ErrorStatus = 'not-found' | 'server-error';
 
@@ -9,37 +12,17 @@ type ErrorViewProps = {
   onRetry?: () => void;
 };
 
-const copy: Record<
-  ErrorStatus,
-  {
-    code: string;
-    title: string;
-    hint: string;
-    ariaLabel: string;
-    iconSrc: string;
-    iconAlt: string;
-  }
-> = {
-  'not-found': {
-    code: '404',
-    title: 'Страница не найдена.',
-    hint: 'Такой страницы нет или она была перемещена. Вернитесь на главную и продолжите работу с задачами.',
-    ariaLabel: 'Страница не найдена',
-    iconSrc: '/images/icons/not-found.svg',
-    iconAlt: 'Иконка: страница не найдена',
-  },
-  'server-error': {
-    code: '500',
-    title: 'Что-то пошло не так.',
-    hint: 'Произошла внутренняя ошибка. Попробуйте ещё раз или вернитесь на главную страницу.',
-    ariaLabel: 'Ошибка сервера',
-    iconSrc: '/images/icons/server-error.svg',
-    iconAlt: 'Иконка: ошибка сервера',
-  },
-};
-
 export function ErrorView({ status, onRetry }: ErrorViewProps) {
-  const { code, title, hint, ariaLabel, iconSrc, iconAlt } = copy[status];
+  const t = useTranslations();
+  const isNotFound = status === 'not-found';
+  const code = isNotFound ? '404' : '500';
+  const title = isNotFound ? t('errorView.notFoundTitle') : t('errorView.serverTitle');
+  const hint = isNotFound ? t('errorView.notFoundHint') : t('errorView.serverHint');
+  const ariaLabel = isNotFound ? t('errorView.notFoundAria') : t('errorView.serverAria');
+  const iconSrc = isNotFound
+    ? '/images/icons/not-found.svg'
+    : '/images/icons/server-error.svg';
+  const iconAlt = isNotFound ? t('errorView.notFoundIconAlt') : t('errorView.serverIconAlt');
 
   return (
     <section className={styles.host} aria-labelledby="error-view-title">
@@ -68,13 +51,13 @@ export function ErrorView({ status, onRetry }: ErrorViewProps) {
           <Link
             href="/"
             className={styles.homeLink}
-            aria-label={`${ariaLabel}. Перейти на главную страницу`}
+            aria-label={t('errorView.homeLinkAria', { label: ariaLabel })}
           >
-            Перейти на главную страницу
+            {t('errorView.homeLink')}
             <Image
               className={styles.arrow}
               src="/images/icons/arrow-right.svg"
-              alt="Стрелка вправо"
+              alt={t('errorView.homeLinkArrowAlt')}
               width={16}
               height={16}
             />
@@ -82,7 +65,7 @@ export function ErrorView({ status, onRetry }: ErrorViewProps) {
 
           {onRetry ? (
             <button type="button" className={styles.retryBtn} onClick={onRetry}>
-              Попробовать снова
+              {t('errorView.tryAgain')}
             </button>
           ) : null}
         </div>

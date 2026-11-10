@@ -2,6 +2,7 @@
 
 import { clsx } from 'clsx';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import styles from './card-menu.module.css';
 
@@ -14,14 +15,12 @@ export function CardMenu({
   onRenameTasksListName,
   onDeleteTasksList,
 }: CardMenuProps) {
+  const t = useTranslations();
   const menuRef = useRef<HTMLDivElement>(null);
   const menuId = useId();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const toggleMenu = useCallback(
-    () => setIsOpen((prev: boolean) => !prev),
-    [],
-  );
+  const toggleMenu = useCallback(() => setIsOpen((prev: boolean) => !prev), []);
 
   const closeMenu = useCallback(() => setIsOpen(false), []);
 
@@ -69,12 +68,12 @@ export function CardMenu({
         onClick={toggleMenu}
         aria-expanded={isOpen}
         aria-controls={menuId}
-        aria-label="Действия со списком"
+        aria-label={t('taskListCard.taskListActions')}
       >
         <Image
           className={styles.triggerIcon}
           src="/images/icons/more-vertical.svg"
-          alt="Меню действий"
+          alt={t('taskListCard.taskListActionsMenuAlt')}
           width={18}
           height={18}
         />
@@ -88,7 +87,7 @@ export function CardMenu({
               className={styles.menuItem}
               onClick={handleRenameTasksListName}
             >
-              Переименовать список
+              {t('taskListCard.renameTaskList')}
             </button>
           </li>
           <li>
@@ -97,7 +96,7 @@ export function CardMenu({
               className={clsx(styles.menuItem, styles.menuItemDanger)}
               onClick={handleDeleteTasksList}
             >
-              Удалить
+              {t('taskListCard.deleteTaskList')}
             </button>
           </li>
         </ul>

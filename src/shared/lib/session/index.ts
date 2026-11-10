@@ -1,1 +1,5 @@
-export { authorizedFetch, redirectIfUnauthorized } from './session';
+export {
+  authorizedFetch,
+  redirectIfUnauthorized,
+  revalidateLocalizedPaths,
+} from './session';

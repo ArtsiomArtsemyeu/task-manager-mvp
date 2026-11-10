@@ -1,6 +1,7 @@
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Login } from './login';
+import type { ActionResult } from '@/src/shared/config';
 import { errorMessages } from '@/src/shared/config/error';
 
 const VALID_EMAIL = 'storybook@example.com';
@@ -101,10 +102,11 @@ export const ShortPassword: Story = {
 
 export const InvalidCredentials: Story = {
   args: {
-    action: fn(() =>
-      Promise.resolve({
-        error: errorMessages.error.invalidCredentials,
-      }),
+    action: fn(
+      (): Promise<ActionResult> =>
+        Promise.resolve({
+          error: 'error.invalidCredentials',
+        }),
     ),
   },
   parameters: {
@@ -146,7 +148,7 @@ export const SuccessfulSubmit: Story = {
     await waitFor(async () => await expect(args.action).toHaveBeenCalledOnce());
 
     const actionMock = args.action as ReturnType<typeof fn>;
-    const formData = actionMock.mock.calls[0]?.[1] as FormData;
+    const formData = actionMock.mock.calls[0]?.[2] as FormData;
     await expect(formData.get('email')).toBe(VALID_EMAIL);
     await expect(formData.get('password')).toBe(VALID_PASSWORD);
     await expect(

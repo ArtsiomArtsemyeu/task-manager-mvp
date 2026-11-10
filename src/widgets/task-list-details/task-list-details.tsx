@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { clsx } from 'clsx';
+import { useLocale, useTranslations } from 'next-intl';
 import { startTransition, use, useCallback, useMemo, useState } from 'react';
 import styles from './task-list-details.module.css';
 import { AddTask } from '@/src/features/add-task';
@@ -16,8 +16,6 @@ import type {
   TaskState,
 } from '@/src/entities/task';
 import {
-  TASK_PRIORITY_LABELS,
-  TASK_STATE_LABELS,
   TASK_STATES,
   calculateTaskListProgress,
   formatTaskDueDate,
@@ -26,8 +24,11 @@ import {
   isTaskPriority,
   isTaskState,
   sortTasks,
+  useTaskLabels,
 } from '@/src/entities/task';
 import type { TaskListDto } from '@/src/entities/task-list';
+import type { ActionErrorCode, ActionResult } from '@/src/shared/config';
+import { Link } from '@/src/shared/i18n';
 import { ProgressBar } from '@/src/shared/ui/components/progress-bar';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
 import { Select } from '@/src/shared/ui/components/select';
@@ -38,7 +39,8 @@ type ChangeTaskStatus = (
   id: string,
   taskListId: string,
   state: TaskState,
-) => Promise<{ error?: string; success?: boolean }>;
+  locale: string,
+) => Promise<NonNullable<ActionResult>>;
 
 type TaskListDetailsProps = {
   taskListPromise: Promise<TaskListDto>;
@@ -56,9 +58,12 @@ export function TaskListDetailsWidget({
   changeTaskStatus = changeTaskStatusAction,
 }: TaskListDetailsProps) {
   const taskList = use(taskListPromise);
+  const locale = useLocale();
+  const t = useTranslations();
+  const { stateLabel, priorityLabel } = useTaskLabels();
   const [tasks, setTasks] = useState<Task[]>(taskList.tasks);
   const [tasksSource, setTasksSource] = useState<Task[]>(taskList.tasks);
-  const [statusError, setStatusError] = useState<string | null>(null);
+  const [statusError, setStatusError] = useState<ActionErrorCode | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [isAddOpen, setIsAddOpen] = useState<boolean>(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -113,8 +118,8 @@ export function TaskListDetailsWidget({
       const stateToRestore = previousState;
 
       startTransition(() => {
-        void changeTaskStatus(taskId, taskList.id, nextState).then(
-          (result: { error?: string; success?: boolean }) => {
+        void changeTaskStatus(taskId, taskList.id, nextState, locale).then(
+          (result) => {
             if (!result.error) {
               return;
             }
@@ -129,7 +134,7 @@ export function TaskListDetailsWidget({
         );
       });
     },
-    [changeTaskStatus, taskList.id],
+    [changeTaskStatus, locale, taskList.id],
   );
 
   return (
@@ -139,11 +144,11 @@ export function TaskListDetailsWidget({
           <Image
             className={styles.backIcon}
             src="/images/icons/arrow-left.svg"
-            alt="Стрелка влево"
+            alt={t('taskListDetails.backToTaskListsArrowAlt')}
             width={16}
             height={16}
           />
-          К спискам
+          {t('taskListDetails.backToTaskLists')}
         </Link>
 
         <div className={styles.topGrid}>
@@ -151,10 +156,12 @@ export function TaskListDetailsWidget({
 
           <div className={styles.rightCol}>
             <span className={styles.metaLabel}>
-              Количество задач: {tasks.length}
+              {t('taskListDetails.taskCount', { count: tasks.length })}
             </span>
             <div className={styles.progressWrap}>
-              <span className={styles.metaLabel}>Прогресс {progress}%</span>
+              <span className={styles.metaLabel}>
+                {t('taskListDetails.taskListProgress', { progress })}
+              </span>
               <div className={styles.progressBar}>
                 <ProgressBar progress={progress} />
               </div>
@@ -164,7 +171,7 @@ export function TaskListDetailsWidget({
               className={styles.addButton}
               onClick={openAddModal}
             >
-              Добавить задачу
+              {t('taskListDetails.addTask')}
             </button>
           </div>
 
@@ -177,7 +184,7 @@ export function TaskListDetailsWidget({
               )}
               onClick={() => setStatusFilter('all')}
             >
-              Все
+              {t('taskListDetails.showAllTasks')}
             </button>
             {TASK_STATES.map((state: TaskState) => (
               <button
@@ -189,14 +196,14 @@ export function TaskListDetailsWidget({
                 )}
                 onClick={() => setStatusFilter(state)}
               >
-                {TASK_STATE_LABELS[state]}
+                {stateLabel(state)}
               </button>
             ))}
           </div>
         </div>
       </div>
 
-      {statusError ? <ErrorHighlight message={statusError} /> : null}
+      {statusError ? <ErrorHighlight message={t(statusError)} /> : null}
 
       <div className={styles.tableCard}>
         <div className={styles.tableScroll}>
@@ -210,11 +217,11 @@ export function TaskListDetailsWidget({
             </colgroup>
             <thead>
               <tr>
-                <th scope="col">Название</th>
-                <th scope="col">Статус</th>
-                <th scope="col">Приоритет</th>
-                <th scope="col">Дедлайн</th>
-                <th scope="col">Действия</th>
+                <th scope="col">{t('taskListDetails.taskName')}</th>
+                <th scope="col">{t('taskListDetails.taskStatus')}</th>
+                <th scope="col">{t('taskListDetails.taskPriority')}</th>
+                <th scope="col">{t('taskListDetails.taskDueDate')}</th>
+                <th scope="col">{t('taskListDetails.taskActions')}</th>
               </tr>
             </thead>
             <tbody>
@@ -222,11 +229,11 @@ export function TaskListDetailsWidget({
                 <tr>
                   <td colSpan={5}>
                     <div className={styles.empty}>
-                      <p className={styles.emptyTitle}>Задач не найдено</p>
+                      <p className={styles.emptyTitle}>{t('taskListDetails.noTasksFound')}</p>
                       <p className={styles.emptyText}>
                         {statusFilter === 'all'
-                          ? 'Создайте первую задачу для этого списка.'
-                          : 'Попробуйте другой фильтр статуса.'}
+                          ? t('taskListDetails.createFirstTask')
+                          : t('taskListDetails.noTasksForStatus')}
                       </p>
                     </div>
                   </td>
@@ -241,7 +248,7 @@ export function TaskListDetailsWidget({
 
                   return (
                     <tr key={task.id} className={styles.taskRow}>
-                      <td data-label="Название">
+                      <td data-label={t('taskListDetails.taskName')}>
                         <div className={styles.taskName}>
                           <Link
                             href={`/tasks/${task.id}`}
@@ -256,11 +263,11 @@ export function TaskListDetailsWidget({
                           ) : null}
                         </div>
                       </td>
-                      <td data-label="Статус">
+                      <td data-label={t('taskListDetails.taskStatus')}>
                         <Select
                           className={styles.statusSelect}
                           size="sm"
-                          aria-label={`Статус задачи ${task.name}`}
+                          aria-label={t('taskListDetails.statusOfTask', { name: task.name })}
                           value={isTaskState(task.state) ? task.state : 'new'}
                           onChange={(event) => {
                             if (isTaskState(event.target.value)) {
@@ -270,12 +277,12 @@ export function TaskListDetailsWidget({
                         >
                           {TASK_STATES.map((state: TaskState) => (
                             <option key={state} value={state}>
-                              {TASK_STATE_LABELS[state]}
+                              {stateLabel(state)}
                             </option>
                           ))}
                         </Select>
                       </td>
-                      <td data-label="Приоритет">
+                      <td data-label={t('taskListDetails.taskPriority')}>
                         <span
                           className={clsx(
                             styles.priority,
@@ -284,10 +291,10 @@ export function TaskListDetailsWidget({
                             ],
                           )}
                         >
-                          {TASK_PRIORITY_LABELS[priority]}
+                          {priorityLabel(priority)}
                         </span>
                       </td>
-                      <td data-label="Дедлайн">
+                      <td data-label={t('taskListDetails.taskDueDate')}>
                         <span
                           className={clsx(
                             styles.dueDate,
@@ -295,20 +302,20 @@ export function TaskListDetailsWidget({
                             isOverdue && styles.dueDateOverdue,
                           )}
                         >
-                          {formatTaskDueDate(task.dueDate)}
+                          {formatTaskDueDate(task.dueDate, locale)}
                         </span>
                       </td>
-                      <td data-label="Действия">
+                      <td data-label={t('taskListDetails.taskActions')}>
                         <div className={styles.actions}>
                           <button
                             type="button"
                             className={styles.iconButton}
-                            aria-label={`Редактировать задачу ${task.name}`}
+                            aria-label={t('taskListDetails.editTask', { name: task.name })}
                             onClick={() => setEditingTask(task)}
                           >
                             <Image
                               src="/images/icons/edit.svg"
-                              alt="Редактировать"
+                              alt={t('taskListDetails.editTaskIconAlt')}
                               width={16}
                               height={16}
                             />
@@ -319,12 +326,12 @@ export function TaskListDetailsWidget({
                               styles.iconButton,
                               styles.iconButtonDanger,
                             )}
-                            aria-label={`Удалить задачу ${task.name}`}
+                            aria-label={t('taskListDetails.deleteTask', { name: task.name })}
                             onClick={() => setDeletingTask(task)}
                           >
                             <Image
                               src="/images/icons/trash.svg"
-                              alt="Удалить"
+                              alt={t('taskListDetails.deleteTaskIconAlt')}
                               width={16}
                               height={16}
                             />

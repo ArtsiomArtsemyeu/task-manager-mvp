@@ -3,10 +3,10 @@
 import { startTransition, useActionState, useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { useLocale, useTranslations } from 'next-intl';
 import type { RenameTaskListActionState } from './api/rename-task-list.action';
 import { renameTaskListAction } from './api/rename-task-list.action';
 import styles from './rename-task-list.module.css';
-import { errorMessages } from '@/src/shared/config/error';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
 import { Input } from '@/src/shared/ui/components/input';
 import { Modal } from '@/src/shared/ui/components/modal';
@@ -28,6 +28,8 @@ export function RenameTaskList({
   currentName,
   onClose,
 }: RenameTaskListProps) {
+  const t = useTranslations();
+  const locale = useLocale();
   const {
     register,
     handleSubmit,
@@ -40,7 +42,10 @@ export function RenameTaskList({
   const [state, formAction, isPending] = useActionState<
     RenameTaskListActionState,
     FormData
-  >(renameTaskListAction, null);
+  >(
+    (prevState, formData) => renameTaskListAction(locale, prevState, formData),
+    null,
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -62,9 +67,7 @@ export function RenameTaskList({
       Object.entries({
         id: taskListId,
         ...data,
-      }).forEach(([key, val]: [string, string]) =>
-        formData.append(key, val),
-      );
+      }).forEach(([key, val]: [string, string]) => formData.append(key, val));
       formAction(formData);
     });
   };
@@ -72,7 +75,7 @@ export function RenameTaskList({
   return (
     <Modal
       isOpen={isOpen}
-      title="Переименовать список"
+      title={t('renameTaskList.renameTaskListTitle')}
       onClose={onClose}
       action={
         <button
@@ -81,23 +84,23 @@ export function RenameTaskList({
           disabled={isPending}
           className={styles.btnSubmit}
         >
-          {isPending ? 'Сохранение...' : 'Сохранить'}
+          {isPending ? t('renameTaskList.savingTaskListName') : t('renameTaskList.saveTaskListName')}
         </button>
       }
     >
       <form id="rename-task-list-form" onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputGroup}>
-          <label htmlFor="rename-task-list-name">Название</label>
+          <label htmlFor="rename-task-list-name">{t('renameTaskList.taskListName')}</label>
           <Input
             id="rename-task-list-name"
             error={errors.name?.message}
             {...register('name', {
-              required: errorMessages.validation.nameRequired,
+              required: t('validation.nameRequired'),
             })}
           />
         </div>
 
-        {state?.error && <ErrorHighlight message={state.error} />}
+        {state?.error && <ErrorHighlight message={t(state.error)} />}
       </form>
     </Modal>
   );

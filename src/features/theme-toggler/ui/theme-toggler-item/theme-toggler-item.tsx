@@ -1,9 +1,16 @@
 'use client';
 
 import { clsx } from 'clsx';
+import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 import type { ThemeConfig } from '../../config/theme.config';
 import styles from './theme-toggler-item.module.css';
+
+const themeLabel = {
+  default: 'theme.systemTheme',
+  light: 'theme.lightTheme',
+  dark: 'theme.darkTheme',
+} as const;
 
 type ThemeTogglerItemProps = {
   theme: ThemeConfig;
@@ -16,6 +23,7 @@ export function ThemeTogglerItem({
   selected,
   onChange,
 }: ThemeTogglerItemProps) {
+  const t = useTranslations();
   const onClickThemeItem = useCallback(
     () => onChange(theme.value),
     [onChange, theme.value],
@@ -27,7 +35,7 @@ export function ThemeTogglerItem({
       className={clsx(styles.themeItem, selected && styles.themeItemSelected)}
       onClick={onClickThemeItem}
     >
-      {theme.label}
+      {t(themeLabel[theme.value])}
     </li>
   );
 }

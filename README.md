@@ -1,4 +1,4 @@
-# ✅ Менеджер задач
+# <img src="./public/images/favicon.png" width="32" height="32" alt="" /> Менеджер задач
 
 Web-приложение для управления списками задач.
 
@@ -55,7 +55,7 @@ Web-приложение для управления списками задач
 | jsonwebtoken | `9.0.3` |
 | Node.js | `≥ 20` |
 
-> Версии соответствуют установленным в проекте на момент обновления README. Актуальные значения — в `package.json` / `package-lock.json`.
+> Актуальные значения — в `package.json` / `package-lock.json`.
 
 ---
 
@@ -69,14 +69,14 @@ Web-приложение для управления списками задач
 
 ```bash
 npm install
-npm run playwright:install                         # один раз (для тестов)
+npm run playwright:install                         
 npm run dev                                        # → http://localhost:3000
 ```
 **PowerShell**
 
 ```powershell
 npm install
-npm run playwright:install                         # один раз (для тестов)
+npm run playwright:install                         
 npm run dev                                        # → http://localhost:3000
 ```
 #### Локальный запуск проекта
@@ -179,8 +179,8 @@ npm run lint
 > **⚠ Предусловие:** перед первым `npm run test` / `npm run test:run` выполните `npm run playwright:install` (см. «Локальный запуск проекта», шаг 5). Иначе Storybook browser-тесты в Vitest завершатся ошибкой. Повторно — только после обновления `playwright`.
 
 ```bash
-npm run test       # watch
-npm run test:run   # один прогон
+npm run test       
+npm run test:run   
 ```
 
 ##### Запуск Storybook

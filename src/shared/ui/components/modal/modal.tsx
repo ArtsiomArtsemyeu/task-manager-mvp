@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './modal.module.css';
@@ -20,6 +21,7 @@ export function Modal({
   children,
   action,
 }: ModalProps) {
+  const t = useTranslations();
   useEffect(() => {
     if (!isOpen) return;
 
@@ -50,11 +52,11 @@ export function Modal({
             type="button"
             className={styles.closeButton}
             onClick={onClose}
-            aria-label="Закрыть"
+            aria-label={t('modal.closeModal')}
           >
             <Image
               src="/images/icons/close.svg"
-              alt="Закрыть"
+              alt={t('modal.closeModal')}
               width={20}
               height={20}
               priority
@@ -69,7 +71,7 @@ export function Modal({
               className={styles.cancelButton}
               onClick={onClose}
             >
-              Отмена
+              {t('modal.cancelModal')}
             </button>
             {action}
           </div>

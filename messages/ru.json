@@ -1,0 +1,208 @@
+{
+  "metadata": {
+    "appTitle": "Менеджер задач",
+    "appDescription": "Приложение для управления задачами",
+    "listsTitle": "Списки задач | Менеджер задач",
+    "listsDescription": "Просмотр и управление списками задач",
+    "listTitle": "Список задач | Менеджер задач",
+    "listDescription": "Просмотр и управление задачами выбранного списка",
+    "taskTitle": "Задача | Менеджер задач",
+    "taskDescription": "Просмотр и управление задачей",
+    "notFoundTitle": "Страница не найдена | Менеджер задач",
+    "notFoundDescription": "Запрашиваемая страница не найдена"
+  },
+  "localeToggler": {
+    "chooseLanguage": "Выбор языка",
+    "ru": "Русский",
+    "en": "English"
+  },
+  "theme": {
+    "chooseTheme": "Выбор темы",
+    "systemTheme": "Системная",
+    "lightTheme": "Светлая",
+    "darkTheme": "Темная"
+  },
+  "home": {
+    "signInToManageTasks": "Для работы с задачами войдите в учетную запись"
+  },
+  "login": {
+    "emailLabel": "Электронный адрес",
+    "passwordLabel": "Пароль",
+    "showPassword": "Показать пароль",
+    "hidePassword": "Скрыть пароль",
+    "signingIn": "Загрузка...",
+    "signIn": "Войти"
+  },
+  "validation": {
+    "requiredFields": "Заполните все требуемые поля",
+    "fillAllFields": "Заполните все поля корректно",
+    "invalidJson": "Некорректный JSON",
+    "emailRequired": "Электронный адрес обязателен",
+    "emailInvalid": "Неверный формат электронного адреса",
+    "passwordRequired": "Пароль обязателен",
+    "passwordMinLength": "Минимум 8 символов",
+    "nameRequired": "Название обязательно",
+    "dueDateRequired": "Дедлайн обязателен",
+    "invalidListName": "Некорректное имя списка",
+    "invalidTaskListId": "Некорректный идентификатор списка",
+    "invalidTaskData": "Некорректные данные задачи",
+    "invalidStatusData": "Некорректные данные статуса"
+  },
+  "error": {
+    "serverError": "Ошибка сервера",
+    "unauthorized": "Требуется авторизация",
+    "invalidCredentials": "Неверный электронный адрес или пароль",
+    "loginFailed": "Не удалось войти",
+    "taskListNotFound": "Список не найден",
+    "taskNotFound": "Задача не найдена",
+    "taskListForTaskNotFound": "Список задач для задачи не найден",
+    "createTaskFailed": "Не удалось создать задачу",
+    "updateTaskFailed": "Не удалось обновить задачу",
+    "deleteTaskFailed": "Не удалось удалить задачу",
+    "changeStatusFailed": "Не удалось изменить статус",
+    "deleteTaskListFailed": "Не удалось удалить список",
+    "renameTaskListFailed": "Не удалось переименовать список"
+  },
+  "errorView": {
+    "notFoundTitle": "Страница не найдена.",
+    "notFoundHint": "Такой страницы нет или она была перемещена. Вернитесь на главную и продолжите работу с задачами.",
+    "notFoundAria": "Страница не найдена",
+    "notFoundIconAlt": "Иконка: страница не найдена",
+    "serverTitle": "Что-то пошло не так.",
+    "serverHint": "Произошла внутренняя ошибка. Попробуйте ещё раз или вернитесь на главную страницу.",
+    "serverAria": "Ошибка сервера",
+    "serverIconAlt": "Иконка: ошибка сервера",
+    "homeLink": "Перейти на главную страницу",
+    "homeLinkAria": "{label}. Перейти на главную страницу",
+    "homeLinkArrowAlt": "Стрелка вправо",
+    "tryAgain": "Попробовать снова"
+  },
+  "modal": {
+    "closeModal": "Закрыть",
+    "cancelModal": "Отмена"
+  },
+  "select": {
+    "openSelect": "Открыть список"
+  },
+  "taskLists": {
+    "searchTaskListsPlaceholder": "Найти список…",
+    "searchTaskListsLabel": "Поиск списков",
+    "addNewTaskList": "Добавить новый список",
+    "noTaskListsFound": "Ничего не найдено",
+    "loadingTaskLists": "Загрузка списков задач"
+  },
+  "taskListCard": {
+    "taskCountLabel": "Количество задач:",
+    "hasOverdueTasks": "Есть просроченные задачи",
+    "dueWithin48Hours": "Дедлайн в ближайшие 48 часов",
+    "taskListActions": "Действия со списком",
+    "taskListActionsMenuAlt": "Меню действий",
+    "renameTaskList": "Переименовать список",
+    "deleteTaskList": "Удалить",
+    "metricsNew": "Новые",
+    "metricsInProgress": "В работе",
+    "metricsDone": "Выполненные",
+    "metricsOverdue": "Просроченные"
+  },
+  "taskListDetails": {
+    "backToTaskLists": "К спискам",
+    "backToTaskListsArrowAlt": "Стрелка влево",
+    "taskCount": "Количество задач: {count}",
+    "taskListProgress": "Прогресс {progress}%",
+    "addTask": "Добавить задачу",
+    "showAllTasks": "Все",
+    "taskName": "Название",
+    "taskStatus": "Статус",
+    "taskPriority": "Приоритет",
+    "taskDueDate": "Дедлайн",
+    "taskActions": "Действия",
+    "noTasksFound": "Задач не найдено",
+    "createFirstTask": "Создайте первую задачу для этого списка.",
+    "noTasksForStatus": "Попробуйте другой фильтр статуса.",
+    "statusOfTask": "Статус задачи {name}",
+    "editTask": "Редактировать задачу {name}",
+    "editTaskIconAlt": "Редактировать",
+    "deleteTask": "Удалить задачу {name}",
+    "deleteTaskIconAlt": "Удалить",
+    "loadingTaskList": "Загрузка списка задач"
+  },
+  "taskDetails": {
+    "backToTaskList": "К списку «{name}»",
+    "backToTaskListArrowAlt": "Стрелка влево",
+    "taskPriority": "Приоритет",
+    "taskDueDate": "Дедлайн",
+    "taskStatus": "Статус",
+    "statusOfTask": "Статус задачи {name}",
+    "editTask": "Редактировать задачу {name}",
+    "editTaskIconAlt": "Редактировать",
+    "deleteTask": "Удалить задачу {name}",
+    "deleteTaskIconAlt": "Удалить",
+    "taskDescription": "Описание",
+    "noTaskDescription": "Описание не указано",
+    "loadingTask": "Загрузка задачи"
+  },
+  "task": {
+    "state": {
+      "new": "Новая",
+      "inProgress": "В работе",
+      "done": "Выполнена",
+      "overdue": "Просрочена"
+    },
+    "priority": {
+      "low": "Низкий",
+      "medium": "Средний",
+      "high": "Высокий"
+    }
+  },
+  "addTask": {
+    "addTaskTitle": "Добавить задачу",
+    "creatingTask": "Создание...",
+    "createTask": "Создать",
+    "taskName": "Название",
+    "taskNamePlaceholder": "Например, Подготовить отчёт",
+    "taskDescription": "Описание",
+    "taskDescriptionPlaceholder": "Необязательно",
+    "taskStatus": "Статус",
+    "taskPriority": "Приоритет",
+    "taskDueDate": "Дедлайн"
+  },
+  "editTask": {
+    "editTaskTitle": "Редактировать задачу",
+    "savingTask": "Сохранение...",
+    "saveTask": "Сохранить",
+    "taskName": "Название",
+    "taskNamePlaceholder": "Например, Подготовить отчёт",
+    "taskDescription": "Описание",
+    "taskDescriptionPlaceholder": "Необязательно",
+    "taskStatus": "Статус",
+    "taskPriority": "Приоритет",
+    "taskDueDate": "Дедлайн"
+  },
+  "deleteTask": {
+    "deleteTaskTitle": "Удалить задачу",
+    "deletingTask": "Удаление...",
+    "confirmDeleteTask": "Удалить",
+    "confirmDeleteTaskMessage": "Вы уверены, что хотите удалить задачу «{name}»?",
+    "deleteTaskIrreversible": "Это действие нельзя отменить."
+  },
+  "addTaskList": {
+    "addTaskListTitle": "Добавить новый список задач",
+    "creatingTaskList": "Загрузка...",
+    "createTaskList": "Создать",
+    "taskListName": "Название",
+    "taskListNamePlaceholder": "Например, Работа"
+  },
+  "renameTaskList": {
+    "renameTaskListTitle": "Переименовать список",
+    "savingTaskListName": "Сохранение...",
+    "saveTaskListName": "Сохранить",
+    "taskListName": "Название"
+  },
+  "deleteTaskList": {
+    "deleteTaskListTitle": "Удалить список",
+    "deletingTaskList": "Удаление...",
+    "confirmDeleteTaskList": "Удалить",
+    "confirmDeleteTaskListMessage": "Вы уверены, что хотите удалить список «{name}»?",
+    "deleteTaskListIrreversible": "Это действие нельзя отменить."
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "metadata": {
+    "appTitle": "Task manager",
+    "appDescription": "Application for managing tasks",
+    "listsTitle": "Task lists | Task manager",
+    "listsDescription": "View and manage task lists",
+    "listTitle": "Task list | Task manager",
+    "listDescription": "View and manage tasks in the selected list",
+    "taskTitle": "Task | Task manager",
+    "taskDescription": "View and manage a task",
+    "notFoundTitle": "Page not found | Task manager",
+    "notFoundDescription": "The requested page was not found"
+  },
+  "localeToggler": {
+    "chooseLanguage": "Choose language",
+    "ru": "Русский",
+    "en": "English"
+  },
+  "theme": {
+    "chooseTheme": "Choose theme",
+    "systemTheme": "System",
+    "lightTheme": "Light",
+    "darkTheme": "Dark"
+  },
+  "home": {
+    "signInToManageTasks": "Sign in to work with tasks"
+  },
+  "login": {
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "signingIn": "Loading...",
+    "signIn": "Sign in"
+  },
+  "validation": {
+    "requiredFields": "Fill in all required fields",
+    "fillAllFields": "Fill in all fields correctly",
+    "invalidJson": "Invalid JSON",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email format",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "At least 8 characters",
+    "nameRequired": "Name is required",
+    "dueDateRequired": "Due date is required",
+    "invalidListName": "Invalid list name",
+    "invalidTaskListId": "Invalid list identifier",
+    "invalidTaskData": "Invalid task data",
+    "invalidStatusData": "Invalid status data"
+  },
+  "error": {
+    "serverError": "Server error",
+    "unauthorized": "Authorization is required",
+    "invalidCredentials": "Invalid email or password",
+    "loginFailed": "Could not sign in",
+    "taskListNotFound": "List not found",
+    "taskNotFound": "Task not found",
+    "taskListForTaskNotFound": "Task list for this task was not found",
+    "createTaskFailed": "Could not create the task",
+    "updateTaskFailed": "Could not update the task",
+    "deleteTaskFailed": "Could not delete the task",
+    "changeStatusFailed": "Could not change the status",
+    "deleteTaskListFailed": "Could not delete the list",
+    "renameTaskListFailed": "Could not rename the list"
+  },
+  "errorView": {
+    "notFoundTitle": "Page not found.",
+    "notFoundHint": "This page does not exist or was moved. Go back home and continue working with tasks.",
+    "notFoundAria": "Page not found",
+    "notFoundIconAlt": "Icon: page not found",
+    "serverTitle": "Something went wrong.",
+    "serverHint": "An internal error occurred. Try again or go back to the home page.",
+    "serverAria": "Server error",
+    "serverIconAlt": "Icon: server error",
+    "homeLink": "Go to the home page",
+    "homeLinkAria": "{label}. Go to the home page",
+    "homeLinkArrowAlt": "Arrow right",
+    "tryAgain": "Try again"
+  },
+  "modal": {
+    "closeModal": "Close",
+    "cancelModal": "Cancel"
+  },
+  "select": {
+    "openSelect": "Open list"
+  },
+  "taskLists": {
+    "searchTaskListsPlaceholder": "Find a list…",
+    "searchTaskListsLabel": "Search lists",
+    "addNewTaskList": "Add a new list",
+    "noTaskListsFound": "Nothing found",
+    "loadingTaskLists": "Loading task lists"
+  },
+  "taskListCard": {
+    "taskCountLabel": "Number of tasks:",
+    "hasOverdueTasks": "Has overdue tasks",
+    "dueWithin48Hours": "Due within 48 hours",
+    "taskListActions": "List actions",
+    "taskListActionsMenuAlt": "Actions menu",
+    "renameTaskList": "Rename list",
+    "deleteTaskList": "Delete",
+    "metricsNew": "New",
+    "metricsInProgress": "In progress",
+    "metricsDone": "Completed",
+    "metricsOverdue": "Overdue"
+  },
+  "taskListDetails": {
+    "backToTaskLists": "Back to lists",
+    "backToTaskListsArrowAlt": "Arrow left",
+    "taskCount": "Number of tasks: {count}",
+    "taskListProgress": "Progress {progress}%",
+    "addTask": "Add task",
+    "showAllTasks": "All",
+    "taskName": "Name",
+    "taskStatus": "Status",
+    "taskPriority": "Priority",
+    "taskDueDate": "Due date",
+    "taskActions": "Actions",
+    "noTasksFound": "No tasks found",
+    "createFirstTask": "Create the first task for this list.",
+    "noTasksForStatus": "Try another status filter.",
+    "statusOfTask": "Status of task {name}",
+    "editTask": "Edit task {name}",
+    "editTaskIconAlt": "Edit",
+    "deleteTask": "Delete task {name}",
+    "deleteTaskIconAlt": "Delete",
+    "loadingTaskList": "Loading task list"
+  },
+  "taskDetails": {
+    "backToTaskList": "Back to list “{name}”",
+    "backToTaskListArrowAlt": "Arrow left",
+    "taskPriority": "Priority",
+    "taskDueDate": "Due date",
+    "taskStatus": "Status",
+    "statusOfTask": "Status of task {name}",
+    "editTask": "Edit task {name}",
+    "editTaskIconAlt": "Edit",
+    "deleteTask": "Delete task {name}",
+    "deleteTaskIconAlt": "Delete",
+    "taskDescription": "Description",
+    "noTaskDescription": "No description",
+    "loadingTask": "Loading task"
+  },
+  "task": {
+    "state": {
+      "new": "New",
+      "inProgress": "In progress",
+      "done": "Done",
+      "overdue": "Overdue"
+    },
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    }
+  },
+  "addTask": {
+    "addTaskTitle": "Add task",
+    "creatingTask": "Creating...",
+    "createTask": "Create",
+    "taskName": "Name",
+    "taskNamePlaceholder": "For example, Prepare a report",
+    "taskDescription": "Description",
+    "taskDescriptionPlaceholder": "Optional",
+    "taskStatus": "Status",
+    "taskPriority": "Priority",
+    "taskDueDate": "Due date"
+  },
+  "editTask": {
+    "editTaskTitle": "Edit task",
+    "savingTask": "Saving...",
+    "saveTask": "Save",
+    "taskName": "Name",
+    "taskNamePlaceholder": "For example, Prepare a report",
+    "taskDescription": "Description",
+    "taskDescriptionPlaceholder": "Optional",
+    "taskStatus": "Status",
+    "taskPriority": "Priority",
+    "taskDueDate": "Due date"
+  },
+  "deleteTask": {
+    "deleteTaskTitle": "Delete task",
+    "deletingTask": "Deleting...",
+    "confirmDeleteTask": "Delete",
+    "confirmDeleteTaskMessage": "Are you sure you want to delete the task “{name}”?",
+    "deleteTaskIrreversible": "This action cannot be undone."
+  },
+  "addTaskList": {
+    "addTaskListTitle": "Add a new task list",
+    "creatingTaskList": "Loading...",
+    "createTaskList": "Create",
+    "taskListName": "Name",
+    "taskListNamePlaceholder": "For example, Work"
+  },
+  "renameTaskList": {
+    "renameTaskListTitle": "Rename list",
+    "savingTaskListName": "Saving...",
+    "saveTaskListName": "Save",
+    "taskListName": "Name"
+  },
+  "deleteTaskList": {
+    "deleteTaskListTitle": "Delete list",
+    "deletingTaskList": "Deleting...",
+    "confirmDeleteTaskList": "Delete",
+    "confirmDeleteTaskListMessage": "Are you sure you want to delete the list “{name}”?",
+    "deleteTaskListIrreversible": "This action cannot be undone."
+  }
+}

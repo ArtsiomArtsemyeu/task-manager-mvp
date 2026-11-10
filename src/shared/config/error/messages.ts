@@ -1,32 +1,6 @@
+import ru from '@/messages/ru.json';
+
 export const messages = {
-  validation: {
-    requiredFields: 'Заполните все требуемые поля',
-    fillAllFields: 'Заполните все поля корректно',
-    invalidJson: 'Некорректный JSON',
-    emailRequired: 'Электронный адрес обязателен',
-    emailInvalid: 'Неверный формат электронного адреса',
-    passwordRequired: 'Пароль обязателен',
-    passwordMinLength: 'Минимум 8 символов',
-    nameRequired: 'Название обязательно',
-    dueDateRequired: 'Дедлайн обязателен',
-    invalidListName: 'Некорректное имя списка',
-    invalidTaskListId: 'Некорректный идентификатор списка',
-    invalidTaskData: 'Некорректные данные задачи',
-    invalidStatusData: 'Некорректные данные статуса',
-  },
-  error: {
-    server: 'Ошибка сервера',
-    unauthorized: 'Требуется авторизация',
-    invalidCredentials: 'Неверный электронный адрес или пароль',
-    loginFailed: 'Не удалось войти',
-    taskListNotFound: 'Список не найден',
-    taskNotFound: 'Задача не найдена',
-    taskListForTaskNotFound: 'Список задач для задачи не найден',
-    createTaskFailed: 'Не удалось создать задачу',
-    updateTaskFailed: 'Не удалось обновить задачу',
-    deleteTaskFailed: 'Не удалось удалить задачу',
-    changeStatusFailed: 'Не удалось изменить статус',
-    deleteTaskListFailed: 'Не удалось удалить список',
-    renameTaskListFailed: 'Не удалось переименовать список',
-  },
+  validation: ru.validation,
+  error: ru.error,
 } as const;

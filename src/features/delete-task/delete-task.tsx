@@ -1,5 +1,6 @@
 'use client';
 
+import { useLocale, useTranslations } from 'next-intl';
 import { startTransition, useActionState, useEffect } from 'react';
 import type { DeleteTaskActionState } from './api/delete-task.action';
 import { deleteTaskAction } from './api/delete-task.action';
@@ -24,10 +25,15 @@ export function DeleteTask({
   redirectTo,
   onClose,
 }: DeleteTaskProps) {
+  const t = useTranslations();
+  const locale = useLocale();
   const [state, formAction, isPending] = useActionState<
     DeleteTaskActionState,
     FormData
-  >(deleteTaskAction, null);
+  >(
+    (prevState, formData) => deleteTaskAction(locale, prevState, formData),
+    null,
+  );
 
   useEffect(() => {
     if (state?.success) {
@@ -50,7 +56,7 @@ export function DeleteTask({
   return (
     <Modal
       isOpen={isOpen}
-      title="Удалить задачу"
+      title={t('deleteTask.deleteTaskTitle')}
       onClose={onClose}
       action={
         <button
@@ -59,18 +65,22 @@ export function DeleteTask({
           onClick={onConfirm}
           disabled={isPending}
         >
-          {isPending ? 'Удаление...' : 'Удалить'}
+          {isPending
+            ? t('deleteTask.deletingTask')
+            : t('deleteTask.confirmDeleteTask')}
         </button>
       }
     >
       <div className={styles.message}>
         <p className={styles.messageText}>
-          Вы уверены, что хотите удалить задачу «{taskName}»?
+          {t('deleteTask.confirmDeleteTaskMessage', { name: taskName })}
         </p>
-        <p className={styles.warning}>Это действие нельзя отменить.</p>
+        <p className={styles.warning}>
+          {t('deleteTask.deleteTaskIrreversible')}
+        </p>
       </div>
 
-      {state?.error && <ErrorHighlight message={state.error} />}
+      {state?.error && <ErrorHighlight message={t(state.error)} />}
     </Modal>
   );
 }

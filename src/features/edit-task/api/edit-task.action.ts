@@ -1,22 +1,22 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { errorMessages } from '@/src/shared/config';
+import type { ActionResult } from '@/src/shared/config';
+import { readLocale } from '@/src/shared/i18n';
 import {
   authorizedFetch,
   redirectIfUnauthorized,
+  revalidateLocalizedPaths,
 } from '@/src/shared/lib/session';
 import { taskPath } from '@/src/shared/utils/api';
 
-export type EditTaskActionState = {
-  error?: string;
-  success?: boolean;
-} | null;
+export type EditTaskActionState = ActionResult;
 
 export async function editTaskAction(
+  localeValue: string,
   _prevState: EditTaskActionState,
   formData: FormData,
 ): Promise<EditTaskActionState> {
+  const locale = readLocale(localeValue);
   const id = formData.get('id');
   const name = formData.get('name');
   const state = formData.get('state');
@@ -39,7 +39,7 @@ export async function editTaskAction(
     Number.isNaN(priority) ||
     !dueDate
   ) {
-    return { error: errorMessages.validation.fillAllFields };
+    return { error: 'validation.fillAllFields' };
   }
 
   const response = await authorizedFetch(taskPath(id), {
@@ -54,14 +54,12 @@ export async function editTaskAction(
     }),
   });
 
-  redirectIfUnauthorized(response);
+  redirectIfUnauthorized(response, locale);
 
   if (!response.ok) {
-    return { error: errorMessages.error.updateTaskFailed };
+    return { error: 'error.updateTaskFailed' };
   }
 
-  revalidatePath(`/tasks/${id}`);
-  revalidatePath(`/lists/${taskListId}`);
-  revalidatePath('/lists');
+  revalidateLocalizedPaths([`/tasks/${id}`, `/lists/${taskListId}`, '/lists']);
   return { success: true };
 }

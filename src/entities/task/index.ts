@@ -13,9 +13,8 @@ export {
   TASK_STATES,
   isTaskPriority,
   TASK_PRIORITIES,
-  TASK_STATE_LABELS,
-  TASK_PRIORITY_LABELS,
 } from './config/task.config';
+export { useTaskLabels } from './lib/use-task-labels';
 export type { Task } from './model/task.model';
 export type { TaskDto } from './model/task-dto.model';
 export type { TaskState, TaskPriority } from './config/task.config';

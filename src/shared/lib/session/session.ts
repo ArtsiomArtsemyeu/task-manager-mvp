@@ -1,8 +1,9 @@
 import 'server-only';
 
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { apiUrl } from '@/src/shared/config';
+import { redirect, routing, type Locale } from '@/src/shared/i18n';
 import { SESSION_COOKIE_NAME } from '@/src/shared/utils/jwt';
 
 export async function authorizedFetch(
@@ -23,8 +24,21 @@ export async function authorizedFetch(
   });
 }
 
-export function redirectIfUnauthorized(response: Response): void {
-  if (response.status === 401) {
-    redirect('/');
+export function redirectIfUnauthorized(
+  response: Response,
+  locale: Locale,
+): void {
+  if (response.status !== 401) {
+    return;
+  }
+
+  redirect({ href: '/', locale });
+}
+
+export function revalidateLocalizedPaths(pathnames: readonly string[]): void {
+  for (const pathname of pathnames) {
+    for (const locale of routing.locales) {
+      revalidatePath(`/${locale}${pathname}`);
+    }
   }
 }

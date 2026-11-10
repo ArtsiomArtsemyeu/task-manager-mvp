@@ -3,10 +3,10 @@
 import { startTransition, useActionState, useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { useLocale, useTranslations } from 'next-intl';
 import type { AddTaskListActionState } from './api/add-task-list.action';
 import { addTaskListAction } from './api/add-task-list.action';
 import styles from './add-task-list.module.css';
-import { errorMessages } from '@/src/shared/config/error';
 import { useFillFormStubsHotkey } from '@/src/shared/lib/fill-form-stubs';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
 import { Input } from '@/src/shared/ui/components/input';
@@ -26,6 +26,8 @@ const ADD_TASK_LIST_FORM_STUBS: AddTaskListFormData = {
 };
 
 export function AddTaskList({ isOpen, onClose }: AddTaskListProps) {
+  const t = useTranslations();
+  const locale = useLocale();
   const {
     register,
     handleSubmit,
@@ -47,7 +49,10 @@ export function AddTaskList({ isOpen, onClose }: AddTaskListProps) {
   const [state, formAction, isPending] = useActionState<
     AddTaskListActionState,
     FormData
-  >(addTaskListAction, null);
+  >(
+    (prevState, formData) => addTaskListAction(locale, prevState, formData),
+    null,
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -76,7 +81,7 @@ export function AddTaskList({ isOpen, onClose }: AddTaskListProps) {
   return (
     <Modal
       isOpen={isOpen}
-      title="Добавить новый список задач"
+      title={t('addTaskList.addTaskListTitle')}
       onClose={onClose}
       action={
         <button
@@ -85,24 +90,24 @@ export function AddTaskList({ isOpen, onClose }: AddTaskListProps) {
           disabled={isPending}
           className={styles.btnSubmit}
         >
-          {isPending ? 'Загрузка...' : 'Создать'}
+          {isPending ? t('addTaskList.creatingTaskList') : t('addTaskList.createTaskList')}
         </button>
       }
     >
       <form id="add-task-list-form" onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputGroup}>
-          <label htmlFor="add-task-list-name">Название</label>
+          <label htmlFor="add-task-list-name">{t('addTaskList.taskListName')}</label>
           <Input
             id="add-task-list-name"
-            placeholder="Например, Работа"
+            placeholder={t('addTaskList.taskListNamePlaceholder')}
             error={errors.name?.message}
             {...register('name', {
-              required: errorMessages.validation.nameRequired,
+              required: t('validation.nameRequired'),
             })}
           />
         </div>
 
-        {state?.error && <ErrorHighlight message={state.error} />}
+        {state?.error && <ErrorHighlight message={t(state.error)} />}
       </form>
     </Modal>
   );

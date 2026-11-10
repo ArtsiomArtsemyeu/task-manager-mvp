@@ -72,13 +72,18 @@ const compareTasks = (left: Task, right: Task): number => {
 export const sortTasks = (tasks: Task[]): Task[] =>
   [...tasks].sort(compareTasks);
 
-export const formatTaskDueDate = (isoDate: string): string => {
+const DATE_LOCALE_BY_APP_LOCALE: Record<string, string> = {
+  ru: 'ru-RU',
+  en: 'en-US',
+};
+
+export const formatTaskDueDate = (isoDate: string, locale = 'ru'): string => {
   const date = new Date(isoDate);
   if (Number.isNaN(date.getTime())) {
     return '—';
   }
 
-  return new Intl.DateTimeFormat('ru-RU', {
+  return new Intl.DateTimeFormat(DATE_LOCALE_BY_APP_LOCALE[locale] ?? locale, {
     day: '2-digit',
     month: 'short',
     year: 'numeric',

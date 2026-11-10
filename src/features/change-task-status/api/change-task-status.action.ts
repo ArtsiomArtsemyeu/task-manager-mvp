@@ -1,11 +1,12 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
 import type { TaskState } from '@/src/entities/task';
-import { errorMessages } from '@/src/shared/config';
+import type { ActionResult } from '@/src/shared/config';
+import { readLocale, type Locale } from '@/src/shared/i18n';
 import {
   authorizedFetch,
   redirectIfUnauthorized,
+  revalidateLocalizedPaths,
 } from '@/src/shared/lib/session';
 import { taskPath } from '@/src/shared/utils/api';
 
@@ -13,9 +14,12 @@ export async function changeTaskStatusAction(
   id: string,
   taskListId: string,
   state: TaskState,
-): Promise<{ error?: string; success?: boolean }> {
+  localeValue: Locale | string,
+): Promise<NonNullable<ActionResult>> {
+  const locale = readLocale(localeValue);
+
   if (!id || !taskListId) {
-    return { error: errorMessages.validation.invalidStatusData };
+    return { error: 'validation.invalidStatusData' };
   }
 
   const response = await authorizedFetch(taskPath(id), {
@@ -24,14 +28,12 @@ export async function changeTaskStatusAction(
     body: JSON.stringify({ state }),
   });
 
-  redirectIfUnauthorized(response);
+  redirectIfUnauthorized(response, locale);
 
   if (!response.ok) {
-    return { error: errorMessages.error.changeStatusFailed };
+    return { error: 'error.changeStatusFailed' };
   }
 
-  revalidatePath(`/tasks/${id}`);
-  revalidatePath(`/lists/${taskListId}`);
-  revalidatePath('/lists');
+  revalidateLocalizedPaths([`/tasks/${id}`, `/lists/${taskListId}`, '/lists']);
   return { success: true };
 }

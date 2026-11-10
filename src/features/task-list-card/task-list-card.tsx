@@ -1,16 +1,17 @@
 'use client';
 
-import Link from 'next/link';
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import styles from './task-list-card.module.css';
-import { TaskMetrics } from './ui/task-metrics/task-metrics';
 import { CardMenu } from './ui/card-menu/card-menu';
+import { TaskMetrics } from './ui/task-metrics/task-metrics';
 import {
   calculateTaskCountByState,
   calculateTaskListProgress,
   isDeadlineWithin48Hours,
 } from '@/src/entities/task';
 import type { TaskListDto } from '@/src/entities/task-list';
+import { Link } from '@/src/shared/i18n';
 import { ProgressBar } from '@/src/shared/ui/components/progress-bar';
 import { Chip } from '@/src/shared/ui/components/chip';
 
@@ -25,6 +26,7 @@ export function TaskListCard({
   onRename,
   onDelete,
 }: TaskListCardProps) {
+  const t = useTranslations();
   const taskListProgress = useMemo(
     () => calculateTaskListProgress(taskList.tasks),
     [taskList],
@@ -47,17 +49,15 @@ export function TaskListCard({
       <Link href={`/lists/${taskList.id}`} className={styles.link}>
         <div className={styles.title}>{taskList.name}</div>
         <div className={styles.count}>
-          Количество задач:
+          {t('taskListCard.taskCountLabel')}
           <span className={styles.countValue}>{taskList.tasks.length}</span>
         </div>
         <TaskMetrics tasks={taskList.tasks} />
         <ProgressBar progress={taskListProgress} />
         <div className={styles.indicators}>
-          {hasOverdueTasks && (
-            <Chip label="Есть просроченные задачи" color="red" />
-          )}
+          {hasOverdueTasks && <Chip label={t('taskListCard.hasOverdueTasks')} color="red" />}
           {hasDeadlineTasks && (
-            <Chip label="Дедлайн в ближайшие 48 часов" color="yellow" />
+            <Chip label={t('taskListCard.dueWithin48Hours')} color="yellow" />
           )}
         </div>
       </Link>

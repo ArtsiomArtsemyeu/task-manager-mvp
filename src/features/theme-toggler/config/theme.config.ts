@@ -1,4 +1,3 @@
 export interface ThemeConfig {
-  label: string;
-  value: string;
+  value: 'default' | 'light' | 'dark';
 }

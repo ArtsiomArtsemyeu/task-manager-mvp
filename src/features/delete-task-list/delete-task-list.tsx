@@ -1,6 +1,7 @@
 'use client';
 
 import { startTransition, useActionState, useEffect } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 import type { DeleteTaskListActionState } from './api/delete-task-list.action';
 import { deleteTaskListAction } from './api/delete-task-list.action';
 import styles from './delete-task-list.module.css';
@@ -20,10 +21,15 @@ export function DeleteTaskList({
   taskListName,
   onClose,
 }: DeleteTaskListProps) {
+  const t = useTranslations();
+  const locale = useLocale();
   const [state, formAction, isPending] = useActionState<
     DeleteTaskListActionState,
     FormData
-  >(deleteTaskListAction, null);
+  >(
+    (prevState, formData) => deleteTaskListAction(locale, prevState, formData),
+    null,
+  );
 
   useEffect(() => {
     if (state?.success) {
@@ -44,7 +50,7 @@ export function DeleteTaskList({
   return (
     <Modal
       isOpen={isOpen}
-      title="Удалить список"
+      title={t('deleteTaskList.deleteTaskListTitle')}
       onClose={onClose}
       action={
         <button
@@ -53,18 +59,18 @@ export function DeleteTaskList({
           onClick={onConfirm}
           disabled={isPending}
         >
-          {isPending ? 'Удаление...' : 'Удалить'}
+          {isPending ? t('deleteTaskList.deletingTaskList') : t('deleteTaskList.confirmDeleteTaskList')}
         </button>
       }
     >
       <div className={styles.message}>
         <p className={styles.messageText}>
-          Вы уверены, что хотите удалить список «{taskListName}»?
+          {t('deleteTaskList.confirmDeleteTaskListMessage', { name: taskListName })}
         </p>
-        <p className={styles.warning}>Это действие нельзя отменить.</p>
+        <p className={styles.warning}>{t('deleteTaskList.deleteTaskListIrreversible')}</p>
       </div>
 
-      {state?.error && <ErrorHighlight message={state.error} />}
+      {state?.error && <ErrorHighlight message={t(state.error)} />}
     </Modal>
   );
 }

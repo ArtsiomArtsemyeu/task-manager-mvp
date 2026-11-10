@@ -1,15 +1,18 @@
+import { useTranslations } from 'next-intl';
 import styles from './task-list-details-skeleton.module.css';
 import { Skeleton } from '@/src/shared/ui/components/skeleton';
 
 const ROW_PLACEHOLDERS = 5;
 
 export function TaskListDetailsSkeleton() {
+  const t = useTranslations();
+
   return (
     <div
       className={styles.host}
       role="status"
       aria-busy="true"
-      aria-label="Загрузка списка задач"
+      aria-label={t('taskListDetails.loadingTaskList')}
     >
       <div className={styles.header}>
         <Skeleton width="8.5rem" height="2.65rem" />

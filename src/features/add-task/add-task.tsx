@@ -1,20 +1,19 @@
 'use client';
 
+import { startTransition, useActionState, useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { startTransition, useActionState, useEffect } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 import type { AddTaskActionState } from './api/add-task.action';
 import { addTaskAction } from './api/add-task.action';
 import styles from './add-task.module.css';
 import type { TaskPriority, TaskState } from '@/src/entities/task';
 import {
   TASK_PRIORITIES,
-  TASK_PRIORITY_LABELS,
-  TASK_STATE_LABELS,
   TASK_STATES,
   getTomorrowDateTimeLocal,
+  useTaskLabels,
 } from '@/src/entities/task';
-import { errorMessages } from '@/src/shared/config/error';
 import { useFillFormStubsHotkey } from '@/src/shared/lib/fill-form-stubs';
 import { ErrorHighlight } from '@/src/shared/ui/components/error-highlight';
 import { Input } from '@/src/shared/ui/components/input';
@@ -44,6 +43,9 @@ function getAddTaskFormStubs(): Partial<AddTaskFormData> {
 }
 
 export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
+  const t = useTranslations();
+  const locale = useLocale();
+  const { stateLabel, priorityLabel } = useTaskLabels();
   const {
     register,
     handleSubmit,
@@ -70,7 +72,10 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
   const [state, formAction, isPending] = useActionState<
     AddTaskActionState,
     FormData
-  >(addTaskAction, null);
+  >(
+    (prevState, formData) => addTaskAction(locale, prevState, formData),
+    null,
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -106,7 +111,7 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
   return (
     <Modal
       isOpen={isOpen}
-      title="Добавить задачу"
+      title={t('addTask.addTaskTitle')}
       onClose={onClose}
       action={
         <button
@@ -115,7 +120,7 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
           disabled={isPending}
           className={styles.btnSubmit}
         >
-          {isPending ? 'Создание...' : 'Создать'}
+          {isPending ? t('addTask.creatingTask') : t('addTask.createTask')}
         </button>
       }
     >
@@ -125,51 +130,51 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className={styles.inputGroup}>
-          <label htmlFor="add-task-name">Название</label>
+          <label htmlFor="add-task-name">{t('addTask.taskName')}</label>
           <Input
             id="add-task-name"
-            placeholder="Например, Подготовить отчёт"
+            placeholder={t('addTask.taskNamePlaceholder')}
             error={errors.name?.message}
             {...register('name', {
-              required: errorMessages.validation.nameRequired,
+              required: t('validation.nameRequired'),
             })}
           />
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="add-task-description">Описание</label>
+          <label htmlFor="add-task-description">{t('addTask.taskDescription')}</label>
           <textarea
             id="add-task-description"
             className={styles.textarea}
-            placeholder="Необязательно"
+            placeholder={t('addTask.taskDescriptionPlaceholder')}
             {...register('description')}
           />
         </div>
 
         <div className={styles.row}>
           <div className={styles.inputGroup}>
-            <label htmlFor="add-task-state">Статус</label>
+            <label htmlFor="add-task-state">{t('addTask.taskStatus')}</label>
             <Select
               id="add-task-state"
               {...register('state', { required: true })}
             >
               {TASK_STATES.map((taskState: TaskState) => (
                 <option key={taskState} value={taskState}>
-                  {TASK_STATE_LABELS[taskState]}
+                  {stateLabel(taskState)}
                 </option>
               ))}
             </Select>
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="add-task-priority">Приоритет</label>
+            <label htmlFor="add-task-priority">{t('addTask.taskPriority')}</label>
             <Select
               id="add-task-priority"
               {...register('priority', { valueAsNumber: true, required: true })}
             >
               {TASK_PRIORITIES.map((priority: TaskPriority) => (
                 <option key={priority} value={priority}>
-                  {TASK_PRIORITY_LABELS[priority]}
+                  {priorityLabel(priority)}
                 </option>
               ))}
             </Select>
@@ -177,18 +182,18 @@ export function AddTask({ isOpen, taskListId, onClose }: AddTaskProps) {
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="add-task-due-date">Дедлайн</label>
+          <label htmlFor="add-task-due-date">{t('addTask.taskDueDate')}</label>
           <Input
             id="add-task-due-date"
             type="datetime-local"
             error={errors.dueDate?.message}
             {...register('dueDate', {
-              required: errorMessages.validation.dueDateRequired,
+              required: t('validation.dueDateRequired'),
             })}
           />
         </div>
 
-        {state?.error && <ErrorHighlight message={state.error} />}
+        {state?.error && <ErrorHighlight message={t(state.error)} />}
       </form>
     </Modal>
   );

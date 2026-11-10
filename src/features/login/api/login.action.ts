@@ -1,8 +1,9 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { apiUrl, errorMessages } from '@/src/shared/config';
+import type { ActionResult } from '@/src/shared/config';
+import { apiUrl } from '@/src/shared/config';
+import { readLocale, redirect } from '@/src/shared/i18n';
 import { loginPath } from '@/src/shared/utils/api';
 import {
   SESSION_COOKIE_NAME,
@@ -11,15 +12,14 @@ import {
 } from '@/src/shared/utils/jwt';
 import { isRecord, readJson } from '@/src/shared/utils/type-guard';
 
-export type LoginActionState = {
-  error?: string;
-  success?: boolean;
-} | null;
+export type LoginActionState = ActionResult;
 
 export async function loginAction(
+  localeValue: string,
   _prevState: LoginActionState,
   formData: FormData,
 ): Promise<LoginActionState> {
+  const locale = readLocale(localeValue);
   const email = formData.get('email');
   const password = formData.get('password');
 
@@ -30,7 +30,7 @@ export async function loginAction(
   });
 
   if (!response.ok) {
-    return { error: errorMessages.error.invalidCredentials };
+    return { error: 'error.invalidCredentials' };
   }
 
   const body = await readJson(response);
@@ -42,7 +42,7 @@ export async function loginAction(
     typeof payload.userId !== 'string' ||
     typeof payload.email !== 'string'
   ) {
-    return { error: errorMessages.error.loginFailed };
+    return { error: 'error.loginFailed' };
   }
 
   const jwtToken = createToken({
@@ -59,5 +59,6 @@ export async function loginAction(
     maxAge: SESSION_MAX_AGE_SECONDS,
   });
 
-  redirect('/lists');
+  redirect({ href: '/lists', locale });
+  return null;
 }

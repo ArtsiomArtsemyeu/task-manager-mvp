@@ -1,9 +1,18 @@
 import './env';
 import type { Preview } from '@storybook/nextjs-vite';
+import { NextIntlClientProvider } from 'next-intl';
+import ru from '../messages/ru.json';
 import '@/app/reset.css';
 import '@/app/global.css';
 
 const preview: Preview = {
+  decorators: [
+    (Story) => (
+      <NextIntlClientProvider locale="ru" messages={ru}>
+        <Story />
+      </NextIntlClientProvider>
+    ),
+  ],
   parameters: {
     controls: {
       matchers: {

@@ -1,38 +1,38 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { errorMessages } from '@/src/shared/config';
+import type { ActionResult } from '@/src/shared/config';
+import { readLocale } from '@/src/shared/i18n';
 import {
   authorizedFetch,
   redirectIfUnauthorized,
+  revalidateLocalizedPaths,
 } from '@/src/shared/lib/session';
 import { taskListPath } from '@/src/shared/utils/api';
 
-export type DeleteTaskListActionState = {
-  error?: string;
-  success?: boolean;
-} | null;
+export type DeleteTaskListActionState = ActionResult;
 
 export async function deleteTaskListAction(
+  localeValue: string,
   _prevState: DeleteTaskListActionState,
   formData: FormData,
 ): Promise<DeleteTaskListActionState> {
+  const locale = readLocale(localeValue);
   const id = formData.get('id');
 
   if (typeof id !== 'string' || !id) {
-    return { error: errorMessages.validation.invalidTaskListId };
+    return { error: 'validation.invalidTaskListId' };
   }
 
   const response = await authorizedFetch(taskListPath(id), {
     method: 'DELETE',
   });
 
-  redirectIfUnauthorized(response);
+  redirectIfUnauthorized(response, locale);
 
   if (!response.ok) {
-    return { error: errorMessages.error.deleteTaskListFailed };
+    return { error: 'error.deleteTaskListFailed' };
   }
 
-  revalidatePath('/lists');
+  revalidateLocalizedPaths(['/lists']);
   return { success: true };
 }
