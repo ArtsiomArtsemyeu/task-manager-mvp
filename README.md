@@ -1,48 +1,52 @@
-# <img src="./public/images/favicon.png" width="32" height="32" alt="" /> Менеджер задач
+# <img src="./public/images/favicon.png" width="32" height="32" alt="" /> Task Manager
 
-Web-приложение для управления списками задач.
+**English** | [Русский](./README.ru.md)
+
+> **Like this project?** If this app helps you stay productive, please leave a Star ⭐️ in the top right corner. Your support motivates me to develop new features and make it even better!
+
+Web application for managing task lists.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.4.2-black?logo=nextdotjs&logoColor=white)   ![React](https://img.shields.io/badge/React-19.3-61DAFB?logo=react&logoColor=black)   ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)   ![Vitest](https://img.shields.io/badge/Vitest-5.0-6E9F18?logo=vitest&logoColor=white)   ![Storybook](https://img.shields.io/badge/Storybook-10.6-FF4785?logo=storybook&logoColor=white)   ![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A5%2020-339933?logo=nodedotjs&logoColor=white)
 
-![Quick start](https://img.shields.io/badge/%F0%9F%9A%80%20Быстрый%20старт-0ea5e9?style=for-the-badge)   ![API](https://img.shields.io/badge/%F0%9F%94%8C%20API-6366f1?style=for-the-badge)   ![Features](https://img.shields.io/badge/%E2%9C%85%20Функции-22c55e?style=for-the-badge)
+![Quick start](https://img.shields.io/badge/%F0%9F%9A%80%20Quick%20start-0ea5e9?style=for-the-badge)   ![API](https://img.shields.io/badge/%F0%9F%94%8C%20API-6366f1?style=for-the-badge)   ![Features](https://img.shields.io/badge/%E2%9C%85%20Features-22c55e?style=for-the-badge)
 
 ---
 
-## 📑 Содержание
+## 📑 Table of contents
 
-- [1. Техническая документация](#1-техническая-документация)
-  - [1.1. Технологии](#11-технологии-используемые-в-проекте)
-  - [1.2. Локальная разработка](#12-инструкция-для-локальной-разработки)
+- [1. Technical documentation](#1-technical-documentation)
+  - [1.1. Technologies](#11-technologies-used-in-the-project)
+  - [1.2. Local development](#12-local-development-guide)
   - [1.3. API](#13-api-appapi)
-  - [1.4. Поток данных](#14-описание-организации-данных-в-приложении)
-- [2. Описание функций](#2-описание-функций-приложения)
-  - [2.1. Карта экранов](#21-карта-экранов)
+  - [1.4. Data flow](#14-how-data-is-organized-in-the-app)
+- [2. Feature overview](#2-feature-overview)
+  - [2.1. Screen map](#21-screen-map)
 - [3. Live-demo](#3-live-demo)
 
 ---
 
-## 1. Техническая документация
+## 1. Technical documentation
 
-### 1.1. Технологии, используемые в проекте
+### 1.1. Technologies used in the project
 
-| Технология | Назначение |
-| :--------- | :--------- |
-| <img src="https://cdn.simpleicons.org/nextdotjs/000000" width="18" height="18" alt="" /> **Next.js** | Фреймворк (App Router): страницы, API routes, Server Actions, SSR/CSR.<br>[Документация ↗](https://nextjs.org/docs) |
-| <img src="https://cdn.simpleicons.org/react/61DAFB" width="18" height="18" alt="" /> **React** | UI-библиотека для клиентских и серверных компонентов.<br>[Документация ↗](https://react.dev) |
-| <img src="https://cdn.simpleicons.org/typescript/3178C6" width="18" height="18" alt="" /> **TypeScript** | Статическая типизация исходного кода.<br>[Документация ↗](https://www.typescriptlang.org/docs) |
-| 🧩 **Feature-Sliced Design (FSD)** | Слои `app` / `widgets` / `features` / `entities` / `shared` с публичными API слайсов.<br>[Документация ↗](https://feature-sliced.design) |
-| <img src="https://cdn.simpleicons.org/eslint/4B32C3" width="18" height="18" alt="" /> **ESLint** | Линтер: Next.js, TypeScript и FSD (`eslint-plugin-fsd-lint`).<br>[Документация ↗](https://eslint.org/docs/latest) |
-| <img src="https://cdn.simpleicons.org/vitest/6E9F18" width="18" height="18" alt="" /> **Vitest** | Unit-тесты (в т.ч. browser через Playwright).<br>[Документация ↗](https://vitest.dev) |
-| <img src="https://cdn.simpleicons.org/storybook/FF4785" width="18" height="18" alt="" /> **Storybook** | Изолированная разработка и просмотр UI.<br>[Документация ↗](https://storybook.js.org/docs) |
-| 🎨 **next-themes** | Переключение темы (default / light / dark).<br>[Репозиторий ↗](https://github.com/pacocoursey/next-themes) |
-| 📝 **react-hook-form** | Управление формами (вход, создание и редактирование).<br>[Документация ↗](https://react-hook-form.com) |
-| 🔑 **jsonwebtoken** | Выдача и проверка JWT при аутентификации.<br>[Репозиторий ↗](https://github.com/auth0/node-jsonwebtoken) |
-| <img src="https://cdn.simpleicons.org/css/1572B6" width="18" height="18" alt="" /> **CSS Modules** | Локальные стили компонентов.<br>[Репозиторий ↗](https://github.com/css-modules/css-modules) |
+| Technology | Purpose |
+| :--------- | :------ |
+| <img src="https://cdn.simpleicons.org/nextdotjs/000000" width="18" height="18" alt="" /> **Next.js** | Framework (App Router): pages, API routes, Server Actions, SSR/CSR.<br>[Docs ↗](https://nextjs.org/docs) |
+| <img src="https://cdn.simpleicons.org/react/61DAFB" width="18" height="18" alt="" /> **React** | UI library for client and server components.<br>[Docs ↗](https://react.dev) |
+| <img src="https://cdn.simpleicons.org/typescript/3178C6" width="18" height="18" alt="" /> **TypeScript** | Static typing for the source code.<br>[Docs ↗](https://www.typescriptlang.org/docs) |
+| 🧩 **Feature-Sliced Design (FSD)** | Layers `app` / `widgets` / `features` / `entities` / `shared` with public slice APIs.<br>[Docs ↗](https://feature-sliced.design) |
+| <img src="https://cdn.simpleicons.org/eslint/4B32C3" width="18" height="18" alt="" /> **ESLint** | Linter: Next.js, TypeScript, and FSD (`eslint-plugin-fsd-lint`).<br>[Docs ↗](https://eslint.org/docs/latest) |
+| <img src="https://cdn.simpleicons.org/vitest/6E9F18" width="18" height="18" alt="" /> **Vitest** | Unit tests (including browser tests via Playwright).<br>[Docs ↗](https://vitest.dev) |
+| <img src="https://cdn.simpleicons.org/storybook/FF4785" width="18" height="18" alt="" /> **Storybook** | Isolated UI development and preview.<br>[Docs ↗](https://storybook.js.org/docs) |
+| 🎨 **next-themes** | Theme switching (default / light / dark).<br>[Repository ↗](https://github.com/pacocoursey/next-themes) |
+| 📝 **react-hook-form** | Form handling (login, create, and edit).<br>[Docs ↗](https://react-hook-form.com) |
+| 🔑 **jsonwebtoken** | Issue and verify JWTs for authentication.<br>[Repository ↗](https://github.com/auth0/node-jsonwebtoken) |
+| <img src="https://cdn.simpleicons.org/css/1572B6" width="18" height="18" alt="" /> **CSS Modules** | Scoped component styles.<br>[Repository ↗](https://github.com/css-modules/css-modules) |
 
-**📦 Текущие версии технологий**
+**📦 Current technology versions**
 
-| Технология | Версия |
-| :--------- | :----: |
+| Technology | Version |
+| :--------- | :-----: |
 | Next.js | `16.4.2` |
 | React / React DOM | `19.3.0` |
 | TypeScript | `5.9.3` |
@@ -55,15 +59,15 @@ Web-приложение для управления списками задач
 | jsonwebtoken | `9.0.3` |
 | Node.js | `≥ 20` |
 
-> Актуальные значения — в `package.json` / `package-lock.json`.
+> Up-to-date values are in `package.json` / `package-lock.json`.
 
 ---
 
 
 
-### 1.2. Инструкция для локальной разработки
+### 1.2. Local development guide
 
-#### 🚀 Быстрый старт
+#### 🚀 Quick start
 
 **bash / zsh**
 
@@ -79,111 +83,111 @@ npm install
 npm run playwright:install                         
 npm run dev                                        # → http://localhost:3000
 ```
-#### Локальный запуск проекта
+#### Running the project locally
 
-**Пошаговая установка**
+**Step-by-step setup**
 
-**1. 🐙 Git** — установка и настройка. [Скачать ↗](https://git-scm.com/downloads)
+**1. 🐙 Git** — install and configure. [Download ↗](https://git-scm.com/downloads)
 
 ```bash
 git --version
 ```
 
-**2. 🟢 Node.js** — версия **≥ 20** (LTS). [Скачать ↗](https://nodejs.org)
+**2. 🟢 Node.js** — version **≥ 20** (LTS). [Download ↗](https://nodejs.org)
 
 ```bash
 node --version
 ```
 
-**3. 📦 npm** — идёт вместе с Node.js. [Документация ↗](https://docs.npmjs.com)
+**3. 📦 npm** — ships with Node.js. [Docs ↗](https://docs.npmjs.com)
 
 ```bash
 npm --version
 ```
 
-**4. 📥 Зависимости**
+**4. 📥 Dependencies**
 
 ```bash
 npm install
 ```
 
-**5. 🎭 Playwright Chromium** — **обязательно один раз** для `npm run test` / `npm run test:run` (Storybook browser-тесты). Повторите после обновления `playwright`:
+**5. 🎭 Playwright Chromium** — **required once** for `npm run test` / `npm run test:run` (Storybook browser tests). Repeat after updating `playwright`:
 
 ```bash
 npm run playwright:install
 ```
 
-> Без этого шага прогон тестов упадёт. Для `npm run dev` и `npm run storybook` шаг не нужен.
+> Without this step, the test run will fail. Not needed for `npm run dev` or `npm run storybook`.
 
-**6. 🔐 Переменные окружения**
+**6. 🔐 Environment variables**
 
-| Переменная | Описание |
-| :--------- | :------- |
-| `APP_BASE_URL` | Базовый URL (по умолчанию `http://localhost:3000`) |
-| `JWT_SECRET` | Секрет подписи JWT |
-| `DEFAULT_USER_ID` | Идентификатор пользователя по умолчанию |
-| `DEFAULT_USER_EMAIL` | Электронный адрес пользователя по умолчанию |
-| `DEFAULT_USER_PASSWORD` | Пароль пользователя по умолчанию |
+| Variable | Description |
+| :------- | :---------- |
+| `APP_BASE_URL` | Base URL (default `http://localhost:3000`) |
+| `JWT_SECRET` | JWT signing secret |
+| `DEFAULT_USER_ID` | Default user ID |
+| `DEFAULT_USER_EMAIL` | Default user email |
+| `DEFAULT_USER_PASSWORD` | Default user password |
 
-**7. ▶️ Dev-сервер**
+**7. ▶️ Dev server**
 
 ```bash
 npm run dev
 ```
 
-Приложение: [http://localhost:3000](http://localhost:3000)
+App: [http://localhost:3000](http://localhost:3000)
 
 ```bash
-npm run build   # production-сборка приложения
-npm run start   # запуск собранного приложения
+npm run build   # production build
+npm run start   # run the built app
 ```
 
-#### Запуск плагинов для проверки кода
+#### Code quality scripts
 
-| Команда | Назначение |
-| :------ | :--------- |
-| `npm run typecheck` | ✅ Проверка TypeScript |
-| `npm run lint` | 🧭 ESLint + правила FSD |
-| `npm run test` | 🧪 Unit-тесты (watch) |
-| `npm run test:run` | 🧪 Unit-тесты |
-| `npm run test:storybook` |  📚 Storybook-тесты |
-| `npm run storybook` | 📚 Storybook на [localhost:6006](http://localhost:6006) |
-| `npm run build-storybook` | 📚 Статическая сборка Storybook |
+| Command | Purpose |
+| :------ | :------ |
+| `npm run typecheck` | ✅ TypeScript check |
+| `npm run lint` | 🧭 ESLint + FSD rules |
+| `npm run test` | 🧪 Unit tests (watch) |
+| `npm run test:run` | 🧪 Unit tests |
+| `npm run test:storybook` |  📚 Storybook tests |
+| `npm run storybook` | 📚 Storybook at [localhost:6006](http://localhost:6006) |
+| `npm run build-storybook` | 📚 Static Storybook build |
 
-**Детали по проверкам**
+**Check details**
 
-##### Проверка TypeScript
+##### TypeScript check
 
 ```bash
 npm run typecheck
 ```
 
-##### Проверка FSD-архитектуры
+##### FSD architecture check
 
-Правила Feature-Sliced Design в ESLint (`eslint-plugin-fsd-lint`):
+Feature-Sliced Design rules in ESLint (`eslint-plugin-fsd-lint`):
 
 ```bash
 npm run lint
 ```
 
-Проверяются, в частности:
+Among other things, this checks:
 
-- запрещённые импорты между слоями;
-- cross-slice зависимости;
-- публичный API слайсов;
-- относительные импорты;
-- порядок импортов.
+- forbidden imports between layers;
+- cross-slice dependencies;
+- public slice APIs;
+- relative imports;
+- import order.
 
-##### Запуск unit-тестов
+##### Running unit tests
 
-> **⚠ Предусловие:** перед первым `npm run test` / `npm run test:run` выполните `npm run playwright:install` (см. «Локальный запуск проекта», шаг 5). Иначе Storybook browser-тесты в Vitest завершатся ошибкой. Повторно — только после обновления `playwright`.
+> **⚠ Prerequisite:** before the first `npm run test` / `npm run test:run`, run `npm run playwright:install` (see “Running the project locally”, step 5). Otherwise Storybook browser tests in Vitest will fail. Repeat only after updating `playwright`.
 
 ```bash
 npm run test       
 npm run test:run   
 ```
 
-##### Запуск Storybook
+##### Running Storybook
 
 ```bash
 npm run storybook
@@ -199,116 +203,116 @@ npm run build-storybook
 
 ### 1.3. API (`app/api`)
 
-Данные хранятся в JSON-файлы:
+Data is stored in JSON files:
 
-| Файл | Путь |
+| File | Path |
 | :--- | :--- |
-| 📋 Списки задач | `src/shared/lib/file-storage/data/task-lists.json` |
-| ✅ Задачи | `src/shared/lib/file-storage/data/tasks.json` |
+| 📋 Task lists | `src/shared/lib/file-storage/data/task-lists.json` |
+| ✅ Tasks | `src/shared/lib/file-storage/data/tasks.json` |
 
-**Статусы задачи (**`state`**):** `new` · `in progress` · `done` · `overdue`
+**Task statuses (`state`):** `new` · `in progress` · `done` · `overdue`
 
-API роуты `/api/data/*` проверяют заголовок `Authorization: Bearer <token>`. Без действующей сессии ответ `401`. `POST /api/auth/login` остаётся открытым. Страницы `/lists` и `/tasks` по-прежнему проверяют cookie `session_token`.
+API routes under `/api/data/*` require the `Authorization: Bearer <token>` header. Without a valid session the response is `401`. `POST /api/auth/login` stays open. Pages `/lists` and `/tasks` still validate the `session_token` cookie.
 
-**📡 Таблица эндпоинтов**
+**📡 Endpoint table**
 
-| Метод | Путь | Параметры | Описание | Куда пишет |
+| Method | Path | Parameters | Description | Writes to |
 | :---: | :--- | :-------- | :------- | :--------- |
-| `POST` | `/api/auth/login` | **Body:** `email`, `password` | Проверяет `DEFAULT_USER_`* из `.env`. Ответ: `{ userSessionPayload: { userId, email } }`. JWT в cookie ставит Server Action, не этот роут. | - |
-| `GET` | `/api/data/task-lists` | — | Все списки (DTO + вложенные задачи). | `task-lists.json`, `tasks.json` |
-| `POST` | `/api/data/task-lists` | **Body:** `name` (обяз.); `taskIds` | Создаёт список (`id` uuid, `userId` из `DEFAULT_USER_ID`). | `task-lists.json` |
-| `GET` | `/api/data/task-lists/[id]` | **Path:** `id` | Один список с задачами. `404`, если нет. | `task-lists.json`, `tasks.json` |
-| `PUT` | `/api/data/task-lists/[id]` | **Path:** `id`; **Body:** `name` | Переименование. `404`, если нет. | `task-lists.json` |
-| `DELETE` | `/api/data/task-lists/[id]` | **Path:** `id` | Удаляет список (задачи в `tasks.json` не трогает). `404`, если нет. | `task-lists.json` |
-| `GET` | `/api/data/tasks` | — | Все задачи. | `tasks.json` |
-| `POST` | `/api/data/tasks` | **Body:** `name`, `description`, `state`, `priority`, `dueDate`, `taskListId` | Создаёт задачу и добавляет `id` в `taskIds` списка. | `task-lists.json`, `tasks.json` |
-| `GET` | `/api/data/tasks/[id]` | **Path:** `id` | Задача + `taskListId`, `taskListName`. `404`, если нет. | `task-lists.json`, `tasks.json` |
-| `PUT` | `/api/data/tasks/[id]` | **Path:** `id`; **Body (опц.):** `name`, `description`, `state`, `priority`, `dueDate` | Обновление. Незаданные поля сохраняются. `404`, если нет. | `tasks.json` |
-| `DELETE` | `/api/data/tasks/[id]` | **Path:** `id` | Удаляет задачу и убирает `id` из `taskIds` всех списков. `404`, если нет. | `task-lists.json`, `tasks.json` |
+| `POST` | `/api/auth/login` | **Body:** `email`, `password` | Validates `DEFAULT_USER_`* from `.env`. Response: `{ userSessionPayload: { userId, email } }`. The JWT cookie is set by a Server Action, not this route. | - |
+| `GET` | `/api/data/task-lists` | — | All lists (DTO + nested tasks). | `task-lists.json`, `tasks.json` |
+| `POST` | `/api/data/task-lists` | **Body:** `name` (required); `taskIds` | Creates a list (`id` uuid, `userId` from `DEFAULT_USER_ID`). | `task-lists.json` |
+| `GET` | `/api/data/task-lists/[id]` | **Path:** `id` | One list with tasks. `404` if missing. | `task-lists.json`, `tasks.json` |
+| `PUT` | `/api/data/task-lists/[id]` | **Path:** `id`; **Body:** `name` | Rename. `404` if missing. | `task-lists.json` |
+| `DELETE` | `/api/data/task-lists/[id]` | **Path:** `id` | Deletes the list (does not touch tasks in `tasks.json`). `404` if missing. | `task-lists.json` |
+| `GET` | `/api/data/tasks` | — | All tasks. | `tasks.json` |
+| `POST` | `/api/data/tasks` | **Body:** `name`, `description`, `state`, `priority`, `dueDate`, `taskListId` | Creates a task and adds its `id` to the list’s `taskIds`. | `task-lists.json`, `tasks.json` |
+| `GET` | `/api/data/tasks/[id]` | **Path:** `id` | Task + `taskListId`, `taskListName`. `404` if missing. | `task-lists.json`, `tasks.json` |
+| `PUT` | `/api/data/tasks/[id]` | **Path:** `id`; **Body (optional):** `name`, `description`, `state`, `priority`, `dueDate` | Update. Unspecified fields are kept. `404` if missing. | `tasks.json` |
+| `DELETE` | `/api/data/tasks/[id]` | **Path:** `id` | Deletes the task and removes its `id` from `taskIds` in all lists. `404` if missing. | `task-lists.json`, `tasks.json` |
 
 ---
 
-### 1.4. Описание организации данных в приложении
+### 1.4. How data is organized in the app
 
-#### Описание организации модели данных в приложении
+#### Data model
 
-Список задач ссылается на задачи через `taskIds`.
+A task list references tasks via `taskIds`.
 
-![Модель данных: список задач и задача](./docs/images/data-model.png)
+![Data model: task list and task](./docs/images/data-model.png)
 
-#### Описание потока данных в приложении
+#### Data flow
 
-![Поток данных от браузера до JSON-файлов и обратно](./docs/images/data-flow.png)
+![Data flow from the browser to JSON files and back](./docs/images/data-flow.png)
 
 ---
 
-## 2. Описание функций приложения
+## 2. Feature overview
 
-### 2.1. Карта экранов
+### 2.1. Screen map
 
 ```mermaid
 flowchart LR
-  A["🔐 / Вход в систему"] --> B["📋 /lists Списки задач"]
-  B --> C["📑 /lists/id Список задач"]
-  C --> D["📝 /tasks/id Детали задачи"]
+  A["🔐 / Sign in"] --> B["📋 /lists Task lists"]
+  B --> C["📑 /lists/id Task list"]
+  C --> D["📝 /tasks/id Task details"]
   D --> C
   C --> B
 ```
 
-| Экран | Маршрут | Что делает |
-| :---- | :------ | :--------- |
-| 🔐 Вход в систему | `/` | Аутентификация, авторизация |
-| 📋 Списки задач | `/lists` | Отображает списки задач |
-| 📑 Список задач | `/lists/[id]` | Отображат задачи списка задач |
-| 📝 Задача | `/tasks/[id]` | Отображает задачу |
+| Screen | Route | What it does |
+| :----- | :---- | :----------- |
+| 🔐 Sign in | `/` | Authentication and authorization |
+| 📋 Task lists | `/lists` | Shows task lists |
+| 📑 Task list | `/lists/[id]` | Shows tasks in a list |
+| 📝 Task | `/tasks/[id]` | Shows a single task |
 
-### 🔐 Вход в систему
+### 🔐 Sign in
 
-- Главная (`/`) — форма входа.
-- Электронный адрес + пароль → JWT в cookie → редирект на `/lists`.
-- Stub-учетная запись из `.env`: `DEFAULT_USER_EMAIL`, `DEFAULT_USER_PASSWORD`.
-- <img src="./public/images/icons/eye.svg" width="16" height="16" alt="" /> Отображение / скрытие пароля в поле ввода.
-- Клавиша **Alt+C** — подстановка stub-данных.
+- Home (`/`) — login form.
+- Email + password → JWT in cookie → redirect to `/lists`.
+- Stub account from `.env`: `DEFAULT_USER_EMAIL`, `DEFAULT_USER_PASSWORD`.
+- <img src="./public/images/icons/eye.svg" width="16" height="16" alt="" /> Show / hide password in the input.
+- **Alt+C** — fill stub credentials.
 
-### 📋 Списки задач
+### 📋 Task lists
 
-- Карточки всех списков.
-- Поиск по названию.
-- Создание списка (модальное окно); **Alt+C** — stub-название.
-- <img src="./public/images/icons/edit.svg" width="16" height="16" alt="" /> Переименование и <img src="./public/images/icons/trash.svg" width="16" height="16" alt="" /> удаление через меню карточки (<img src="./public/images/icons/more-vertical.svg" width="16" height="16" alt="" />).
-- Клик по карточке → `/lists/[id]`.
+- Cards for all lists.
+- Search by name.
+- Create a list (modal); **Alt+C** — stub name.
+- <img src="./public/images/icons/edit.svg" width="16" height="16" alt="" /> Rename and <img src="./public/images/icons/trash.svg" width="16" height="16" alt="" /> delete via the card menu (<img src="./public/images/icons/more-vertical.svg" width="16" height="16" alt="" />).
+- Click a card → `/lists/[id]`.
 
-### 📑 Список задач
+### 📑 Task list
 
-- Заголовок, количество задач, прогресс.
-- Таблица: название, статус, приоритет, дедлайн, действия.
-- Фильтр по статусу.
-- Автосортировка: незавершённые выше; просроченные первыми → ближайший дедлайн → приоритет (без клика по колонкам).
-- Подсветка скорого дедлайна (≤ 48 ч) и просроченных задач.
-- Смена статуса в таблице с откатом при ошибке.
-- Добавление / Изменение / Удаление через модальные окна; **Alt+C** в форме добавления.
-- Переход на `/tasks/[id]`.
-- <img src="./public/images/icons/arrow-left.svg" width="16" height="16" alt="" /> Назад к `/lists`.
+- Title, task count, progress.
+- Table: name, status, priority, due date, actions.
+- Filter by status.
+- Auto-sort: incomplete first; overdue first → nearest due date → priority (no column clicks).
+- Highlight soon-due (≤ 48 h) and overdue tasks.
+- Change status in the table with rollback on error.
+- Add / Edit / Delete via modals; **Alt+C** in the add form.
+- Navigate to `/tasks/[id]`.
+- <img src="./public/images/icons/arrow-left.svg" width="16" height="16" alt="" /> Back to `/lists`.
 
-### 📝 Задача
+### 📝 Task
 
-- <img src="./public/images/icons/arrow-left.svg" width="16" height="16" alt="" /> Назад к списку (`К списку «…»`).
-- Заголовок, описание (или «Описание не указано»).
-- Приоритет, дедлайн с подсветкой дедлайн в ближайшие 48 часов / просроченные.
-- Смена статуса с откатом при ошибке.
-- <img src="./public/images/icons/edit.svg" width="16" height="16" alt="" /> Редактирование и <img src="./public/images/icons/trash.svg" width="16" height="16" alt="" /> удаление; после удаления — возврат к списку.
+- <img src="./public/images/icons/arrow-left.svg" width="16" height="16" alt="" /> Back to the list (`To list «…»`).
+- Title, description (or “No description”).
+- Priority, due date with highlight for due within 48 hours / overdue.
+- Change status with rollback on error.
+- <img src="./public/images/icons/edit.svg" width="16" height="16" alt="" /> Edit and <img src="./public/images/icons/trash.svg" width="16" height="16" alt="" /> delete; after delete — return to the list.
 
-### 🎨 Тема оформления
+### 🎨 Theme
 
-- Переключатель в шапке <img src="./public/images/icons/color-bucket.svg" width="16" height="16" alt="" />.
-- Режимы: **системная**, **светлая**, **тёмная**.
-- Выбор сохраняется и применяется ко всему UI.
+- Toggle in the header <img src="./public/images/icons/color-bucket.svg" width="16" height="16" alt="" />.
+- Modes: **system**, **light**, **dark**.
+- Choice is persisted and applied across the UI.
 
-### ⚠️ Ошибки и загрузка
+### ⚠️ Errors and loading
 
-- Скелетоны на загрузку данных для страниц: `/lists`, `/lists/[id]`, `/tasks/[id]`.
-- <img src="./public/images/icons/not-found.svg" width="16" height="16" alt="" /> 404 — `ErrorView` для неизвестного маршрута / для ситуации, когда запрашиваемый ресурс не найден.
-- <img src="./public/images/icons/server-error.svg" width="16" height="16" alt="" /> 500 — экран ошибки с повтором действия.
+- Skeletons while loading data on `/lists`, `/lists/[id]`, `/tasks/[id]`.
+- <img src="./public/images/icons/not-found.svg" width="16" height="16" alt="" /> 404 — `ErrorView` for unknown routes / missing resources.
+- <img src="./public/images/icons/server-error.svg" width="16" height="16" alt="" /> 500 — error screen with retry.
 
 ---
 
