@@ -1,4 +1,4 @@
-# <img src="./public/images/favicon.png" width="32" height="32" alt="" /> Менеджер задач
+# <img src="./public/images/favicon.png" width="32" height="32" alt="" /> Персональный менеджер задач
 
 [English](./README.md) | **Русский**
 
