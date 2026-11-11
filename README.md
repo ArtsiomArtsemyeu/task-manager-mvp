@@ -18,7 +18,6 @@ Web application for managing task lists.
   - [1.1. Technologies](#11-technologies-used-in-the-project)
   - [1.2. Local development](#12-local-development-guide)
   - [1.3. API](#13-api-appapi)
-  - [1.4. Data flow](#14-how-data-is-organized-in-the-app)
 - [2. Feature overview](#2-feature-overview)
   - [2.1. Screen map](#21-screen-map)
 - [3. Live-demo](#3-live-demo)
@@ -229,20 +228,6 @@ API routes under `/api/data/*` require the `Authorization: Bearer <token>` heade
 | `GET` | `/api/data/tasks/[id]` | **Path:** `id` | Task + `taskListId`, `taskListName`. `404` if missing. | `task-lists.json`, `tasks.json` |
 | `PUT` | `/api/data/tasks/[id]` | **Path:** `id`; **Body (optional):** `name`, `description`, `state`, `priority`, `dueDate` | Update. Unspecified fields are kept. `404` if missing. | `tasks.json` |
 | `DELETE` | `/api/data/tasks/[id]` | **Path:** `id` | Deletes the task and removes its `id` from `taskIds` in all lists. `404` if missing. | `task-lists.json`, `tasks.json` |
-
----
-
-### 1.4. How data is organized in the app
-
-#### Data model
-
-A task list references tasks via `taskIds`.
-
-![Data model: task list and task](./docs/images/data-model.png)
-
-#### Data flow
-
-![Data flow from the browser to JSON files and back](./docs/images/data-flow.png)
 
 ---
 
